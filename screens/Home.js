@@ -26,19 +26,20 @@ const styles = StyleSheet.create({
     elevation: 8,
     backgroundColor: "#000",
     color:'#fff',
+    marginTop:50,
     borderRadius: 20,
-    width:100,
-    height:40,
-    paddingVertical: 10,
+    width:130,
+    height:45,
+    paddingVertical: 5,
     paddingHorizontal: 1
   },
   appButtonText: {
-    fontSize: 1,
+    fontSize: 22,
     color: "#fff",
     alignSelf: "center",
   },
   bgBody:{
-    backgroundColor:"#3a39394f",
+    backgroundColor:"#6d6b6b8e",
     flex:1,
   }
 });
@@ -128,8 +129,8 @@ const AppButton = ({  title }) => (
           marginTop:10,
         }}
         setOpen={setCityOpen}
-        zIndex={5000}
-        zIndexInverse={1000}
+        zIndex={2000}
+        zIndexInverse={3000}
         placeholder="Where in Kenya"
         
         placeholderStyle={{
@@ -173,8 +174,8 @@ const AppButton = ({  title }) => (
         open={moodOpen}
         onOpen={onVibeOpen}
         setOpen={setMoodOpen}
-        zIndex={5000}
-        zIndexInverse={1000}
+        zIndex={1000}
+        zIndexInverse={0}
         placeholder="What would you like to discover"
         placeholderStyle={{
           color: "grey",

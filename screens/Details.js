@@ -60,8 +60,9 @@ const Details= ({navigation}) => {
       </View>
       </View>
       </ImageBackground>
-      </TouchableOpacity>
       <Text style={styles.title}>No reviews yet</Text>
+      </TouchableOpacity>
+    
     </View>
   );
   
@@ -91,11 +92,11 @@ const styles = StyleSheet.create({
     flexDirection:'column',
     backgroundColor: '#2e2e300e',
     padding: 15,
-    width:'98%',
-    height:350,
+    width:'100%',
+    height:380,
     marginVertical: 8,
     marginTop:30,
-    marginHorizontal: 12,
+    marginHorizontal: 1,
   },
   heartIcon: {
   backgroundColor:"rgba(24,24,24,0.4)",
@@ -115,8 +116,11 @@ const styles = StyleSheet.create({
   },
   tinyLogo: {
     width:'99%',
-    height:'98%',
+    height:'94%',
     borderRadius:100,
+    backgroundColor:' #000',
+    opacity: .7,
+    borderRadius:20,
 
   },
   title: {
@@ -134,9 +138,10 @@ const styles = StyleSheet.create({
     width:250,
   },
   location:{
-    fontSize: 17,
+    fontSize: 20,
     color:'#fff',
-    fontWeight: '450',
+    fontWeight: '600',
+    textAlign:'center',
 
   },
   road:{
