@@ -20,28 +20,42 @@ const styles = StyleSheet.create({
   screenContainer: {
     height:30,
     justifyContent: "center",
-    padding: 16
+    padding: 16,
+    zIndex:-1,
+    
   },
   appButtonContainer: {
-    elevation: 8,
     backgroundColor: "#000",
+    marginLeft:20,
     color:'#fff',
-    marginTop:50,
-    borderRadius: 20,
-    width:130,
+    marginTop:20,
+    borderRadius: 25,
+    width:100,
     height:45,
-    paddingVertical: 5,
-    paddingHorizontal: 1
+    paddingVertical:9,
+    paddingHorizontal: 5,
+    
   },
   appButtonText: {
-    fontSize: 22,
+    fontSize: 17,
     color: "#fff",
     alignSelf: "center",
   },
   bgBody:{
     backgroundColor:"#6d6b6b8e",
     flex:1,
-  }
+  },
+  BackButtonContainer:{
+    backgroundColor:"black",
+    opacity:.5,
+    borderRadius:200,
+    alignItems:'center',
+    marginTop:-20,
+    marginBottom:120,
+    marginLeft:10,
+    padding:5,
+    width:50,
+  },
 });
 
 const Home = ({ navigation }) => {
@@ -49,13 +63,14 @@ const Home = ({ navigation }) => {
   const [cityOpen, setCityOpen] = useState(false);
   const [moodOpen, setMoodOpen] = useState(false);
   const [value, setValue] = useState(null);
+  const [valueTown, setValueTown] = useState(null);
   const [items, setItems] = useState([
     {label: 'What would you like to discover', value: 'label' ,
     containerStyle:{
       backgroundColor: "#000",
       borderRadius:5,
       color:'#fff',
-      padding:10
+      padding:0,
     },
     labelStyle: {
       color: "#fff"
@@ -94,12 +109,14 @@ const Home = ({ navigation }) => {
   TouchableOpacity.defaultProps = { activeOpacity: 0.8 };
 
 const AppButton = ({  title }) => (
+ <View>
   <TouchableOpacity onPress={() =>
     navigation.navigate('Details', { name: 'Jane' })
   } style={styles.appButtonContainer}>
     <Text style={styles.appButtonText}>
     {title}</Text>
   </TouchableOpacity>
+  </View>
 );
  
   
@@ -114,11 +131,11 @@ const AppButton = ({  title }) => (
        style={{width:"100%", height: "100%"}}>
       <View    style={styles.bgBody}>
        <HomeHeader/>
-       <View style={{marginTop:"40%",
+       <View style={{marginTop:10,
     
         }}/>
        <TypeWriter typing={1} style={
-        {marginBottom:"5%",fontSize:45,
+        {marginBottom:30,fontSize:45,marginTop:30,
         color:"#fff", marginLeft:"3%",height:150
         }}>Discover where to go out</TypeWriter>
         <DropDownPicker
@@ -126,11 +143,12 @@ const AppButton = ({  title }) => (
         onOpen={onTownOpen}
         listItemLabelStyle={{
           color: "grey",
-          marginTop:10,
+          marginTop:0,
+          fontSize:13,
         }}
         setOpen={setCityOpen}
-        zIndex={2000}
-        zIndexInverse={3000}
+        zIndex={1000}
+         zIndexInverse={2000}
         placeholder="Where in Kenya"
         
         placeholderStyle={{
@@ -142,8 +160,8 @@ const AppButton = ({  title }) => (
         borderWidth: 0,
         padding:20,
         width:'90%',
-        marginLeft:"3%"
-          
+        marginLeft:"3%",
+       
         }}
         containerStyle={{
          
@@ -153,20 +171,21 @@ const AppButton = ({  title }) => (
         textStyle={{
           fontSize: 15
         }}
-      value={value}
+      value={valueTown}
       items={location}
-      setValue={setValue}
+      setValue={setValueTown}
       setItems={setLocation}
       style={{
       backgroundColor: "white",
       flexDirection: "row",
+      borderWidth:0,
       marginLeft:"3%",
       height: 50,
       width:'90%',
       borderRadius:5,
       alignItems:'center',
       justifyContent: "space-between",
-      
+      zIndex:1,
       padding:10
         }}
         />
@@ -175,7 +194,8 @@ const AppButton = ({  title }) => (
         onOpen={onVibeOpen}
         setOpen={setMoodOpen}
         zIndex={1000}
-        zIndexInverse={0}
+        zIndexInverse={1000}
+        dropDownDirection="BOTTOM"
         placeholder="What would you like to discover"
         placeholderStyle={{
           color: "grey",
@@ -184,7 +204,8 @@ const AppButton = ({  title }) => (
         }}
         listItemLabelStyle={{
           color: "grey",
-          marginTop:10,
+          marginTop:5,
+          fontSize:13,
         }}
       value={value}
       items={items}
@@ -194,7 +215,9 @@ const AppButton = ({  title }) => (
       borderWidth: 0,
       padding:20,
       width:'90%',
-      marginLeft:"3%"
+      marginLeft:"3%",
+      flexDirection:'column',
+      
       }}
       containerStyle={{
         
@@ -203,23 +226,26 @@ const AppButton = ({  title }) => (
       textStyle={{
         fontSize: 15
       }}
-    maxHeight={250}
+    maxHeight={200}
     style={{
     backgroundColor: "white",
+    borderWidth:0,
+    borderWidth:0,
     marginLeft:"3%",
     flexDirection: "row",
+    zIndex:2,
     marginTop:10,
     height: 50,
-    width: '90%',
+    width: '90.5%',
     borderRadius:5,
     alignItems:'center',
     justifyContent: "space-between",
-    padding:10
+    padding:5
         }}
         />
-        <View style={styles.screenContainer}>
+      
       <AppButton title="Search" size="sm" backgroundColor="#007bff" />
-      </View>   
+    
       </View>
       </ImageBackground>
       

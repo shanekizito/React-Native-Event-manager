@@ -13,11 +13,10 @@ const AppButton = ({ onPress, title }) => (
   <TouchableOpacity onPress={onPress} style={styles.appButtonContainer}>
     <Text style={styles.appButtonText}>
     <IconComponentProvider IconComponent={MaterialCommunityIcons}>
-     <Icon name="login" size={14} color="black"/>
+     <Icon name="login" size={15} color="#5c5c5c"/>
   </IconComponentProvider>{title}</Text>
   </TouchableOpacity>
 );
-
 
 
 
@@ -32,16 +31,16 @@ const styles = StyleSheet.create({
     elevation: 8,
     backgroundColor: "#f7f7f7f1",
     color:'#000',
+    height: 40,
     borderRadius: 20,
     width:100,
     paddingVertical: 5,
     paddingHorizontal: 1
   },
   appButtonText: {
-    fontSize: 15,
-    color: "#000",
+    fontSize: 18,
+    color: "#5c5c5c",
     alignSelf: "center",
-    marginLeft:10
   }
 });
 
@@ -60,7 +59,8 @@ const HomeHeader = ({ onSearch }) => {
         style={{
           backgroundColor:"white",
           width:'100%',
-          height:100
+          height:100,
+          marginBottom:20,
         }}
       >
         
@@ -71,16 +71,12 @@ const HomeHeader = ({ onSearch }) => {
           style={{ width: '90%', height:'100%' }}
         />
         </View>
-        <View style={{ width: '100%', height:'30%' ,borderBottom: '1px solid #64626246',marginBottom:20}}>
-       <Image
-          source={assets.bannerLogo}
-          resizeMode="contain"
-          style={{ width: '60%', height:'100%',marginLeft:20 }}
-        />
+        <View style={{ width: '100%' ,borderBottom: '1px solid #64626246',marginBottom:5}}>
+       
         </View>
       
-      <View style={styles.screenContainer}>
-      <AppButton title="Sign in" size="sm" backgroundColor="#007bff" />
+        <View style={styles.screenContainer}>
+      <AppButton title="sign in" size="sm" backgroundColor="#007bff" />
     </View>
        
       

@@ -3,6 +3,7 @@ import { SafeAreaView, View, FlatList,ImageBackground,TouchableOpacity, StyleShe
 import { IconComponentProvider, Icon } from "@react-native-material/core";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { NFTCard, HomeHeaderWhite, DropDown, FocusedStatusBar } from "../components";
+
 const DATA = [
   {
     id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
@@ -46,39 +47,32 @@ const Details= ({navigation}) => {
     </TouchableOpacity>
   )
   const Item = ({ title ,banner,location,vibe}) => (
-    <View>
-    
-      <BackButton/>
-    
+   
     <View style={styles.item}>
     
      <TouchableOpacity  onPress={() =>
         navigation.navigate('Venue', { name: 'Jane' })
       } >
-     <ImageBackground  
-      style={styles.tinyLogo}
-      resizeMode="cover"
-      source={{ uri: banner }}>
-      <View style={styles.heartIcon}>
-      <IconComponentProvider IconComponent={MaterialCommunityIcons}>
-      <Icon name="heart" size={24} color="white"/>
-      </IconComponentProvider>
-      </View>
-  <View style={styles.cardDetails}>
+     <Image style={styles.tinyLogo}resizeMode="cover"source={{ uri: banner }}/>
+       <View style={styles.heartIcon}>
+        <IconComponentProvider IconComponent={MaterialCommunityIcons}>
+         <Icon name="heart" size={24} color="white"/>
+        </IconComponentProvider>
+       </View>
+
+    <View style={styles.cardDetails}>
+        <View  style={styles.bannerDetails}>
+          <Text style={styles.vibe}>{vibe}</Text>
+            <Text style={styles.location}>{title}</Text>
+            <Text style={styles.road}>{location}</Text>
+        </View>
+    </View>
       
-      <View  style={styles.bannerDetails}>
-      <Text style={styles.vibe}>{vibe}</Text>
-      <Text style={styles.location}>{title}</Text>
-      <Text style={styles.road}>{location}
-      </Text>
-      </View>
-      </View>
-      </ImageBackground>
       <Text style={styles.title}>No reviews yet</Text>
       </TouchableOpacity>
     
     </View>
-    </View>
+  
   );
   
   const renderItem = ({ item }) => (
@@ -107,14 +101,13 @@ const styles = StyleSheet.create({
 
   item: {
     flexDirection:'column',
-    backgroundColor: 'white',
-    
-    padding: 10,
-    width:'100%',
-    height:380,
-    marginVertical: 8,
-    marginTop:35,
-    marginHorizontal: 1,
+    backgroundColor: '#ffff',
+    borderRadius:5,
+    width:'95%',
+    height:300,
+    marginVertical: 15,
+    marginTop:0,
+    marginHorizontal: 8,
     shadowColor: '#000',
     shadowOffset: {width: -2, height: 4},
     shadowOpacity: 0.2,
@@ -135,42 +128,46 @@ const styles = StyleSheet.create({
   backgroundColor:"rgba(24,24,24,0.4)",
   position:'absolute',
   alignItems:'center',
-  height:44,
-  width:30,
+  height:40,
+  width:40,
   marginTop:15,
   marginLeft:'70%',
-  padding:10,
-  borderRadius:100,
+  padding:8,
+  borderRadius:50,
   },
   cardDetails:{
    flexDirection:'row',
+   position:'absolute',
    alignItems:'center',
    justifyContent:'center',
+   zIndex:1,
+   height:150,
+   
    flex:1,
   },
   tinyLogo: {
     width:'100%',
-    height:'100%',
-    backgroundColor:"rgba(24,24,24,0.4)",
-    opacity: .8,
-  
-    borderRadius:200,
-    
-
+    height:'85%',
+    borderRadius:10,
+    borderBottomLeftRadius:0,
+    borderBottomRightRadius:0,
   },
   title: {
     fontSize: 15,
     color:'#726e6e',
-    fontWeight: '300',
+    fontWeight: '800',
     textAlign:'center',
+    marginTop:10,
 
   },
   bannerDetails: {
     flexDirection:'column',
+    color:'white',
     alignItems:'center',
+    height:'100%',
     justifyContent:'center',
     marginTop:'38%',
-    width:250,
+    width:'100%',
   },
   location:{
     fontSize: 18,
