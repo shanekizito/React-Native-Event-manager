@@ -111,7 +111,7 @@ const Home = ({ navigation }) => {
 const AppButton = ({  title }) => (
  <View>
   <TouchableOpacity onPress={() =>
-    navigation.navigate('Details', { name: 'Jane' })
+    navigation.navigate('SignIn', { name: 'Jane' })
   } style={styles.appButtonContainer}>
     <Text style={styles.appButtonText}>
     {title}</Text>

@@ -65,23 +65,16 @@ const styles = StyleSheet.create({
 
 const HomeHeaderWhite = ({ onSearch }) => {
   return (
-    <View
-      style={{
-       
-       
-      }}
-    >
-      
-        <View style={{ width: '100%'  ,height:60,marginBottom:22}}>
-       <Image
+        <View style={{ width: '100%'  ,height:60,marginBottom:22,
+        borderBottomWidth:1,borderColor:'rgba(228, 224, 224, 0.795)',
+        }}>
+        <Image
           source={assets.bannerLogoWhite}
           resizeMode="contain"
-          style={{ width: '60%',marginLeft:20 ,height:'90%'}}
+          style={{ width: '60%',marginLeft:20 ,height:'100%'}}
         />
         </View>
       
-        
-    </View>
   );
 };
 
