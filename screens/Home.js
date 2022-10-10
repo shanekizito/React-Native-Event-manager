@@ -56,6 +56,23 @@ const styles = StyleSheet.create({
     padding:5,
     width:50,
   },
+  SignInButtonContainer: {
+    elevation: 8,
+    backgroundColor: "#f7f7f7f1",
+    color:'#000',
+    height: 40,
+    borderRadius: 20,
+    marginTop:-20,
+    marginLeft:10,
+    width:100,
+    paddingVertical: 5,
+    paddingHorizontal: 1
+  },
+  SignInButtonText: {
+    fontSize: 18,
+    color: "#5c5c5c",
+    alignSelf: "center",
+  }
 });
 
 const Home = ({ navigation }) => {
@@ -111,12 +128,22 @@ const Home = ({ navigation }) => {
 const AppButton = ({  title }) => (
  <View>
   <TouchableOpacity onPress={() =>
-    navigation.navigate('SignIn', { name: 'Jane' })
+    navigation.navigate('Details', { name: 'Jane' })
   } style={styles.appButtonContainer}>
     <Text style={styles.appButtonText}>
     {title}</Text>
   </TouchableOpacity>
   </View>
+);
+
+const SignInButton = ({ title }) => (
+  <TouchableOpacity onPress={() =>
+    navigation.navigate('SignIn', { name: 'Jane' })} style={styles.SignInButtonContainer}>
+    <Text style={styles.SignInButtonText}>
+    <IconComponentProvider IconComponent={MaterialCommunityIcons}>
+     <Icon name="login" size={15} color="#5c5c5c"/>
+  </IconComponentProvider>{title}</Text>
+  </TouchableOpacity>
 );
  
   
@@ -124,13 +151,14 @@ const AppButton = ({  title }) => (
   return (
     <SafeAreaView style={{ flex: 1 }}>
      
-      <FocusedStatusBar backgroundColor={COLORS.primary} />
+     
       <ImageBackground
        
        source={{uri:"https://kenyaonthego.com/wp-content/uploads/2021/03/friends.jpg"}} 
        style={{width:"100%", height: "100%"}}>
       <View    style={styles.bgBody}>
        <HomeHeader/>
+       <SignInButton title="Sign in" size="sm" backgroundColor="#007bff" />
        <View style={{marginTop:10,
     
         }}/>
@@ -245,6 +273,7 @@ const AppButton = ({  title }) => (
         />
       
       <AppButton title="Search" size="sm" backgroundColor="#007bff" />
+
     
       </View>
       </ImageBackground>

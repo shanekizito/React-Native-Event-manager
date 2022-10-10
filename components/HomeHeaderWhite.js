@@ -5,7 +5,7 @@ import { IconComponentProvider, Icon } from "@react-native-material/core";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-  
+import {  FocusedStatusBar } from "../components";
 
 
 TouchableOpacity.defaultProps = { activeOpacity: 0.8 };
@@ -64,10 +64,12 @@ const styles = StyleSheet.create({
 
 
 const HomeHeaderWhite = ({ onSearch }) => {
+
   return (
         <View style={{ width: '100%'  ,height:60,marginBottom:22,
         borderBottomWidth:1,borderColor:'rgba(228, 224, 224, 0.795)',
         }}>
+        < FocusedStatusBar/>
         <Image
           source={assets.bannerLogoWhite}
           resizeMode="contain"

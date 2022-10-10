@@ -76,10 +76,10 @@ const SignUp = ({navigation}) => {
   return (
     
         <SafeAreaView style={styles.container}>
-        <FocusedStatusBar backgroundColor={COLORS.primary} />
+        
         <HomeHeaderWhite/>
         <View style={styles.form}>
-        <Text style={styles.text}>Sign up</Text>
+        <Text style={styles.text}>Create account</Text>
         <TextInput
             placeholder={'Email'}
             style={styles.input}

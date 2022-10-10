@@ -5,12 +5,21 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Home from "./screens/Home";
 import Details from "./screens/Details";
+import Profile from "./screens/Profile";
 import Venue from "./screens/Venue";
+import Notification from './screens/Notification';
 import SignUp from './screens/SignUp';
 import SignIn from './screens/SignIn';
 import { BlurView } from 'expo-blur';
 
 const Tab = createBottomTabNavigator();
+
+
+
+
+
+
+
 
 const MyTabs=()=>{
   return (
@@ -29,10 +38,49 @@ const MyTabs=()=>{
         name="SignUp"
         component={SignUp}
         options={{
-          tabBarLabel: 'sign up',
+          tabBarButton: () => null,
+           tabBarVisible: false,
+        }}
+      />
+      <Tab.Screen
+        name="Home"
+        component={Home}
+        options={{
+          tabBarLabel: '',
           tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="account-circle" color={color} size={size} />
+            <MaterialCommunityIcons name="map-marker-radius" color={color} size={size} />
           ),
+        }}
+      />
+      
+      <Tab.Screen
+        name="Details"
+        component={Details}
+        options={{
+          tabBarLabel: '',
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="calendar-search" color={color} size={size} />
+          ),
+        }}
+      />
+
+
+<Tab.Screen
+        name="Notification"
+        component={Notification}
+        options={{
+          tabBarLabel: '',
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="bell-outline" color={color} size={size} />
+          ),
+        }}
+      />
+  <Tab.Screen
+        name="Venue"
+        component={Venue}
+        options={{
+          tabBarButton: () => null,
+           tabBarVisible: false,
         }}
       />
 
@@ -40,41 +88,24 @@ const MyTabs=()=>{
         name="SignIn"
         component={SignIn}
         options={{
-          tabBarLabel: 'sign IN',
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="account-check" color={color} size={size} />
-          ),
+          tabBarButton: () => null,
+           tabBarVisible: false,
         }}
       />
+      
 
 
+
+
+      
+      
       <Tab.Screen
-        name="Home"
-        component={Home}
+        name="Profile"
+        component={Profile}
         options={{
-          tabBarLabel: 'Places',
+          tabBarLabel: '',
           tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="map-marker-radius" color={color} size={size} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Details"
-        component={Details}
-        options={{
-          tabBarLabel: 'Trending',
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="calendar-search" color={color} size={size} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Venue"
-        component={Venue}
-        options={{
-          tabBarLabel: 'Profile',
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="account" color={color} size={size} />
+            <MaterialCommunityIcons name="account-outline" color={color} size={size} />
           ),
         }}
       />

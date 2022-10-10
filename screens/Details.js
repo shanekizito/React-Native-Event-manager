@@ -60,17 +60,19 @@ const Details= ({navigation}) => {
         </IconComponentProvider>
        </View>
 
-    <View style={styles.cardDetails}>
+    
+       <Text style={styles.vibe}>{vibe}</Text>
+      
+      </TouchableOpacity>
+      <View style={styles.cardDetails}>
         <View  style={styles.bannerDetails}>
-          <Text style={styles.vibe}>{vibe}</Text>
+          
             <Text style={styles.location}>{title}</Text>
             <Text style={styles.road}>{location}</Text>
         </View>
+       
     </View>
-      
-      <Text style={styles.title}>No reviews yet</Text>
-      </TouchableOpacity>
-    
+
     </View>
   
   );
@@ -95,23 +97,29 @@ const Details= ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: StatusBar.currentHeight || 0,
+    
+   
   },
    
-
   item: {
     flexDirection:'column',
     backgroundColor: '#ffff',
-    borderRadius:5,
+    padding:10,
+    borderRadius:10,
     width:'95%',
     height:300,
     marginVertical: 15,
     marginTop:0,
     marginHorizontal: 8,
-    shadowColor: '#000',
-    shadowOffset: {width: -2, height: 4},
-    shadowOpacity: 0.2,
-    shadowRadius: 3,
+    shadowColor: "#000",
+    shadowOffset: {
+   	width: 0,
+  	height: 1,
+},
+shadowOpacity: 0.18,
+shadowRadius: 1.00,
+
+elevation: 1,
   },
   BackButtonContainer:{
     backgroundColor:"black",
@@ -130,69 +138,65 @@ const styles = StyleSheet.create({
   alignItems:'center',
   height:40,
   width:40,
-  marginTop:15,
-  marginLeft:'70%',
+  marginTop:3,
+  marginLeft:'80%',
   padding:8,
   borderRadius:50,
   },
   cardDetails:{
-   flexDirection:'row',
-   position:'absolute',
+   
    alignItems:'center',
    justifyContent:'center',
    zIndex:1,
-   height:150,
-   
+   marginTop:-50,
    flex:1,
   },
   tinyLogo: {
     width:'100%',
     height:'85%',
-    borderRadius:10,
-    borderBottomLeftRadius:0,
-    borderBottomRightRadius:0,
+    borderRadius:8,
+    
   },
+
   title: {
     fontSize: 15,
-    color:'#726e6e',
+    color:'#000',
     fontWeight: '800',
     textAlign:'center',
-    marginTop:10,
+    
 
   },
   bannerDetails: {
     flexDirection:'column',
-    color:'white',
     alignItems:'center',
     height:'100%',
     justifyContent:'center',
-    marginTop:'38%',
+    
     width:'100%',
   },
   location:{
     fontSize: 18,
-    color:'#ffffff',
-    fontWeight: 'bold',
+    color:'#000',
+    fontWeight: '900',
     textAlign:'center',
    
 
   },
   road:{
-    fontSize: 15,
-    marginTop:10,
-    color:'#e8e9eb',
+    fontSize: 14,
+    color:'rgba(58, 58, 58, 0.945)',
     fontWeight: '300',
     textAlign: 'center',
+    marginTop:10,
   },
   vibe: {
     fontSize: 13,
-    marginBottom:5,
+    position:'absolute',
     color:'white',
     minWidth:90,
     backgroundColor:'#000',
-    borderRadius:15,
     padding:10,
-    paddingVertical:5
+    paddingVertical:10
   }
   
 });
