@@ -56,7 +56,7 @@ const Details= ({navigation}) => {
      <Image style={styles.tinyLogo}resizeMode="cover"source={{ uri: banner }}/>
        <View style={styles.heartIcon}>
         <IconComponentProvider IconComponent={MaterialCommunityIcons}>
-         <Icon name="heart" size={24} color="white"/>
+         <Icon name="bookmark-outline" size={24} color="white"/>
         </IconComponentProvider>
        </View>
 
@@ -84,7 +84,8 @@ const Details= ({navigation}) => {
 
   return (
     <SafeAreaView style={styles.container}>
-     <HomeHeaderWhite/>
+     <HomeHeaderWhite header={"POPULAR"}/>
+     
       <FlatList
         data={DATA}
         renderItem={renderItem}
@@ -100,7 +101,11 @@ const styles = StyleSheet.create({
     
    
   },
-   
+  Header:{
+    color:"#000",
+  },
+
+
   item: {
     flexDirection:'column',
     backgroundColor: '#ffff',
@@ -133,7 +138,7 @@ elevation: 1,
     width:50,
   },
   heartIcon: {
-  backgroundColor:"rgba(24,24,24,0.4)",
+  
   position:'absolute',
   alignItems:'center',
   height:40,
@@ -194,7 +199,7 @@ elevation: 1,
     position:'absolute',
     color:'white',
     minWidth:90,
-    backgroundColor:'#000',
+    backgroundColor:"rgba(24,24,24,0.4)",
     padding:10,
     paddingVertical:10
   }

@@ -23,9 +23,9 @@ const Profile = () => {
 
    return (
     <View style={styles.container}>
-    <HomeHeaderWhite/>
+    <HomeHeaderWhite header={'SETTINGS'}/>
 
-    <Text style={styles.header}> Account settings</Text>
+    
     <View style={styles.form}>
         
         <View style={styles.inputSection}>
@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
         justifyContent:"flex-start",
         alignItems: 'center',
         
-        marginTop:5,
+       
         
     
     },
@@ -159,7 +159,7 @@ const styles = StyleSheet.create({
         padding:20,
         backgroundColor:"#ffff" ,
         flex:1,
-        marginTop:10,
+        marginTop:0,
 
     },
     text:{

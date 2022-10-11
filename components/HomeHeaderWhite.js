@@ -10,11 +10,13 @@ import {  FocusedStatusBar } from "../components";
 
 TouchableOpacity.defaultProps = { activeOpacity: 0.8 };
 
-const AppButton = ({ onPress, title }) => (
+const NotificationButton = ({ onPress, title }) => (
   <TouchableOpacity onPress={onPress} style={styles.appButtonContainer}>
     <Text style={styles.appButtonText}>
     <IconComponentProvider IconComponent={MaterialCommunityIcons}>
-     <Icon name="login" size={15} color="#5c5c5c"/>
+     <Icon name="bell-outline" size={20} color="#363636" styler={{fontWeight: 'bold'}} />
+
+
   </IconComponentProvider>{title}</Text>
   </TouchableOpacity>
 );
@@ -31,16 +33,36 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     padding: 16
   },
+  homeHeaderWhiteContainer :{
+    width: '100%',
+    flexDirection: 'row',
+    alignItems:'center',
+   
+    height:60,
+    marginBottom:22,
+    marginTop:20,
+  },
+  Header:{
+ fontWeight:"bold",
+ fontSize:17,
+ position:'absolute',
+ marginLeft:120,
+ color:'#363636'
+  },
+
   appButtonContainer: {
-    elevation: 8,
+    elevation: 5,
+    position:'absolute',
     backgroundColor: "#f7f7f7f1",
-    color:'#000',
-    marginTop:-20,
+    alignItems:"center",
+    justifyContent:"center",
+    color:'#363636',
+    marginTop:10,
+    marginLeft: 300,
     height: 40,
     borderRadius: 20,
-    width:100,
-    paddingVertical: 5,
-    paddingHorizontal: 1
+    width:40,
+    padding:10
   },
   BackButtonContainer:{
     backgroundColor:"black",
@@ -63,19 +85,17 @@ const styles = StyleSheet.create({
 
 
 
-const HomeHeaderWhite = ({ onSearch }) => {
+const HomeHeaderWhite = ({ header }) => {
 
   return (
-        <View style={{ width: '100%'  ,height:60,marginBottom:22,
-        borderBottomWidth:1,borderColor:'rgba(228, 224, 224, 0.795)',
-        }}>
-        < FocusedStatusBar/>
-        <Image
-          source={assets.bannerLogoWhite}
-          resizeMode="contain"
-          style={{ width: '60%',marginLeft:20 ,height:'100%'}}
-        />
+    
+        
+        <View style={styles.homeHeaderWhiteContainer}>
+          < FocusedStatusBar/>
+          <NotificationButton/>
+          <Text style={styles.Header}>{header}</Text>
         </View>
+       
       
   );
 };

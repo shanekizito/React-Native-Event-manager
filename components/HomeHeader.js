@@ -37,16 +37,16 @@ const HomeHeader = ({ onSearch }) => {
         style={{
           backgroundColor:"white",
           width:'100%',
-          height:100,
+          height:70,
           marginBottom:20,
         }}
       >
         
         
         <Image
-          source={assets.logo}
+          source={assets.bannerLogoWhite}
           resizeMode="contain"
-          style={{ width: '90%', height:'100%' }}
+          style={{ width: '60%',marginLeft:20 ,height:'100%'}}
         />
         </View>
         <View style={{ width: '100%' ,borderBottom: '1px solid #64626246',marginBottom:5}}>
