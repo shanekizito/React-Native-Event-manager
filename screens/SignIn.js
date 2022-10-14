@@ -1,7 +1,8 @@
 import React from 'react'
 import { Alert, Button, TextInput, Text,View, StyleSheet,SafeAreaView,TouchableOpacity } from 'react-native';
-import { HomeHeaderWhite,  FocusedStatusBar } from "../components";
+import {  FocusedStatusBar, HomeHeader } from "../components";
 import { COLORS, NFTData ,assets} from "../constants";
+import Home from './Home';
 
 const styles = StyleSheet.create({
 
@@ -58,7 +59,7 @@ const styles = StyleSheet.create({
     registerLink:{
      marginTop:30,
      marginLeft:25,
-     color:'grey',
+     color:'#afafaf',
      fontSize:15,
      flexDirection:'row',
      justifyContent:'flex-start',
@@ -66,8 +67,9 @@ const styles = StyleSheet.create({
 
     },
     registerButton:{
-        color:'blue',
-        marginLeft:5,
+        color:'#000',
+        fontWeight:'bold',
+        marginLeft:8,
         
     }
 
@@ -92,7 +94,7 @@ const SignIn = ({navigation}) => {
     
         <SafeAreaView style={styles.container}>
         <FocusedStatusBar backgroundColor={COLORS.primary} />
-        <HomeHeaderWhite/>
+        <HomeHeader/>
         <View style={styles.form}>
         <Text style={styles.text}>Sign in</Text>
         
@@ -107,13 +109,17 @@ const SignIn = ({navigation}) => {
         />
        
         <AppButton title="Sign in" size="sm" backgroundColor="#007bff" />
-        <Text style={styles.registerLink}>Don't have an account ?  
+        <View style={styles.registerLink}>
+        <Text style={{color:"#929292"}}>Don't have an account ? </Text> 
         <TouchableOpacity onPress={() =>
       navigation.navigate('SignUp', { name: 'Jane' })
-    } >
+        } >
         <Text style={styles.registerButton}>Register</Text>
         </TouchableOpacity>
-        </Text>
+        </View>
+        
+         
+        
     </View>
     </SafeAreaView>
   )

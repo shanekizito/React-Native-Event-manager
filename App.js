@@ -42,7 +42,7 @@ const MyTabs=()=>{
         options={{
           tabBarLabel: '',
           tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="filter-outline" color={color} size={size} />
+            <MaterialCommunityIcons name="home-outline" color={color} size={size} />
           ),
         }}
       />

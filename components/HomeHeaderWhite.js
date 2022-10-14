@@ -10,17 +10,6 @@ import {  FocusedStatusBar } from "../components";
 
 TouchableOpacity.defaultProps = { activeOpacity: 0.8 };
 
-const NotificationButton = ({ onPress, title }) => (
-  <TouchableOpacity onPress={onPress} style={styles.appButtonContainer}>
-    <Text style={styles.appButtonText}>
-    <IconComponentProvider IconComponent={MaterialCommunityIcons}>
-     <Icon name="bell-outline" size={20} color="#363636" styler={{fontWeight: 'bold'}} />
-
-
-  </IconComponentProvider>{title}</Text>
-  </TouchableOpacity>
-);
-
 
 
 
@@ -51,7 +40,7 @@ const styles = StyleSheet.create({
   },
 
   appButtonContainer: {
-    elevation: 5,
+    elevation: 2,
     position:'absolute',
     backgroundColor: "#f7f7f7f1",
     alignItems:"center",
@@ -62,36 +51,69 @@ const styles = StyleSheet.create({
     height: 40,
     borderRadius: 20,
     width:40,
-    padding:10
-  },
-  BackButtonContainer:{
+    padding:10,
     backgroundColor:"black",
-    opacity:.5,
     borderRadius:200,
     alignItems:'center',
-    marginTop:-20,
-    marginBottom:120,
-    marginLeft:10,
+    justifyContent:'center',
+
     padding:5,
-    width:50,
+    width:40,
+    height:40
   },
   appButtonText: {
     fontSize: 18,
     color: "#5c5c5c",
     alignSelf: "center",
-  }
+  },
+  BackButtonContainer:{
+    backgroundColor:"black",
+    borderRadius:200,
+    alignItems:'center',
+    justifyContent:'center',
+    marginTop:0, 
+    marginLeft:10,
+    padding:5,
+    width:40,
+    height:40
+  },
 });
 
 
 
 
-const HomeHeaderWhite = ({ header }) => {
+const HomeHeaderWhite = ({ header,navigation  }) => {
+
+
+
+  const NotificationButton = ({ onPress, title }) => (
+    <TouchableOpacity onPress={onPress} style={styles.appButtonContainer}>
+      <Text style={styles.appButtonText}>
+      <IconComponentProvider IconComponent={MaterialCommunityIcons}>
+       <Icon name="bell-outline" size={20} color="#ffff" styler={{fontWeight: 'bold'}} />
+    </IconComponentProvider>{title}</Text>
+    </TouchableOpacity>
+  );
+  
+  
+  const BackButton = () => (
+    <View style={styles.BackButtonContainer}>
+    <TouchableOpacity onPress={() =>
+      navigation.goBack()
+    } >
+      <IconComponentProvider IconComponent={MaterialCommunityIcons}>
+        <Icon name="chevron-left" size={22} color="white"/>
+      </IconComponentProvider>
+    </TouchableOpacity>
+    </View>
+  );
 
   return (
     
         
         <View style={styles.homeHeaderWhiteContainer}>
           < FocusedStatusBar/>
+          <BackButton/>
           <NotificationButton/>
           <Text style={styles.Header}>{header}</Text>
         </View>

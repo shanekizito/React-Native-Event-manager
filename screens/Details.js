@@ -68,7 +68,7 @@ const Details= ({navigation}) => {
         <View  style={styles.bannerDetails}>
           
             <Text style={styles.location}>{title}</Text>
-            <Text style={styles.road}>{location}</Text>
+            
         </View>
        
     </View>
@@ -84,7 +84,7 @@ const Details= ({navigation}) => {
 
   return (
     <SafeAreaView style={styles.container}>
-     <HomeHeaderWhite header={"POPULAR"}/>
+     <HomeHeaderWhite header={"UPCOMING"} navigation={navigation}/>
      
       <FlatList
         data={DATA}

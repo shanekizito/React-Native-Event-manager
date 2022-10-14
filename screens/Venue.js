@@ -15,7 +15,7 @@ const Venue= ({navigation}) => {
   
   const AppButton = ({  title }) => (
     <TouchableOpacity onPress={() =>
-      navigation.navigate('Details', { name: 'Jane' })
+      navigation.navigate('Ticket', { name: 'Jane' })
     } style={styles.appButtonContainer}>
       <Text style={styles.appButtonText}>
       {title} </Text>
@@ -63,7 +63,7 @@ const Venue= ({navigation}) => {
         </View>
       <Text style={styles.vibe}>We welcome you to come and join us in experiencing three magnificent films that will entertain and edutain you as our lovely guest. </Text>
       <View >
-        <AppButton title="Location" size="sm" backgroundColor="#fff" />
+        <AppButton title="Get Ticket" size="sm" backgroundColor="#fff" />
       </View> 
       </LinearGradient>
      
@@ -86,7 +86,7 @@ const Venue= ({navigation}) => {
   return (
     <SafeAreaView style={styles.container}>
       
-     <HomeHeaderWhite/>
+     <HomeHeaderWhite navigation={navigation} header={'ABOUT'}/>
      
       <Item/>
     </SafeAreaView>

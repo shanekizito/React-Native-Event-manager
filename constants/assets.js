@@ -5,6 +5,7 @@ import left from "../assets/icons/left.png";
 import search from "../assets/icons/search.png";
 
 import logo from "../assets/images/logo.png";
+import qrcode from "../assets/images/qrcode.png";
 import backgroundImage from "../assets/images/backgroundImage.jpg";
 import bannerLogo from "../assets/images/bannerLogo.png";
 import bannerLogoWhite from "../assets/images/bannerLogoWhite.png";
@@ -38,7 +39,7 @@ export default {
   nft05,
   nft06,
   nft07,
-
+ qrcode,
   person01,
   person02,
   person03,

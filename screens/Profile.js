@@ -15,7 +15,7 @@ const AppButton = ({  title }) => (
   );
 
 
-const Profile = () => {
+const Profile = ({navigation}) => {
 
     const [isEnabled, setIsEnabled] = useState(false);
 
@@ -23,7 +23,7 @@ const Profile = () => {
 
    return (
     <View style={styles.container}>
-    <HomeHeaderWhite header={'SETTINGS'}/>
+    <HomeHeaderWhite header={'SETTINGS'} navigation={navigation}/>
 
     
     <View style={styles.form}>
@@ -33,7 +33,7 @@ const Profile = () => {
                 <Icon style={styles.inputIcon} name="map-marker" size={25} color="#000"/>
                 </IconComponentProvider>
             <TextInput
-                    placeholder={'Email'}
+                    placeholder={'Location'}
                     style={styles.input}
                     placeholderTextColor="#000"
                     editable={false}
@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent:"flex-start",
         alignItems: 'center',
-        
+        marginTop:5
        
         
     

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Alert, Button, TextInput, Text,View, StyleSheet,SafeAreaView,TouchableOpacity } from 'react-native';
-import { HomeHeaderWhite,  FocusedStatusBar } from "../components";
+import {HomeHeader,  FocusedStatusBar } from "../components";
 import { COLORS, NFTData ,assets} from "../constants";
 
 const styles = StyleSheet.create({
@@ -76,8 +76,7 @@ const SignUp = ({navigation}) => {
   return (
     
         <SafeAreaView style={styles.container}>
-        
-        <HomeHeaderWhite/>
+        <HomeHeader/>
         <View style={styles.form}>
         <Text style={styles.text}>Create account</Text>
         <TextInput
