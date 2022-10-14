@@ -9,14 +9,6 @@ import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 
 TouchableOpacity.defaultProps = { activeOpacity: 0.8 };
 
-const AppButton = ({ onPress, title }) => (
-  <TouchableOpacity onPress={onPress} style={styles.appButtonContainer}>
-    <Text style={styles.appButtonText}>
-    <IconComponentProvider IconComponent={MaterialCommunityIcons}>
-     <Icon name="login" size={14} color="black"/>
-  </IconComponentProvider>{title}</Text>
-  </TouchableOpacity>
-);
 
 
 
@@ -27,21 +19,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     padding: 16
-  },
-  appButtonContainer: {
-    elevation: 8,
-    backgroundColor: "#f7f7f7f1",
-    color:'#000',
-    borderRadius: 20,
-    width:100,
-    paddingVertical: 5,
-    paddingHorizontal: 1
-  },
-  appButtonText: {
-    fontSize: 15,
-    color: "#000",
-    alignSelf: "center",
-    marginLeft:10
   }
 });
 
@@ -60,27 +37,24 @@ const HomeHeader = ({ onSearch }) => {
         style={{
           backgroundColor:"white",
           width:'100%',
-          height:100
+          height:70,
+          marginBottom:20,
         }}
       >
         
         
         <Image
-          source={assets.logo}
+          source={assets.bannerLogoWhite}
           resizeMode="contain"
-          style={{ width: '90%', height:'100%' }}
+          style={{ width: '60%',marginLeft:20 ,height:'100%'}}
         />
         </View>
-        <View style={{ width: '100%', height:'30%' ,borderBottom: '1px solid #64626246',marginBottom:20}}>
-       <Image
-          source={assets.bannerLogo}
-          resizeMode="contain"
-          style={{ width: '60%', height:'100%',marginLeft:20 }}
-        />
+        <View style={{ width: '100%' ,borderBottom: '1px solid #64626246',marginBottom:5}}>
+       
         </View>
       
-      <View style={styles.screenContainer}>
-      <AppButton title="Sign in" size="sm" backgroundColor="#007bff" />
+        <View style={styles.screenContainer}>
+      
     </View>
        
       

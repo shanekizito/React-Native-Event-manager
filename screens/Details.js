@@ -3,12 +3,13 @@ import { SafeAreaView, View, FlatList,ImageBackground,TouchableOpacity, StyleShe
 import { IconComponentProvider, Icon } from "@react-native-material/core";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { NFTCard, HomeHeaderWhite, DropDown, FocusedStatusBar } from "../components";
+
 const DATA = [
   {
     id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
     title: 'Black Pearl Launge and Grill',
     vibe:'Happy Hour',
-    location:"Mamboleo Stage,Off - Vihiga Road, Kisumu",
+    location:"Mamboleo Stage , Off - Vihiga Road , Kisumu",
     banner: 'https://kenyaonthego.com/wp-content/uploads/2021/11/clubda-1-520x397.jpg',
   },
   {
@@ -35,34 +36,45 @@ const DATA = [
 
 
 const Details= ({navigation}) => {
+  const BackButton = () => (
+    <TouchableOpacity style={styles.BackButtonContainer} onPress={() => 
+  
+      navigation.goBack()
+    } >
+      <IconComponentProvider IconComponent={MaterialCommunityIcons}>
+        <Icon name="arrow-left" size={24} color="white"/>
+      </IconComponentProvider>
+    </TouchableOpacity>
+  )
   const Item = ({ title ,banner,location,vibe}) => (
-
-    <View >
+   
+    <View style={styles.item}>
     
-     <TouchableOpacity style={styles.item} onPress={() =>
+     <TouchableOpacity  onPress={() =>
         navigation.navigate('Venue', { name: 'Jane' })
       } >
-     <ImageBackground  
-      style={styles.tinyLogo}
-      resizeMode="cover"
-      source={{ uri: banner }}>
-  <View style={styles.cardDetails}>
-      <View  style={styles.bannerDetails}>
-      <Text style={styles.vibe}>{vibe}</Text>
-      <Text style={styles.location}>{title}</Text>
-      <Text style={styles.road}>{location}
-      </Text>
-      </View>
-      <View style={styles.heartIcon}>
-      <IconComponentProvider IconComponent={MaterialCommunityIcons}>
-      <Icon name="heart" size={24} color="white"/>
-      </IconComponentProvider>
-      </View>
-      </View>
-      </ImageBackground>
+     <Image style={styles.tinyLogo}resizeMode="cover"source={{ uri: banner }}/>
+       <View style={styles.heartIcon}>
+        <IconComponentProvider IconComponent={MaterialCommunityIcons}>
+         <Icon name="bookmark-outline" size={24} color="white"/>
+        </IconComponentProvider>
+       </View>
+
+    
+       <Text style={styles.vibe}>{vibe}</Text>
+      
       </TouchableOpacity>
-      <Text style={styles.title}>No reviews yet</Text>
+      <View style={styles.cardDetails}>
+        <View  style={styles.bannerDetails}>
+          
+            <Text style={styles.location}>{title}</Text>
+            
+        </View>
+       
     </View>
+
+    </View>
+  
   );
   
   const renderItem = ({ item }) => (
@@ -72,7 +84,8 @@ const Details= ({navigation}) => {
 
   return (
     <SafeAreaView style={styles.container}>
-     <HomeHeaderWhite/>
+     <HomeHeaderWhite header={"UPCOMING"} navigation={navigation}/>
+     
       <FlatList
         data={DATA}
         renderItem={renderItem}
@@ -85,75 +98,110 @@ const Details= ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: StatusBar.currentHeight || 0,
-  },
-  item: {
-    flexDirection:'column',
-    backgroundColor: '#2e2e300e',
-    padding: 15,
-    width:'98%',
-    height:350,
-    marginVertical: 8,
-    marginTop:30,
-    marginHorizontal: 12,
-  },
-  heartIcon: {
-  backgroundColor:"rgba(24,24,24,0.4)",
-  height:44,
-  width:44,
-  marginTop:190,
-  marginLeft:'10%',
-  padding:10,
-  borderRadius:'50%',
-  },
-  cardDetails:{
-   flexDirection:'row',
-   alignItems:'flex-start',
-   justifyContent:'center',
-   flex:1,
+    
    
   },
-  tinyLogo: {
-    width:'99%',
-    height:'98%',
-    borderRadius:100,
-
+  Header:{
+    color:"#000",
   },
+
+
+  item: {
+    flexDirection:'column',
+    backgroundColor: '#ffff',
+    padding:10,
+    borderRadius:10,
+    width:'95%',
+    height:300,
+    marginVertical: 15,
+    marginTop:0,
+    marginHorizontal: 8,
+    shadowColor: "#000",
+    shadowOffset: {
+   	width: 0,
+  	height: 1,
+},
+shadowOpacity: 0.18,
+shadowRadius: 1.00,
+
+elevation: 1,
+  },
+  BackButtonContainer:{
+    backgroundColor:"black",
+    opacity:.5,
+    borderRadius:200,
+    alignItems:'center',
+    marginTop:-20,
+    marginBottom:120,
+    marginLeft:10,
+    padding:5,
+    width:50,
+  },
+  heartIcon: {
+  
+  position:'absolute',
+  alignItems:'center',
+  height:40,
+  width:40,
+  marginTop:3,
+  marginLeft:'80%',
+  padding:8,
+  borderRadius:50,
+  },
+  cardDetails:{
+   
+   alignItems:'center',
+   justifyContent:'center',
+   zIndex:1,
+   marginTop:-50,
+   flex:1,
+  },
+  tinyLogo: {
+    width:'100%',
+    height:'85%',
+    borderRadius:8,
+    
+  },
+
   title: {
     fontSize: 15,
-    color:'#726e6e',
-    fontWeight: '300',
+    color:'#000',
+    fontWeight: '800',
     textAlign:'center',
+    
 
   },
   bannerDetails: {
     flexDirection:'column',
     alignItems:'center',
+    height:'100%',
     justifyContent:'center',
-    marginTop:'38%',
-    width:250,
+    
+    width:'100%',
   },
   location:{
-    fontSize: 17,
-    color:'#fff',
-    fontWeight: '450',
+    fontSize: 18,
+    color:'#000',
+    fontWeight: '900',
+    textAlign:'center',
+   
 
   },
   road:{
-    fontSize: 16,
-    color:'#e8e9eb',
+    fontSize: 14,
+    color:'rgba(58, 58, 58, 0.945)',
     fontWeight: '300',
     textAlign: 'center',
+    marginTop:10,
   },
   vibe: {
     fontSize: 13,
-    marginBottom:5,
+    position:'absolute',
     color:'white',
     minWidth:90,
-    backgroundColor:'#000',
-    borderRadius:15,
+    backgroundColor:"rgba(24,24,24,0.4)",
     padding:10,
-    paddingVertical:5
+    paddingVertical:10
   }
   
 });

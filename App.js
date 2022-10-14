@@ -1,47 +1,150 @@
-import React from "react";
-import { createStackNavigator } from "@react-navigation/stack";
-import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
-import { useFonts } from "expo-font";
-
+import * as React from 'react';
+import { Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Home from "./screens/Home";
 import Details from "./screens/Details";
+import Profile from "./screens/Profile";
+import Ticket from "./screens/Ticket"
 import Venue from "./screens/Venue";
+import Notification from './screens/Notification';
+import SignUp from './screens/SignUp';
+import HomeHeaderWhite from './components/HomeHeaderWhite';
+import SignIn from './screens/SignIn';
+import { BlurView } from 'expo-blur';
+const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
 
-const theme = {
-  ...DefaultTheme,
-  colors: {
-    ...DefaultTheme.colors,
-    background: "transparent",
-  },
-};
 
-const Stack = createStackNavigator();
 
-const App = () => {
-  const [loaded] = useFonts({
-    InterBold: require("./assets/fonts/Inter-Bold.ttf"),
-    InterSemiBold: require("./assets/fonts/Inter-SemiBold.ttf"),
-    InterMedium: require("./assets/fonts/Inter-Medium.ttf"),
-    InterRegular: require("./assets/fonts/Inter-Regular.ttf"),
-    InterLight: require("./assets/fonts/Inter-Light.ttf"),
-  });
 
-  if (!loaded) return null;
 
+
+const MyTabs=()=>{
   return (
-    <NavigationContainer theme={theme}>
-      <Stack.Navigator
-        screenOptions={{
-          headerShown: false,
+    <Tab.Navigator
+      initialRouteName="SignIn"
+      screenOptions={{
+        tabBarActiveTintColor: '#000',
+        headerShown:false,
+        tabBarStyle: { position: 'absolute' },
+        tabBarBackground: () => (
+          <BlurView tint="light" intensity={200} style={{height:100}} />
+        ),
+      }}
+    >
+
+<Tab.Screen
+        name="Home"
+        component={Home}
+        options={{
+          tabBarLabel: '',
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="home-outline" color={color} size={size} />
+          ),
         }}
-        initialRouteName="Home"
-      >
-        <Stack.Screen name="Home" component={Home} />
-        <Stack.Screen name="Details" component={Details} />
-        <Stack.Screen name="Venue" component={Venue} />
+      />
+
+
+      <Tab.Screen
+        name="SignUp"
+        component={SignUp}
+        options={{
+          tabBarButton: () => null,
+           tabBarVisible: false,
+        }}
+      />
+      
+      
+       <Tab.Screen
+        name="Details"
+        component={Details}
+        options={{
+          tabBarLabel: '',
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="fire" color={color} size={size} />
+          ),
+        }}
+      />
+
+<Tab.Screen
+        name="Ticket"
+        component={Ticket}
+        options={{
+          tabBarLabel: '',
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="ticket-outline" color={color} size={size} />
+          ),
+        }}
+      />
+      
+     
+
+
+<Tab.Screen
+        name="Notification"
+        component={Notification}
+        options={{
+          tabBarLabel: '',
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="bell-outline" color={color} size={size} />
+          ),
+        }}
+      />
+  <Tab.Screen
+        name="Venue"
+        component={Venue}
+        options={{
+          tabBarButton: () => null,
+           tabBarVisible: false,
+        }}
+      />
+
+<Tab.Screen
+        name="SignIn"
+        component={SignIn}
+        options={{
+          tabBarButton: () => null,
+           tabBarVisible: false,
+        }}
+      />
+      
+
+
+
+
+      
+      
+      <Tab.Screen
+        name="Profile"
+        component={Profile}
+        options={{
+          tabBarLabel: '',
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="account-outline" color={color} size={size} />
+          ),
+        }}
+      />
+    </Tab.Navigator>
+  );
+}
+
+const Screens=()=> {
+  return (
+      <Stack.Navigator>
+        <Stack.Screen name="Home" component={MyTabs} />
+     
       </Stack.Navigator>
+  );
+}
+
+
+export default function App() {
+  return (
+    <NavigationContainer>
+      <MyTabs/>
     </NavigationContainer>
   );
-};
-
-export default App;
+}
