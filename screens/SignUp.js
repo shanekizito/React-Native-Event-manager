@@ -8,8 +8,6 @@ const styles = StyleSheet.create({
 
     container: {
         flex: 1,
-         
-        
     },
     form:{
         padding:20,
@@ -26,7 +24,7 @@ const styles = StyleSheet.create({
     },
     text:{
         fontSize: 20,
-         fontWeight :'bold',
+        fontFamily: 'RalewayBold',
          marginBottom:12,
     },
     input: {
@@ -36,7 +34,8 @@ const styles = StyleSheet.create({
         height:40,
         marginTop:20,
         padding:10,
-        borderRadius:15
+        borderRadius:15,
+        fontFamily: 'RalewayRegular'
 
 
     },
@@ -54,6 +53,7 @@ const styles = StyleSheet.create({
         fontSize: 17,
         color: "#fff",
         alignSelf: "center",
+        fontFamily: 'RalewayRegular'
     }
 
 
@@ -76,6 +76,7 @@ const SignUp = ({navigation}) => {
   return (
     
         <SafeAreaView style={styles.container}>
+        <FocusedStatusBar backgroundColor={COLORS.primary} />
         <HomeHeader/>
         <View style={styles.form}>
         <Text style={styles.text}>Create account</Text>
