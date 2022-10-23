@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { View, SafeAreaView, Switch,ImageBackground,TextInput,Image,StyleSheet,TouchableOpacity,Text} from "react-native";
 import { IconComponentProvider, Icon } from "@react-native-material/core";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
-import { HomeHeader} from "../components";
+import { HomeHeaderWhite} from "../components";
 
 
 const AppButton = ({  title }) => (
@@ -23,9 +23,8 @@ const Notification = ({navigation}) => {
 
    return (
     <View style={styles.container}>
-    <HomeHeader />
-
-     <Text style={styles.notificationsHeader}>Notifications </Text>
+     <HomeHeaderWhite navigation={navigation} header={'NOTIFICATIONS'}/>
+    
       <View style={styles.notificationContainer}>
         
       <IconComponentProvider IconComponent={MaterialCommunityIcons}>
@@ -55,6 +54,7 @@ elevation:3,
 color:"#666664",
 fontSize:15,
 marginLeft:20,
+
 },
 notificationsHeader:{
 color:"#fff",
@@ -65,6 +65,7 @@ fontSize:18,
 fontWeight:"bold"
 },
 notificationContainer:{
+  marginTop:10,
 height:120,
 backgroundColor:"#1f1e1ffa",
 flexDirection:'row',
@@ -73,7 +74,7 @@ flexDirection:'row',
     width:'95%',
     alignItems:"center",
     marginVertical: 15,
-    marginTop:0,
+    
     marginHorizontal: 8,
     shadowColor: "#000",
     shadowOffset: {

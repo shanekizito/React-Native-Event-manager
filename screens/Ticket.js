@@ -2,6 +2,7 @@ import React from 'react'
 import { SafeAreaView, View, FlatList,ImageBackground, StyleSheet, Text, StatusBar,Image,TouchableOpacity,navigation} from 'react-native';
 import { assets} from "../constants";
 import { HomeHeaderWhite} from "../components";
+import Barcode from 'react-native-barcode-svg';
 
 
 
@@ -30,8 +31,12 @@ const Ticket = ({navigation}) => {
             </View>
         </View>
        <View style={styles.row3}>
-        <Image style={styles.qrcode}resizeMode="cover"source={assets.qrcode}/>
-        <Text  style={styles.info}>Tell your visiting code to employee or use barcode</Text>
+        
+       <Text  style={styles.info}>Security barcode</Text>
+       <Barcode value="Hello World" format="CODE128" />
+        
+      
+        
      </View> 
     </View>
     </View>
@@ -46,9 +51,16 @@ const styles = StyleSheet.create({
      
     },
     place:{
-        fontWeight:'bold',
+        fontFamily: 'RalewayBold',
         fontSize:18,
         marginBottom:10,
+
+    },
+    barCode:{
+    height:200,
+    width:300,
+    color:"#0f0",
+
 
     },
     ticket:{
@@ -60,7 +72,7 @@ const styles = StyleSheet.create({
         width:'95%',
         justifyContent:'center',
         marginVertical: 15,
-        marginTop:0,
+        marginTop:10,
         marginHorizontal: 8,
         shadowColor: "#000",
         shadowOffset: {
@@ -81,8 +93,10 @@ justifyContent:"center",
     }
     ,
     info:{
-marginTop:15,
-color:"grey"
+marginTop:0,
+marginBottom:15,
+color:"grey",
+fontFamily: 'RalewayRegular',
     },
 
     venueContainer: {
@@ -108,7 +122,8 @@ color:"grey"
     venueName: {
     },
     venueLocation: {
-        fontSize:12
+        fontSize:12,
+        fontFamily: 'RalewayRegular',
     },
     
     userInfoContainer: {
@@ -125,7 +140,7 @@ color:"grey"
     },
     title:{
     fontSize:18,
-    fontWeight:'bold',
+    fontFamily: 'RalewayBold',
     marginTop:15,
 
     },

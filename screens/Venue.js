@@ -32,7 +32,7 @@ const Venue= ({navigation}) => {
      <ImageBackground  
       style={styles.bannerImage}
       resizeMode="cover"
-      source={{ uri:'https://kenyaonthego.com/wp-content/uploads/2021/11/clubda-5.jpg' }}>  
+      source={{ uri:'https://cdn.uc.assets.prezly.com/63e33bf5-3a17-4b2d-bfae-18b6a1c528cc/-/preview/1200x1200/-/format/auto/' }}>  
       </ImageBackground>
       
       <View style={styles.card}>
@@ -56,7 +56,7 @@ const Venue= ({navigation}) => {
         <IconComponentProvider IconComponent={MaterialCommunityIcons}>
         <Icon name="flag" size={30} color="#fff"/>
         </IconComponentProvider>
-          <Text  style={{color:"white",fontSize:15,textAlign:'center',color:"rgba(229, 233, 229, 0.938)",marginLeft:20}}>Mamboleo Stage Kisumu </Text>
+          <Text  style={{color:"white",fontSize:15,textAlign:'center',color:"rgba(229, 233, 229, 0.938)",marginLeft:20,fontFamily: 'RalewayRegular'}}>Mamboleo Stage Kisumu </Text>
         </View>
   
        
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
     
   },
   item:{
-    marginTop:-21,
+    marginTop:-10,
     height:'99%',
   },
   eventDetails:{
@@ -156,12 +156,13 @@ const styles = StyleSheet.create({
     lineHeight:25,
     fontSize:15,
     marginLeft:20,
-    
-    color:'rgba(109, 109, 109, 0.945)',
+    fontFamily: 'RalewayRegular',
+    color:'#fff',
     marginBottom:15,
     
   },
   date:{
+    fontFamily: 'RalewayRegular',
     fontSize:12,
     color:'grey',
      justifyContent:'flex-start',
@@ -184,7 +185,7 @@ borderTopColor:'grey',
 borderStyle:'dashed',
 fontWeight:'bold',
 fontSize:25,
-
+fontFamily: 'RalewayRegular',
 
   },
   venue:{
@@ -192,12 +193,14 @@ fontSize:25,
     alignItems:'center',
     flexDirection:'row',
     color:'#fff',
+    fontFamily: 'RalewayRegular',
   },
 
   area:{
     fontSize:22,
+    fontFamily: 'RalewayRegular',
     marginLeft:20,
-    fontWeight:'bold',
+    fontWeight:'600',
     marginTop:30,
     textAlign:'center',
     color:'white',
@@ -206,6 +209,7 @@ fontSize:25,
   road:{
     fontSize:10,
     textAlign:'center',
+    fontFamily: 'RalewayRegular',
     marginTop:20,
     alignSelf:'stretch',
   },
@@ -226,6 +230,7 @@ fontSize:25,
   },
   appButtonText: {
     fontSize: 17,
+    fontFamily: 'RalewayRegular',
     color: "#000",
     alignSelf: "center",
     flexDirection:"row",

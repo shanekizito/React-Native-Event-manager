@@ -18,7 +18,7 @@ export const SIZES = {
 };
 
 export const FONTS = {
-  bold: "InterBold",
+  bold: "Raleway",
   semiBold: "InterSemiBold",
   medium: "InterMedium",
   regular: "InterRegular",

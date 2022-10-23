@@ -26,38 +26,35 @@ const styles = StyleSheet.create({
     width: '100%',
     flexDirection: 'row',
     alignItems:'center',
-   
+    backgroundColor: '#ffff',
     height:60,
-    marginBottom:22,
-    marginTop:20,
+    
+    elevation:2,
   },
   Header:{
- fontWeight:"bold",
- fontSize:17,
+ fontFamily: 'RalewayBold',
+ fontSize:15,
  position:'absolute',
  marginLeft:120,
  color:'#363636'
   },
 
   appButtonContainer: {
-    elevation: 2,
+   
     position:'absolute',
-    backgroundColor: "#f7f7f7f1",
+   
     alignItems:"center",
     justifyContent:"center",
     color:'#363636',
-    marginTop:10,
+    
     marginLeft: 300,
-    height: 40,
-    borderRadius: 20,
-    width:40,
-    padding:10,
-    backgroundColor:"black",
-    borderRadius:200,
+     
+    
+    
     alignItems:'center',
     justifyContent:'center',
 
-    padding:5,
+    
     width:40,
     height:40
   },
@@ -67,15 +64,13 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   BackButtonContainer:{
-    backgroundColor:"black",
+    
     borderRadius:200,
     alignItems:'center',
     justifyContent:'center',
-    marginTop:0, 
+   
     marginLeft:10,
-    padding:5,
-    width:40,
-    height:40
+    
   },
 });
 
@@ -87,32 +82,32 @@ const HomeHeaderWhite = ({ header,navigation  }) => {
 
 
   const NotificationButton = ({ onPress, title }) => (
-    <TouchableOpacity onPress={onPress} style={styles.appButtonContainer}>
-      <Text style={styles.appButtonText}>
-      <IconComponentProvider IconComponent={MaterialCommunityIcons}>
-       <Icon name="bell-outline" size={20} color="#ffff" styler={{fontWeight: 'bold'}} />
-    </IconComponentProvider>{title}</Text>
+    <TouchableOpacity onPress={()=>{ navigation.navigate('Details', { name: 'Jane' })}} style={styles.appButtonContainer}>
+      <Image style={{width:30,height:35}} 
+      source={{ uri:"https://img.icons8.com/fluency/48/000000/fire-element.png" }} 
+      />
+     
     </TouchableOpacity>
   );
   
   
   const BackButton = () => (
-    <View style={styles.BackButtonContainer}>
-    <TouchableOpacity onPress={() =>
+     
+    <TouchableOpacity style={styles.BackButtonContainer} onPress={() =>
       navigation.goBack()
     } >
       <IconComponentProvider IconComponent={MaterialCommunityIcons}>
-        <Icon name="chevron-left" size={22} color="white"/>
+        <Icon name="arrow-left" size={40} color="red"/>
       </IconComponentProvider>
     </TouchableOpacity>
-    </View>
+     
   );
 
   return (
     
         
         <View style={styles.homeHeaderWhiteContainer}>
-          < FocusedStatusBar/>
+          
           <BackButton/>
           <NotificationButton/>
           <Text style={styles.Header}>{header}</Text>

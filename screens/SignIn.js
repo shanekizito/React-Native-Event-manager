@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
     },
     text:{
         fontSize: 20,
-         fontWeight :'bold',
+        fontFamily: 'RalewayBold',
          marginBottom:12,
     },
     input: {
@@ -37,7 +37,8 @@ const styles = StyleSheet.create({
         height:40,
         marginTop:20,
         padding:10,
-        borderRadius:15
+        borderRadius:15,
+        fontFamily: 'RalewayRegular'
 
 
     },
@@ -55,12 +56,14 @@ const styles = StyleSheet.create({
         fontSize: 17,
         color: "#fff",
         alignSelf: "center",
+        fontFamily: 'RalewayRegular'
     },
     registerLink:{
      marginTop:30,
      marginLeft:25,
      color:'#afafaf',
      fontSize:15,
+     fontFamily: 'RalewayRegular',
      flexDirection:'row',
      justifyContent:'flex-start',
      alignItems:'center'
@@ -68,7 +71,7 @@ const styles = StyleSheet.create({
     },
     registerButton:{
         color:'#000',
-        fontWeight:'bold',
+        fontFamily: 'RalewayBold',
         marginLeft:8,
         
     }
@@ -114,7 +117,7 @@ const SignIn = ({navigation}) => {
         <TouchableOpacity onPress={() =>
       navigation.navigate('SignUp', { name: 'Jane' })
         } >
-        <Text style={styles.registerButton}>Register</Text>
+        <Text style={styles.registerButton}>create one</Text>
         </TouchableOpacity>
         </View>
         

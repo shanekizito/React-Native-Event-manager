@@ -40,6 +40,7 @@ const styles = StyleSheet.create({
     fontSize: 17,
     color: "#fff",
     alignSelf: "center",
+    fontFamily: 'RalewayRegular'
   },
   bgBody:{
     backgroundColor:"#6d6b6b8e",
@@ -66,12 +67,14 @@ const styles = StyleSheet.create({
     marginLeft:10,
     width:100,
     paddingVertical: 5,
-    paddingHorizontal: 1
+    paddingHorizontal: 1,
+    
   },
   SignInButtonText: {
     fontSize: 18,
     color: "#5c5c5c",
     alignSelf: "center",
+    fontFamily: 'RalewayRegular'
   }
 });
 
@@ -154,17 +157,17 @@ const SignInButton = ({ title }) => (
      
       <ImageBackground
        
-       source={{uri:"https://kenyaonthego.com/wp-content/uploads/2021/03/friends.jpg"}} 
+       source={{uri:"https://cdn.uc.assets.prezly.com/6144c428-5a1d-44aa-ad3e-685ed09f0f5e/-/preview/1200x1200/-/format/auto/"}} 
        style={{width:"100%", height: "100%"}}>
       <View    style={styles.bgBody}>
        <HomeHeader/>
-       <SignInButton title="Sign in" size="sm" backgroundColor="#007bff" />
+       <SignInButton title=" sign in" size="sm" backgroundColor="#007bff" />
        <View style={{marginTop:10,
     
         }}/>
        <TypeWriter typing={1} style={
-        {marginBottom:30,fontSize:45,marginTop:30,
-        color:"#fff", marginLeft:"3%",height:150
+        {marginBottom:30,fontSize:44,marginTop:30,
+        color:"#fff", marginLeft:"3%",height:150,fontFamily: 'RalewayRegular',
         }}>Discover where to go out</TypeWriter>
         <DropDownPicker
         open={cityOpen}
@@ -181,8 +184,8 @@ const SignInButton = ({ title }) => (
         
         placeholderStyle={{
           color: "grey",
-          marginLeft:15
-          
+          marginLeft:15,
+          fontFamily: 'RalewayRegular'
         }}
         dropDownContainerStyle={{
         borderWidth: 0,
@@ -197,7 +200,8 @@ const SignInButton = ({ title }) => (
 
         }}
         textStyle={{
-          fontSize: 15
+          fontSize: 15,
+          fontFamily: 'RalewayRegular'
         }}
       value={valueTown}
       items={location}
@@ -227,13 +231,15 @@ const SignInButton = ({ title }) => (
         placeholder="What would you like to discover"
         placeholderStyle={{
           color: "grey",
-          marginLeft:15
+          marginLeft:15,
+          fontFamily: 'RalewayRegular'
           
         }}
         listItemLabelStyle={{
           color: "grey",
           marginTop:5,
           fontSize:13,
+          fontFamily: 'RalewayRegular'
         }}
       value={value}
       items={items}
@@ -252,7 +258,8 @@ const SignInButton = ({ title }) => (
         
       }}
       textStyle={{
-        fontSize: 15
+        fontSize: 15,
+        fontFamily: 'RalewayRegular'
       }}
     maxHeight={200}
     style={{

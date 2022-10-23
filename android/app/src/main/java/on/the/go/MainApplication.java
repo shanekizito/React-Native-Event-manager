@@ -1,5 +1,6 @@
 package on.the.go;
 
+import com.reactnativecommunity.art.ARTPackage;
 import android.app.Application;
 import android.content.Context;
 import android.content.res.Configuration;
@@ -27,6 +28,20 @@ public class MainApplication extends Application implements ReactApplication {
     @Override
     public boolean getUseDeveloperSupport() {
       return BuildConfig.DEBUG;
+    }
+    
+    @Override
+    protected List<ReactPackage> getPackages() {
+      @SuppressWarnings("UnnecessaryLocalVariable")
+      List<ReactPackage> packages = new PackageList(this).getPackages();
+      
+      ...
+      
+      packages.add(new ARTPackage());
+      
+      ...
+      
+      return packages;
     }
 
     @Override
