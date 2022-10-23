@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Text, View } from 'react-native';
+import { Text, View,Image } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -16,6 +16,9 @@ import SignIn from './screens/SignIn';
 import { BlurView } from 'expo-blur';
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
+import { useFonts } from 'expo-font';
+
+
 
 
 
@@ -27,13 +30,27 @@ const MyTabs=()=>{
     <Tab.Navigator
       initialRouteName="SignIn"
       screenOptions={{
-        tabBarActiveTintColor: '#000',
+       
+        tabBarActiveTintColor:'#db3005',
+       
         headerShown:false,
-        tabBarStyle: { position: 'absolute' },
-        tabBarBackground: () => (
-          <BlurView tint="light" intensity={200} style={{height:100}} />
-        ),
-      }}
+        tabBarStyle: { position: 'absolute',
+        bottom:10,
+        left:10,
+        right:10,
+        borderRadius:25,
+        shadowColor: "#000",
+        shadowOffset: {
+          width: 0,
+          height: 12,
+        },
+        shadowOpacity: 0.58,
+        shadowRadius: 10,
+        elevation: 24,
+        backgroundColor:'#fff',
+        height:65, },
+                
+          }}
     >
 
 <Tab.Screen
@@ -42,7 +59,7 @@ const MyTabs=()=>{
         options={{
           tabBarLabel: '',
           tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="home-outline" color={color} size={size} />
+            <MaterialCommunityIcons name="map-marker-outline" color={color} size={35} />
           ),
         }}
       />
@@ -62,10 +79,8 @@ const MyTabs=()=>{
         name="Details"
         component={Details}
         options={{
-          tabBarLabel: '',
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="fire" color={color} size={size} />
-          ),
+          tabBarButton: () => null,
+           tabBarVisible: false,
         }}
       />
 
@@ -75,7 +90,7 @@ const MyTabs=()=>{
         options={{
           tabBarLabel: '',
           tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="ticket-outline" color={color} size={size} />
+            <MaterialCommunityIcons name="ticket-outline" color={color} size={35} />
           ),
         }}
       />
@@ -88,8 +103,20 @@ const MyTabs=()=>{
         component={Notification}
         options={{
           tabBarLabel: '',
+          tabBarBadge:'3',
+          tabBarBadgeStyle: {
+            maxWidth: 10,
+            maxHeight: 10,
+            fontSize: 8,
+            lineHeight: 9,
+            backgroundColor:"#35a4e4",
+            color:"#35a4e4"
+           
+       },
           tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="bell-outline" color={color} size={size} />
+            <Image style={{width:30,height:35}} 
+           source={{ uri:"https://img.icons8.com/fluency/48/000000/fire-element.png" }} 
+             />
           ),
         }}
       />
@@ -123,7 +150,7 @@ const MyTabs=()=>{
         options={{
           tabBarLabel: '',
           tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="account-outline" color={color} size={size} />
+            <MaterialCommunityIcons name="account-outline" color={color} size={35} />
           ),
         }}
       />
@@ -133,7 +160,7 @@ const MyTabs=()=>{
 
 const Screens=()=> {
   return (
-      <Stack.Navigator>
+      <Stack.Navigator screenOptions={{ headerShown: false}}>
         <Stack.Screen name="Home" component={MyTabs} />
      
       </Stack.Navigator>
@@ -142,6 +169,17 @@ const Screens=()=> {
 
 
 export default function App() {
+
+  const [loaded] = useFonts({
+    RalewayRegular: require('./assets/fonts/Raleway-Regular.ttf'),
+    RalewayBold: require('./assets/fonts/Raleway-Bold.ttf'),
+  });
+  
+  if (!loaded) {
+    return null;
+  }
+
+  
   return (
     <NavigationContainer>
       <MyTabs/>

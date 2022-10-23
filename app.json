@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "pronef",
-    "slug": "pronef",
+    "name": "on-the-go",
+    "slug": "on-the-go",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -17,7 +17,8 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "on.the.go"
     },
     "android": {
       "adaptiveIcon": {
@@ -28,6 +29,11 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "a8f6d266-f2fd-4045-80e4-c382440e0e2d"
+      }
     }
   }
 }
