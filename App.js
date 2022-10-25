@@ -31,7 +31,7 @@ const MyTabs=()=>{
       initialRouteName="SignIn"
       screenOptions={{
        
-        tabBarActiveTintColor:'#db3005',
+        tabBarActiveTintColor:'#000',
        
         headerShown:false,
         tabBarStyle: { position: 'absolute',
@@ -150,7 +150,9 @@ const MyTabs=()=>{
         options={{
           tabBarLabel: '',
           tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="account-outline" color={color} size={35} />
+           
+            <Text >t</Text>
+          
           ),
         }}
       />
