@@ -11,7 +11,7 @@ import Ticket from "./screens/Ticket"
 import Venue from "./screens/Venue";
 import Notification from './screens/Notification';
 import SignUp from './screens/SignUp';
-import HomeHeaderWhite from './components/HomeHeaderWhite';
+import OTP from './screens/Otp';
 import SignIn from './screens/SignIn';
 import { BlurView } from 'expo-blur';
 const Tab = createBottomTabNavigator();
@@ -31,14 +31,15 @@ const MyTabs=()=>{
       initialRouteName="SignIn"
       screenOptions={{
        
-        tabBarActiveTintColor:'#db3005',
+        tabBarActiveTintColor:'#424242',
        
         headerShown:false,
         tabBarStyle: { position: 'absolute',
         bottom:10,
+        
         left:10,
         right:10,
-        borderRadius:25,
+        borderRadius:30,
         shadowColor: "#000",
         shadowOffset: {
           width: 0,
@@ -48,7 +49,8 @@ const MyTabs=()=>{
         shadowRadius: 10,
         elevation: 24,
         backgroundColor:'#fff',
-        height:65, },
+        height:60,
+      padding:10 },
                 
           }}
     >
@@ -94,6 +96,17 @@ const MyTabs=()=>{
           ),
         }}
       />
+
+<Tab.Screen
+        name="OTP"
+        component={OTP}
+        options={{
+          tabBarLabel: '',
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="phone" color={color} size={35} />
+          ),
+        }}
+      />
       
      
 
@@ -114,9 +127,7 @@ const MyTabs=()=>{
            
        },
           tabBarIcon: ({ color, size }) => (
-            <Image style={{width:30,height:35}} 
-           source={{ uri:"https://img.icons8.com/fluency/48/000000/fire-element.png" }} 
-             />
+            <MaterialCommunityIcons name="bell-outline" color={color} size={35} />
           ),
         }}
       />
@@ -150,7 +161,9 @@ const MyTabs=()=>{
         options={{
           tabBarLabel: '',
           tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="account-outline" color={color} size={35} />
+           <View style={{backgroundColor:"#000",color:"#fff",fontSize:15,borderRadius:20,display:"flex",alignItems:"center",justifyContent:"center",height:36,width:36}}>
+            <Text style={{color:"#fff",fontSize:16,fontWeight:"bold"}}>S</Text>
+            </View>
           ),
         }}
       />

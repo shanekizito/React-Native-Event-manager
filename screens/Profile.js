@@ -55,7 +55,7 @@ const Profile = ({navigation}) => {
                 <Icon style={styles.inputIcon} name="account-outline" size={25} color="#000"/>
                 </IconComponentProvider>
             <TextInput
-                    placeholder={'User Name'}
+                    placeholder={'Name'}
                     style={styles.input}
                     placeholderTextColor="#000"
                     editable={false}
@@ -75,20 +75,10 @@ const Profile = ({navigation}) => {
 
        
 
-        <View style={styles.inputSection}>
-            <IconComponentProvider IconComponent={MaterialCommunityIcons}>
-                <Icon style={styles.inputIcon} name="map-marker-outline" size={25} color="#000"/>
-                </IconComponentProvider>
-            <TextInput
-                    placeholder={'Current Location'}
-                    style={styles.input}
-                    placeholderTextColor="#000"
-                    editable={false}
-            />
-        </View>
+       
         <View style={styles.notification}>
             <IconComponentProvider IconComponent={MaterialCommunityIcons}>
-                <Icon style={styles.notificationIcon} name="bell" size={25} color="black"/>
+                <Icon style={styles.notificationIcon} name="bell-outline" size={25} color="black"/>
                 </IconComponentProvider>
             <Text style={{fontSize:17}}>Notifications</Text>
             <Switch
@@ -112,7 +102,7 @@ const styles = StyleSheet.create({
 
     container: {
         flex: 1,
-        backgroundColor:"#ffff" ,
+       
         
     },
     header:{
@@ -122,36 +112,40 @@ const styles = StyleSheet.create({
     },
     notification:{
         height:50,
+        display:"flex",
         flexDirection: 'row',
-        justifyContent:"flex-start",
+        justifyContent: 'center',
         alignItems: 'center',
-        marginTop:5
+        
+        marginTop:5,
+        paddingLeft:0
+        
        
         
     
     },
     notificationIcon:{
-        borderWidth:1,
-        borderColor:'#e1e2e0',
-        height:'100%',
-        padding:9,
-        marginRight:10,
+      
+       
+        marginRight:6,
         borderRadius:5,
     },
     inputIcon: {
-        borderWidth:1,
-        borderColor:'rgb(221, 221, 221)',
+        
+       
+      
+        marginRight:6,
         borderRadius:5,
-        height:'100%',
-        padding:9,
+
     },
 
     inputSection:{
         height:50,
+        display:"flex",
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor:"#ffff" ,
+        
         marginTop:5,
         paddingLeft:10
     },
