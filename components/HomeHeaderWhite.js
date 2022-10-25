@@ -97,7 +97,7 @@ const HomeHeaderWhite = ({ header,navigation  }) => {
       navigation.goBack()
     } >
       <IconComponentProvider IconComponent={MaterialCommunityIcons}>
-        <Icon name="arrow-left" size={40} color="red"/>
+        <Icon name="arrow-left" size={35} color="#424242"/>
       </IconComponentProvider>
     </TouchableOpacity>
      
@@ -109,7 +109,7 @@ const HomeHeaderWhite = ({ header,navigation  }) => {
         <View style={styles.homeHeaderWhiteContainer}>
           
           <BackButton/>
-          <NotificationButton/>
+         
           <Text style={styles.Header}>{header}</Text>
         </View>
        
