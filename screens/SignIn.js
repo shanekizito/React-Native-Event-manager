@@ -3,7 +3,7 @@ import { Alert, Button, TextInput, Text,View, StyleSheet,SafeAreaView,TouchableO
 import {  FocusedStatusBar, HomeHeader } from "../components";
 import { COLORS, NFTData ,assets} from "../constants";
 import Home from './Home';
-
+import {  useState } from "react";
 const styles = StyleSheet.create({
 
 
@@ -80,9 +80,20 @@ const styles = StyleSheet.create({
 
 });
 
-const AppButton = ({  title }) => (
+
+
+
+
+
+const SignIn = ({navigation}) => {
+
+  const [phoneNumber, setPhoneNumber] = useState("");
+
+
+
+  const AppButton = ({  title }) => (
     <TouchableOpacity onPress={() =>
-      navigation.navigate('Details', { name: 'Jane' })
+      navigation.navigate('PhoneNumberAuth',{contact:phoneNumber })
     } style={styles.appButtonContainer}>
       <Text style={styles.appButtonText}>
       {title}</Text>
@@ -90,8 +101,6 @@ const AppButton = ({  title }) => (
   );
 
 
-
-const SignIn = ({navigation}) => {
 
   return (
     
@@ -102,7 +111,11 @@ const SignIn = ({navigation}) => {
         <Text style={styles.text}>Sign in</Text>
         
         <TextInput
-            placeholder={'Email'}
+            placeholder={'Phone Number'}
+            onChangeText={(text) => {
+              setPhoneNumber(text);
+            }}
+
             style={styles.input}
         />
         <TextInput

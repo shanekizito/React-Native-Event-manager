@@ -7,11 +7,12 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Home from "./screens/Home";
 import Details from "./screens/Details";
 import Profile from "./screens/Profile";
-import Ticket from "./screens/Ticket"
+import Ticket from "./screens/Ticket";
+import PhoneNumberAuth from './screens/PhoneNumberAuth';
 import Venue from "./screens/Venue";
 import Notification from './screens/Notification';
 import SignUp from './screens/SignUp';
-import OTP from './screens/Otp';
+import Verify from './screens/Verify';
 import SignIn from './screens/SignIn';
 import { BlurView } from 'expo-blur';
 const Tab = createBottomTabNavigator();
@@ -32,7 +33,7 @@ const MyTabs=()=>{
       screenOptions={{
        
         tabBarActiveTintColor:'#424242',
-       
+        tabBarHideOnKeyboard:true,
         headerShown:false,
         tabBarStyle: { position: 'absolute',
         bottom:10,
@@ -75,6 +76,15 @@ const MyTabs=()=>{
            tabBarVisible: false,
         }}
       />
+
+       <Tab.Screen
+        name="PhoneNumberAuth"
+        component={PhoneNumberAuth}
+        options={{
+          tabBarButton: () => null,
+           tabBarVisible: false,
+        }}
+      />
       
       
        <Tab.Screen
@@ -98,8 +108,8 @@ const MyTabs=()=>{
       />
 
 <Tab.Screen
-        name="OTP"
-        component={OTP}
+        name="Verify"
+        component={Verify}
         options={{
           tabBarLabel: '',
           tabBarIcon: ({ color, size }) => (
@@ -175,7 +185,6 @@ const Screens=()=> {
   return (
       <Stack.Navigator screenOptions={{ headerShown: false}}>
         <Stack.Screen name="Home" component={MyTabs} />
-     
       </Stack.Navigator>
   );
 }

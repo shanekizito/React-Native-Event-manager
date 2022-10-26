@@ -3,7 +3,7 @@ import eth from "../assets/icons/eth.png";
 import heart from "../assets/icons/heart.png";
 import left from "../assets/icons/left.png";
 import search from "../assets/icons/search.png";
-
+import otp from "../assets/images/otp.png";
 import logo from "../assets/images/logo.png";
 import qrcode from "../assets/images/qrcode.png";
 import backgroundImage from "../assets/images/backgroundImage.jpg";
@@ -25,6 +25,7 @@ import person04 from "../assets/images/person04.png";
 export default {
   badge,
   eth,
+  otp,
   heart,
   left,
   search,

@@ -1,13 +1,16 @@
 import React from 'react'
 import { Alert, Button, TextInput, Text,View, StyleSheet,SafeAreaView,TouchableOpacity } from 'react-native';
-import {HomeHeader,  FocusedStatusBar } from "../components";
+import {  FocusedStatusBar, HomeHeader } from "../components";
 import { COLORS, NFTData ,assets} from "../constants";
-
+import Home from './Home';
+import {  useState } from "react";
 const styles = StyleSheet.create({
 
 
     container: {
         flex: 1,
+         
+        
     },
     form:{
         padding:20,
@@ -54,15 +57,43 @@ const styles = StyleSheet.create({
         color: "#fff",
         alignSelf: "center",
         fontFamily: 'RalewayRegular'
+    },
+    registerLink:{
+     marginTop:30,
+     marginLeft:25,
+     color:'#afafaf',
+     fontSize:15,
+     fontFamily: 'RalewayRegular',
+     flexDirection:'row',
+     justifyContent:'flex-start',
+     alignItems:'center'
+
+    },
+    registerButton:{
+        color:'#000',
+        fontFamily: 'RalewayBold',
+        marginLeft:8,
+        
     }
 
 
 
 });
 
-const AppButton = ({  title }) => (
+
+
+
+
+
+const SignUp = ({navigation}) => {
+
+  const [phoneNumber, setPhoneNumber] = useState("");
+
+
+
+  const AppButton = ({  title }) => (
     <TouchableOpacity onPress={() =>
-      navigation.navigate('Details', { name: 'Jane' })
+      navigation.navigate('PhoneNumberAuth',{contact:phoneNumber })
     } style={styles.appButtonContainer}>
       <Text style={styles.appButtonText}>
       {title}</Text>
@@ -70,8 +101,6 @@ const AppButton = ({  title }) => (
   );
 
 
-
-const SignUp = ({navigation}) => {
 
   return (
     
@@ -81,15 +110,15 @@ const SignUp = ({navigation}) => {
         <View style={styles.form}>
         <Text style={styles.text}>Create account</Text>
         <TextInput
-            placeholder={'Email'}
-            style={styles.input}
-        />
-        <TextInput
             placeholder={'Name'}
+            
+
             style={styles.input}
         />
         <TextInput
-            placeholder={'Phone'}
+            placeholder={'Email'}
+             
+
             style={styles.input}
         />
         <TextInput
@@ -98,11 +127,23 @@ const SignUp = ({navigation}) => {
             secureTextEntry={true}
         />
         <TextInput
-            placeholder={'Confirm password'}
+            placeholder={'Confirm Password'}
             style={styles.input}
             secureTextEntry={true}
         />
-        <AppButton title="Sign up" size="sm" backgroundColor="#007bff" />
+       
+        <AppButton title="Next" size="sm" backgroundColor="#007bff" />
+        <View style={styles.registerLink}>
+        <Text style={{color:"#929292"}}>Already have an account ? </Text> 
+        <TouchableOpacity onPress={() =>
+      navigation.navigate('SignIn', { name: 'Jane' })
+        } >
+        <Text style={styles.registerButton}>Login</Text>
+        </TouchableOpacity>
+        </View>
+        
+         
+        
     </View>
     </SafeAreaView>
   )
@@ -110,4 +151,4 @@ const SignUp = ({navigation}) => {
 
 
 
-export default SignUp
+export default SignUp;

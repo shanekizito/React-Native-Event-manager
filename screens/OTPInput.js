@@ -1,4 +1,3 @@
-
 import React, { useRef, useState, useEffect } from "react";
 import {
   OTPInputContainer,
@@ -9,7 +8,7 @@ import {
   SplitBoxesFocused,
 } from "./styles";
 
-const OTPInput = ({ code, setCode, maximumLength, setIsPinReady }) => {
+const OTPInput = ({ code, setCode, maximumLength, setIsPinReady,refer }) => {
   const boxArray = new Array(maximumLength).fill(0);
   const inputRef = useRef();
 
@@ -60,7 +59,7 @@ const OTPInput = ({ code, setCode, maximumLength, setIsPinReady }) => {
         value={code}
         onChangeText={setCode}
         maxLength={maximumLength}
-        ref={inputRef}
+        ref={refer}
         onBlur={handleOnBlur}
       />
     </OTPInputContainer>

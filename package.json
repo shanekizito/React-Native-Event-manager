@@ -9,6 +9,7 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@expo/webpack-config": "^0.17.0",
     "@kichiyaki/react-native-barcode-generator": "^0.6.7",
     "@mdi/js": "^7.0.96",
     "@mdi/react": "^1.6.1",
@@ -49,7 +50,8 @@
     "react-native-svg": "12.3.0",
     "react-native-typewriter": "^0.7.0",
     "react-native-web": "~0.18.7",
-    "react-native-webview": "11.23.0"
+    "react-native-webview": "11.23.0",
+    "styled-components": "^5.3.6"
   },
   "devDependencies": {
     "@babel/core": "^7.18.6"
