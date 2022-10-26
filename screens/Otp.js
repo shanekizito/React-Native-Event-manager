@@ -1,8 +1,11 @@
-import * as React from 'react';
-import { Text, View, StyleSheet, TextInput, Button, Alert, ActivityIndicator } from 'react-native';
+
+
+import React, { useRef, useState, useEffect } from "react";
+import { Text, View, StyleSheet, TextInput, Button, Alert, ActivityIndicator,Pressable  } from 'react-native';
 import * as FirebaseRecaptcha from 'expo-firebase-recaptcha';
 import { initializeApp, getApp } from 'firebase/app';
 import { getAuth, PhoneAuthProvider, signInWithCredential } from 'firebase/auth';
+
 
 // Add your Firebase >=9.x.x config here
 // https://firebase.google.com/docs/web/setup
@@ -30,6 +33,15 @@ try {
 let app = getApp();
 const auth = getAuth(app);
 
+
+
+
+
+
+
+
+
+
 export default function PhoneAuthScreen() {
   const recaptchaVerifier = React.useRef(null);
   const verificationCodeTextInput = React.useRef(null);
@@ -41,17 +53,36 @@ export default function PhoneAuthScreen() {
   const [confirmError, setConfirmError] = React.useState();
   const [confirmInProgress, setConfirmInProgress] = React.useState(false);
   const isConfigValid = !!FIREBASE_CONFIG.apiKey;
+ 
+
+ 
+
+  
+
+
+
+
+
+
+
+
+
 
   return (
     <View style={styles.container}>
       <View style={styles.content}>
+      
         <FirebaseRecaptcha.FirebaseRecaptchaVerifierModal
           ref={recaptchaVerifier}
           firebaseConfig={FIREBASE_CONFIG}
           attemptInvisibleVerification={true }
         />
         <Text style={styles.title}>Verify Account</Text>
-      
+        
+        
+       
+
+         
         <Text style={styles.text}>phone</Text>
         <View style={styles.inputContainer}>
         <Text style={styles.prefix}>+254</Text>
@@ -65,7 +96,7 @@ export default function PhoneAuthScreen() {
           editable={!verificationId}
           onChangeText={phoneNumber => setPhoneNumber(phoneNumber+254)}
         />
-      </View>
+        </View>
         
         <Button
           title={`${verificationId ? 'Resend' : 'Send'} Verification Code`}
@@ -144,6 +175,34 @@ const styles = StyleSheet.create({
   },
   content: {
     marginTop: 50,
+  },
+  hiddenInput: {
+    width: "300px",
+    borderColor: "#e5e5e5",
+    borderWidth: "1px",
+    borderRadius: "5px",
+    padding: 15
+  },
+  SplitOTPBoxesContainer:{
+    width: "80%",
+    flexDirection: "row",
+    justifyContent:"space-evenly"
+  },
+  splitBoxes: {
+    borderColor: "#e5e5e5",
+    borderWidth: "2px",
+    borderRadius: "5px",
+    padding: "12px",
+    minWidth: "50px"
+  },
+
+  splitBoxesFocused:{
+    borderColor: "#ecdbba",
+    borderWidth: "2px",
+    borderRadius: "5px",
+    padding: "12px",
+    minWidth: "50px",
+    backgroundColor:"grey"
   },
   title: {
     marginBottom: 2,
