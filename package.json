@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@expo/webpack-config": "^0.17.0",
+    "@gorhom/bottom-sheet": "^4.4.5",
     "@kichiyaki/react-native-barcode-generator": "^0.6.7",
     "@mdi/js": "^7.0.96",
     "@mdi/react": "^1.6.1",

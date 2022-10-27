@@ -14,30 +14,33 @@ import Notification from './screens/Notification';
 import SignUp from './screens/SignUp';
 import Verify from './screens/Verify';
 import SignIn from './screens/SignIn';
-import { BlurView } from 'expo-blur';
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 import { useFonts } from 'expo-font';
+import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
+import {BaseButton,GestureHandlerRootView} from 'react-native-gesture-handler';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { reload } from '../redux/actions/index';
+import firebase from 'firebase';
+import { Provider } from 'react-redux';
+import { applyMiddleware, createStore } from 'redux';
+import thunk from 'redux-thunk';
+import rootReducer from './redux/reducers';
 
 
-
-
-
-
-
+const store = createStore(rootReducer, applyMiddleware(thunk))
 
 const MyTabs=()=>{
   return (
     <Tab.Navigator
-      initialRouteName="SignIn"
+      initialRouteName="Home"
       screenOptions={{
-       
-        tabBarActiveTintColor:'#424242',
+        tabBarActiveTintColor:'#000',
         tabBarHideOnKeyboard:true,
         headerShown:false,
         tabBarStyle: { position: 'absolute',
         bottom:10,
-        
         left:10,
         right:10,
         borderRadius:30,
@@ -51,21 +54,18 @@ const MyTabs=()=>{
         elevation: 24,
         backgroundColor:'#fff',
         height:60,
-      padding:10 },
-                
-          }}
-    >
+        padding:10 },             
+        }}>
 
-<Tab.Screen
+      <Tab.Screen
         name="Home"
         component={Home}
         options={{
           tabBarLabel: '',
           tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="map-marker-outline" color={color} size={35} />
+            <MaterialCommunityIcons name="map-marker-outline" color={"#000"} size={30} />
           ),
-        }}
-      />
+        }}/>
 
 
       <Tab.Screen
@@ -74,8 +74,15 @@ const MyTabs=()=>{
         options={{
           tabBarButton: () => null,
            tabBarVisible: false,
-        }}
-      />
+        }}/>
+
+      <Tab.Screen
+        name="Verify"
+        component={Verify}
+        options={{
+          tabBarButton: () => null,
+           tabBarVisible: false,
+        }}/>
 
        <Tab.Screen
         name="PhoneNumberAuth"
@@ -83,8 +90,7 @@ const MyTabs=()=>{
         options={{
           tabBarButton: () => null,
            tabBarVisible: false,
-        }}
-      />
+        }}/>
       
       
        <Tab.Screen
@@ -93,35 +99,20 @@ const MyTabs=()=>{
         options={{
           tabBarButton: () => null,
            tabBarVisible: false,
-        }}
-      />
+        }}/>
 
-<Tab.Screen
+      <Tab.Screen
         name="Ticket"
         component={Ticket}
         options={{
           tabBarLabel: '',
           tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="ticket-outline" color={color} size={35} />
+            <MaterialCommunityIcons name="ticket-outline" color={"#000"} size={30} />
           ),
-        }}
-      />
-
-<Tab.Screen
-        name="Verify"
-        component={Verify}
-        options={{
-          tabBarLabel: '',
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="phone" color={color} size={35} />
-          ),
-        }}
-      />
-      
-     
+        }}/>
 
 
-<Tab.Screen
+       <Tab.Screen
         name="Notification"
         component={Notification}
         options={{
@@ -132,39 +123,31 @@ const MyTabs=()=>{
             maxHeight: 10,
             fontSize: 8,
             lineHeight: 9,
-            backgroundColor:"#35a4e4",
-            color:"#35a4e4"
-           
-       },
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="bell-outline" color={color} size={35} />
+            backgroundColor:"#30a4e4",
+            color:"#30a4e4"
+            },
+           tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="bell-outline" color={"#000"} size={30} />
           ),
         }}
       />
-  <Tab.Screen
+    <Tab.Screen
         name="Venue"
         component={Venue}
         options={{
           tabBarButton: () => null,
            tabBarVisible: false,
-        }}
-      />
+        }}/>
 
-<Tab.Screen
+     <Tab.Screen
         name="SignIn"
         component={SignIn}
         options={{
           tabBarButton: () => null,
            tabBarVisible: false,
-        }}
-      />
-      
+        }}/>
 
 
-
-
-      
-      
       <Tab.Screen
         name="Profile"
         component={Profile}
@@ -190,12 +173,16 @@ const Screens=()=> {
 }
 
 
-export default function App() {
+function App() {
 
+
+  const 
   const [loaded] = useFonts({
     RalewayRegular: require('./assets/fonts/Raleway-Regular.ttf'),
     RalewayBold: require('./assets/fonts/Raleway-Bold.ttf'),
   });
+
+
   
   if (!loaded) {
     return null;
@@ -203,8 +190,24 @@ export default function App() {
 
   
   return (
+    <Provider store={store}>
+    <GestureHandlerRootView style={{flex: 1}}>
+    <BottomSheetModalProvider >
     <NavigationContainer>
       <MyTabs/>
     </NavigationContainer>
+    </BottomSheetModalProvider>
+    </GestureHandlerRootView>
+    </Provider>
   );
 }
+
+
+const mapStateToProps = (store) => ({
+  currentUser: store.userState.currentUser,
+  chats: store.userState.chats,
+  friendsRequestsReceived: store.userState.friendsRequestsReceived,
+})
+const mapDispatchProps = (dispatch) => bindActionCreators({ reload }, dispatch);
+
+export default connect(mapStateToProps, mapDispatchProps)(App);
