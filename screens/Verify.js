@@ -49,20 +49,6 @@ const auth = getAuth(app);
   
  
 
- 
-
-  
-
-
-
-
-
-
-
-
-
-
-
 
 export default function Verify({ route, navigation }) {
   const [otpCode, setOTPCode] = useState("");

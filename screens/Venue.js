@@ -1,30 +1,12 @@
 
-import { SafeAreaView, View, FlatList,ImageBackground, StyleSheet, Text, StatusBar,Image,TouchableOpacity,navigation,Button} from 'react-native';
-import { NFTCard, HomeHeaderWhite, DropDown, FocusedStatusBar } from "../components";
+import { SafeAreaView, View, FlatList,ImageBackground, StyleSheet, Text,Image,TouchableOpacity} from 'react-native';
+import {  HomeHeaderWhite} from "../components";
 import { LinearGradient } from 'expo-linear-gradient';
 import { IconComponentProvider, Icon } from "@react-native-material/core";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
-import { assets} from "../constants";
-
 import Barcode from 'react-native-barcode-svg';
-
-
 import React, { useCallback, useMemo, useRef } from 'react';
-
-import BottomSheet from '@gorhom/bottom-sheet';
-
-
-
-
-import {
-  BottomSheetModal,
-  
-} from '@gorhom/bottom-sheet';
-
- 
-
-
- 
+import {BottomSheetModal,} from '@gorhom/bottom-sheet';
 
 
 
@@ -35,12 +17,13 @@ const Venue= ({navigation}) => {
   const bottomSheetModalRef = useRef(null);
 
   // variables
-  const snapPoints = useMemo(() => ['25%', '85%'], []);
+  const snapPoints = useMemo(() => ['50%', '85%'], []);
 
   // callbacks
   const handlePresentModalPress = useCallback(() => {
     bottomSheetModalRef.current?.present();
   }, []);
+
   const handleSheetChanges = useCallback((index) => {
     console.log('handleSheetChanges', index);
   }, []);
@@ -61,14 +44,14 @@ const Venue= ({navigation}) => {
 
   );
 
-  const CloseAppButton = ({  title }) => (
+   const CloseAppButton = ({  title }) => (
     <TouchableOpacity onPress={
       handleClosePress
     } style={styles.CloseappButtonContainer}>
       <Text style={styles.CloseappButtonText}>
       {title} </Text>
       <IconComponentProvider IconComponent={MaterialCommunityIcons}>
-        <Icon name="chevron-right" size={25} color="#000"/>
+        <Icon name="chevron-right" size={25} color="#fff"/>
         </IconComponentProvider>
     </TouchableOpacity>
 
@@ -125,68 +108,51 @@ const Venue= ({navigation}) => {
 
 
 
-  const BackButton = ({  title }) => (
-    <View style={styles.BackButtonContainer}>
-    <TouchableOpacity onPress={() =>
-      navigation.navigate('Home', { name: 'Jane' })
-    } >
-      <IconComponentProvider IconComponent={MaterialCommunityIcons}>
-        <Icon name="chevron-left" size={22} color="white"/>
-      </IconComponentProvider>
-    </TouchableOpacity>
-    </View>
-  );
 
   return (
    
     <SafeAreaView style={styles.container}>
-      
-     <HomeHeaderWhite navigation={navigation} header={'ABOUT'}/>
-     <BottomSheetModal
-          ref={bottomSheetModalRef}
-          index={1}
-          snapPoints={snapPoints}
-          onChange={handleSheetChanges}
-          enablePanDownToClose
 
-        >
+     <HomeHeaderWhite navigation={navigation} header={'ABOUT'}/>
+
+      <BottomSheetModal
+            ref={bottomSheetModalRef}
+            index={1}
+            snapPoints={snapPoints}
+            onChange={handleSheetChanges}
+            enablePanDownToClose >
           <View style={styles.contentContainer}>
           
-    
-    <View style={styles.ticket}>
-       <View style={styles.venueContainer}>
-            <Image style={styles.tinyBanner}resizeMode="cover"source={{ uri:"https://kenyaonthego.com/wp-content/uploads/2021/11/black-pearl-4-520x397.jpg" }}/>
-            <View style={styles.venueInfoContainer}>
-                <Text style={styles.place}>Club Da Place</Text>
-                <Text style={styles.venueLocation}>Mamboleo stage - Kisumu</Text>
-            </View>
-        </View>
-        <View style={styles.userInfoContainer}>
-            <View style={styles.row1}>
-            <Text style={styles.title}>Shane Kizito</Text>
-            <Text style={styles.title}>Feb 29 2023</Text>
-            </View>
+               <View style={styles.ticket}>
+                  <View style={styles.venueContainer}>
+                    <Image style={styles.tinyBanner}resizeMode="cover"source={{ uri:"https://kenyaonthego.com/wp-content/uploads/2021/11/black-pearl-4-520x397.jpg" }}/>
+                  <View style={styles.venueInfoContainer}>
+                    <Text style={styles.place}>Club Da Place</Text>
+                    <Text style={styles.venueLocation}>Mamboleo stage - Kisumu</Text>
+                 </View>
+               </View>
 
-            <View style={styles.row2}> 
-                <Text style={styles.title}>4:30 PM</Text>
-            <Text style={styles.title}></Text>
-            </View>
-        </View>
-       <View style={styles.row3}>
-        
-       <Text  style={styles.info}>Security barcode</Text>
-       <Barcode value="Hello World" format="CODE128" />
-       <CloseAppButton title="Proceed" size="sm" backgroundColor="#fff" />
-      
-        
-     </View> 
-    </View>
-     
-          
+              <View style={styles.userInfoContainer}>
+                <View style={styles.row1}>
+                <Text style={styles.title}>Shane Kizito</Text>
+                <Text style={styles.title}>Feb 29 2023</Text>
+                </View>
+
+              <View style={styles.row2}> 
+                  <Text style={styles.title}>4:30 PM</Text>
+                  <Text style={styles.title}></Text>
+              </View>
+
           </View>
+       <View style={styles.row3}>
+          <Text  style={styles.info}>Security barcode</Text>
+          <Barcode value="Hello World" format="CODE128" />
+          <CloseAppButton title="GO" size="sm" backgroundColor="#fff" />
+       </View> 
+       </View>
+       </View>
         </BottomSheetModal>
         <Item/>
-   
     </SafeAreaView>
      
   );
@@ -217,15 +183,12 @@ const styles = StyleSheet.create({
 
   },
   dateTextContainer:{
-   
     fontSize:15, 
     flexDirection:"column",
     justifyContent:"center",
 
   },
-  dateTextMonth:{
-
-  },
+  
   bannerImage:{
     width:'100%',
     height:'98%',
@@ -239,10 +202,7 @@ const styles = StyleSheet.create({
      borderRadius:35,
      borderBottomLeftRadius:0,
      borderBottomRightRadius:0,
-    
      width:'100%',
-     
-  
      alignItems:'center',
      height:"100%",
   },
@@ -250,7 +210,6 @@ const styles = StyleSheet.create({
     flex:1,
     height:'100%',
     alignItems:'flex-start',
-    
     width:'100%',
     justifyContent:'flex-start',
     width:'100%',
@@ -331,8 +290,7 @@ fontFamily: 'RalewayRegular',
     borderRadius: 115,
     width:320,
     height:45,
-    paddingVertical:9,
-    paddingHorizontal: 5,
+ 
     zIndex:3
   },
   appButtonContainer: {
@@ -364,12 +322,12 @@ fontFamily: 'RalewayRegular',
   },
   CloseappButtonText: {
     fontSize: 17,
-    fontFamily: 'RalewayRegular',
+    fontFamily: 'RalewayBold',
     color: "#fff",
-    alignSelf: "center",
+     
     flexDirection:"row",
     alignItems:"center",
-    justifyContent:"center",
+    justifyContent:"flex-end",
     marginRight:10,
     marginLeft:10
 
@@ -400,20 +358,20 @@ color:"#0f0",
 
 },
 ticket:{
-    shadowColor: "#000",
-    flexDirection:'column',
-    backgroundColor: '#ffff',
-    padding:20,
-    borderRadius:10,
-    width:'95%',
-    justifyContent:'center',
-    marginVertical: 15,
-    marginTop:10,
-    marginHorizontal: 8,
-    shadowColor: "#000",
-    shadowOffset: {
-        width: 0,
-        height: 1,
+shadowColor: "#000",
+flexDirection:'column',
+backgroundColor: '#ffff',
+padding:20,
+borderRadius:10,
+width:'95%',
+justifyContent:'center',
+marginVertical: 15,
+marginTop:10,
+marginHorizontal: 8,
+shadowColor: "#000",
+shadowOffset: {
+    width: 0,
+    height: 1,
 },
 shadowOpacity: 0.18,
 shadowRadius: 1.00,

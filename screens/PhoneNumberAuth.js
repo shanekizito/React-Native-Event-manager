@@ -39,106 +39,7 @@ let app = getApp();
 const auth = getAuth(app);
 
 
-const styles = StyleSheet.create({
 
-
-    container: {
-        flex: 1,
-        width:"100%",
-        
-         
-        
-    },
-    form:{
-        padding:20,
-        display:"flex",
-        flexDirection:"column",
-        alignItems:"center",
-        justifyContent:"center",
-  
-        shadowColor: '#000',
-        shadowOffset: {width: -2, height: 4},
-        shadowOpacity: 0.2,
-        shadowRadius: 3,
-        width:'98%',
-        height: '65%',
-         
-
-
-    },
-    text:{
-        fontSize: 25,
-        fontFamily: 'RalewayBold',
-         marginBottom:12,
-    },
-    input: {
-        borderBottomColor:'rgba(196, 193, 193, 0.945)',
-        borderBottomWidth:2,
-        color:'#000',
-        height:40,
-        fontSize:17,
-
-        marginTop:20,
-        padding:10,
-        borderRadius:15,
-        fontFamily: 'RalewayRegular',
-        width:"70%"
-  
-
-    },
-    mobileNumberContainer:{
-    
-   width:"100%",
-
-    },
-    appButtonContainer:{
-        backgroundColor: "#000",
-        color:'#fff',
-        marginTop:50,
-        borderRadius: 25,
-        width:'100%',
-        height:45,
-        paddingVertical:9,
-        paddingHorizontal: 5,
-    },
-    appButtonText:{
-        fontSize: 17,
-        color: "#fff",
-        alignSelf: "center",
-        fontFamily: 'RalewayRegular'
-    },
-    registerLink:{
-     marginTop:30,
-     marginLeft:25,
-     color:'#afafaf',
-     fontSize:15,
-     fontFamily: 'RalewayRegular',
-     flexDirection:'row',
-     justifyContent:'flex-start',
-     alignItems:'center'
-
-    },
-    registerButton:{
-        color:'#000',
-        fontFamily: 'RalewayBold',
-        marginLeft:8,
-        
-    },
-    prefix:{
-      marginTop:50,
-     
-     fontWeight:"bold",
-      fontSize:15,
-      color:'gray',
-    },
-    info:{
-      marginTop:10,
-      fontSize:15,
-      color:'gray',
-      textAlign: "center",
-
-    }
-});
 
 
 
@@ -257,5 +158,105 @@ const PhoneNumberAuth = ({navigation,route}) => {
 }
 
 
+const styles = StyleSheet.create({
+
+
+  container: {
+      flex: 1,
+      width:"100%",
+      
+       
+      
+  },
+  form:{
+      padding:20,
+      display:"flex",
+      flexDirection:"column",
+      alignItems:"center",
+      justifyContent:"center",
+
+      shadowColor: '#000',
+      shadowOffset: {width: -2, height: 4},
+      shadowOpacity: 0.2,
+      shadowRadius: 3,
+      width:'98%',
+      height: '65%',
+       
+
+
+  },
+  text:{
+      fontSize: 25,
+      fontFamily: 'RalewayBold',
+       marginBottom:12,
+  },
+  input: {
+      borderBottomColor:'rgba(196, 193, 193, 0.945)',
+      borderBottomWidth:2,
+      color:'#000',
+      height:40,
+      fontSize:17,
+
+      marginTop:20,
+      padding:10,
+      borderRadius:15,
+      fontFamily: 'RalewayRegular',
+      width:"70%"
+
+
+  },
+  mobileNumberContainer:{
+  
+ width:"100%",
+
+  },
+  appButtonContainer:{
+      backgroundColor: "#000",
+      color:'#fff',
+      marginTop:50,
+      borderRadius: 25,
+      width:'100%',
+      height:45,
+      paddingVertical:9,
+      paddingHorizontal: 5,
+  },
+  appButtonText:{
+      fontSize: 17,
+      color: "#fff",
+      alignSelf: "center",
+      fontFamily: 'RalewayRegular'
+  },
+  registerLink:{
+   marginTop:30,
+   marginLeft:25,
+   color:'#afafaf',
+   fontSize:15,
+   fontFamily: 'RalewayRegular',
+   flexDirection:'row',
+   justifyContent:'flex-start',
+   alignItems:'center'
+
+  },
+  registerButton:{
+      color:'#000',
+      fontFamily: 'RalewayBold',
+      marginLeft:8,
+      
+  },
+  prefix:{
+    marginTop:50,
+   
+   fontWeight:"bold",
+    fontSize:15,
+    color:'gray',
+  },
+  info:{
+    marginTop:10,
+    fontSize:15,
+    color:'gray',
+    textAlign: "center",
+
+  }
+});
 
 export default PhoneNumberAuth;

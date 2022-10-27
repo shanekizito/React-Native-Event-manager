@@ -1,9 +1,132 @@
 import React from 'react'
 import { Alert, Button, TextInput, Text,View, StyleSheet,SafeAreaView,TouchableOpacity } from 'react-native';
 import {  FocusedStatusBar, HomeHeader } from "../components";
-import { COLORS, NFTData ,assets} from "../constants";
-import Home from './Home';
+import { COLORS} from "../constants";
 import {  useState } from "react";
+
+
+
+require('firebase/firestore');
+
+
+const AppButton = ({  title }) => (
+    <TouchableOpacity onPress={() =>
+      navigation.navigate('PhoneNumberAuth',{contact:phoneNumber })
+    } style={styles.appButtonContainer}>
+      <Text style={styles.appButtonText}>
+      {title}</Text>
+    </TouchableOpacity>
+  );
+
+
+
+const SignUp = ({navigation}) => {
+
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
+  const [username, setUsername] = useState('');
+  const [isValid, setIsValid] = useState(true);
+
+
+  
+
+
+  if (name.lenght == 0 || username.lenght == 0 || email.length == 0 || password.length == 0) {
+    setIsValid({ bool: true, boolSnack: true, message: "Please fill out everything" })
+    return;
+}
+if (password.length < 6) {
+    setIsValid({ bool: true, boolSnack: true, message: "passwords must be at least 6 characters" })
+    return;
+}
+if (password.length < 6) {
+    setIsValid({ bool: true, boolSnack: true, message: "passwords must be at least 6 characters" })
+    return;
+}
+firebase.firestore()
+    .collection('users')
+    .where('username', '==', username)
+    .get()
+    .then((snapshot) => {
+
+        if (!snapshot.exist) {
+            firebase.auth().createUserWithEmailAndPassword(email, password)
+                .then(() => {
+                    if (snapshot.exist) {
+                        return
+                    }
+                    firebase.firestore().collection("users")
+                        .doc(firebase.auth().currentUser.uid)
+                        .set({
+                            name,
+                            email,
+                            username,
+                            image: 'default',
+                            followingCount: 0,
+                            followersCount: 0,
+
+                        })
+                })
+                .catch(() => {
+                    setIsValid({ bool: true, boolSnack: true, message: "Something went wrong" })
+                })
+        }
+    }).catch(() => {
+        setIsValid({ bool: true, boolSnack: true, message: "Something went wrong" })
+    })
+
+
+
+  return (
+    
+        <SafeAreaView style={styles.container}>
+        <FocusedStatusBar backgroundColor={COLORS.primary} />
+        <HomeHeader/>
+        <View style={styles.form}>
+        <Text style={styles.text}>Create account</Text>
+        <TextInput
+            placeholder={'Name'}
+            
+
+            style={styles.input}
+        />
+        <TextInput
+            placeholder={'Email'}
+             
+
+            style={styles.input}
+        />
+        <TextInput
+            placeholder={'Password'}
+            style={styles.input}
+            secureTextEntry={true}
+        />
+        <TextInput
+            placeholder={'Confirm Password'}
+            style={styles.input}
+            secureTextEntry={true}
+        />
+       
+        <AppButton title="Next" size="sm" backgroundColor="#007bff" />
+        <View style={styles.registerLink}>
+        <Text style={{color:"#929292"}}>Already have an account ? </Text> 
+        <TouchableOpacity onPress={() =>
+      navigation.navigate('SignIn', { name: 'Jane' })
+        } >
+        <Text style={styles.registerButton}>Login</Text>
+        </TouchableOpacity>
+        </View>
+        
+         
+        
+    </View>
+    </SafeAreaView>
+  )
+}
+
+
 const styles = StyleSheet.create({
 
 
@@ -79,75 +202,6 @@ const styles = StyleSheet.create({
 
 
 });
-
-
-
-
-
-
-const SignUp = ({navigation}) => {
-
-  const [phoneNumber, setPhoneNumber] = useState("");
-
-
-
-  const AppButton = ({  title }) => (
-    <TouchableOpacity onPress={() =>
-      navigation.navigate('PhoneNumberAuth',{contact:phoneNumber })
-    } style={styles.appButtonContainer}>
-      <Text style={styles.appButtonText}>
-      {title}</Text>
-    </TouchableOpacity>
-  );
-
-
-
-  return (
-    
-        <SafeAreaView style={styles.container}>
-        <FocusedStatusBar backgroundColor={COLORS.primary} />
-        <HomeHeader/>
-        <View style={styles.form}>
-        <Text style={styles.text}>Create account</Text>
-        <TextInput
-            placeholder={'Name'}
-            
-
-            style={styles.input}
-        />
-        <TextInput
-            placeholder={'Email'}
-             
-
-            style={styles.input}
-        />
-        <TextInput
-            placeholder={'Password'}
-            style={styles.input}
-            secureTextEntry={true}
-        />
-        <TextInput
-            placeholder={'Confirm Password'}
-            style={styles.input}
-            secureTextEntry={true}
-        />
-       
-        <AppButton title="Next" size="sm" backgroundColor="#007bff" />
-        <View style={styles.registerLink}>
-        <Text style={{color:"#929292"}}>Already have an account ? </Text> 
-        <TouchableOpacity onPress={() =>
-      navigation.navigate('SignIn', { name: 'Jane' })
-        } >
-        <Text style={styles.registerButton}>Login</Text>
-        </TouchableOpacity>
-        </View>
-        
-         
-        
-    </View>
-    </SafeAreaView>
-  )
-}
 
 
 
