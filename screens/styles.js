@@ -38,7 +38,7 @@ export const SplitBoxText = styled.Text`
 
 export const SplitBoxesFocused = styled(SplitBoxes)`
   border-color: #ecdbba;
-  background-color: grey;
+  
 `;
 
 export const ButtonContainer = styled.TouchableOpacity`

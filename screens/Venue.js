@@ -5,15 +5,18 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { IconComponentProvider, Icon } from "@react-native-material/core";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import Barcode from 'react-native-barcode-svg';
-import React, { useCallback, useMemo, useRef } from 'react';
+import React, { useCallback, useMemo,useState, useRef } from 'react';
 import {BottomSheetModal,} from '@gorhom/bottom-sheet';
 
+import { Stack, Alert, IconButton, HStack, VStack,Box, CloseIcon, Center, NativeBaseProvider } from "native-base";
 
 
-
+ 
+    
 
 const Venue= ({navigation}) => {
 
+  const [booked,setBooked]=useState(false);
   const bottomSheetModalRef = useRef(null);
 
   // variables
@@ -46,7 +49,7 @@ const Venue= ({navigation}) => {
 
    const CloseAppButton = ({  title }) => (
     <TouchableOpacity onPress={
-      handleClosePress
+      setBooked(true)
     } style={styles.CloseappButtonContainer}>
       <Text style={styles.CloseappButtonText}>
       {title} </Text>
@@ -114,8 +117,8 @@ const Venue= ({navigation}) => {
     <SafeAreaView style={styles.container}>
 
      <HomeHeaderWhite navigation={navigation} header={'ABOUT'}/>
-
-      <BottomSheetModal
+     
+        <BottomSheetModal
             ref={bottomSheetModalRef}
             index={1}
             snapPoints={snapPoints}
@@ -124,6 +127,7 @@ const Venue= ({navigation}) => {
           <View style={styles.contentContainer}>
           
                <View style={styles.ticket}>
+                
                   <View style={styles.venueContainer}>
                     <Image style={styles.tinyBanner}resizeMode="cover"source={{ uri:"https://kenyaonthego.com/wp-content/uploads/2021/11/black-pearl-4-520x397.jpg" }}/>
                   <View style={styles.venueInfoContainer}>
@@ -131,7 +135,7 @@ const Venue= ({navigation}) => {
                     <Text style={styles.venueLocation}>Mamboleo stage - Kisumu</Text>
                  </View>
                </View>
-
+ 
               <View style={styles.userInfoContainer}>
                 <View style={styles.row1}>
                 <Text style={styles.title}>Shane Kizito</Text>
@@ -140,16 +144,29 @@ const Venue= ({navigation}) => {
 
               <View style={styles.row2}> 
                   <Text style={styles.title}>4:30 PM</Text>
-                  <Text style={styles.title}></Text>
+                  
+                  <View style={{marginTop:19}}>
+        
+          <Text  style={styles.title}><IconComponentProvider IconComponent={MaterialCommunityIcons}>
+            
+        <Icon name="tag-outline" size={25} color="#000"/>
+           free 
+        </IconComponentProvider></Text>
+        </View>
+              
               </View>
+
 
           </View>
        <View style={styles.row3}>
+        
           <Text  style={styles.info}>Security barcode</Text>
           <Barcode value="Hello World" format="CODE128" />
+         
           <CloseAppButton title="GO" size="sm" backgroundColor="#fff" />
        </View> 
-       </View>
+              </View>
+            
        </View>
         </BottomSheetModal>
         <Item/>
@@ -249,7 +266,7 @@ const styles = StyleSheet.create({
 color:'#000',
 borderTopWidth:3,
 borderTopColor:'grey',
-borderStyle:'dashed',
+ 
 fontWeight:'bold',
 fontSize:25,
 fontFamily: 'RalewayRegular',
@@ -398,7 +415,7 @@ venueContainer: {
     alignItems:'center',
     borderBottomWidth:1,
     borderBottomColor:'#e4e3e3',
-    borderStyle:'dotted',
+    
     paddingBottom:20
 },
 tinyBanner:{

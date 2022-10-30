@@ -1,8 +1,8 @@
 import * as Notifications from 'expo-notifications';
-import firebase from 'firebase';
+import firebase from 'firebase/app';
 import { Constants } from 'react-native-unimodules';
 import { CLEAR_DATA, USERS_DATA_STATE_CHANGE, USERS_LIKES_STATE_CHANGE, USERS_POSTS_STATE_CHANGE, USER_CHATS_STATE_CHANGE, USER_FOLLOWING_STATE_CHANGE, USER_POSTS_STATE_CHANGE, USER_STATE_CHANGE } from '../constants/index';
-require('firebase/firestore')
+import 'firebase/firestore';
 
 
 let unsubscribe = [];

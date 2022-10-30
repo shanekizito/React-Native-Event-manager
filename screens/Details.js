@@ -80,7 +80,7 @@ const Details= ({navigation}) => {
      <HomeHeaderWhite header={"UPCOMING"} navigation={navigation}/>
      
       <FlatList
-      style={{marginTop:2}}
+       style={{marginTop:3}}
         data={DATA}
         renderItem={renderItem}
         keyExtractor={item => item.id}
@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
     borderRadius:10,
     width:'95%',
     height:260,
-    marginVertical: 15,
+    marginVertical: 8,
     marginTop:0,
     marginHorizontal: 8,
     shadowColor: "#000",
@@ -113,10 +113,10 @@ const styles = StyleSheet.create({
     shadowOffset: {
         width: 0,
         height: 1,
-},
-shadowOpacity: 0.18,
-shadowRadius: 1.00,
-elevation: 1,
+     },
+    shadowOpacity: 0.18,
+    shadowRadius: 1.00,
+    elevation: 1,
   },
   BackButtonContainer:{
     backgroundColor:"black",
@@ -151,7 +151,10 @@ elevation: 1,
   tinyLogo: {
     width:'100%',
     height:'85%',
-    
+    borderWidth:1,
+    borderRadius:10,
+    borderBottomLeftRadius:0,
+    borderBottomRightRadius:0,
     
   },
 
@@ -160,6 +163,8 @@ elevation: 1,
     color:'#000',
     fontWeight: '800',
     textAlign:'center',
+    borderTopWidth: 1,
+    borderRadius:10,
     
 
   },

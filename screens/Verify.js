@@ -3,12 +3,13 @@
 
 import OTPInput from "./OTPInput";
 import { ButtonContainer, ButtonText } from "./styles";
-import React, {  useState, useEffect } from "react";
+import React, {  useState, useEffect,useRef } from "react";
 import { Text, View, StyleSheet, Image, Button, Keyboard , Alert, ActivityIndicator,Pressable ,TouchableOpacity } from 'react-native';
 import * as FirebaseRecaptcha from 'expo-firebase-recaptcha';
 import { initializeApp, getApp } from 'firebase/app';
 import { getAuth, PhoneAuthProvider, signInWithCredential } from 'firebase/auth';
 import { COLORS, NFTData ,assets} from "../constants";
+import { getFirestore } from 'firebase/firestore';
 import { HomeHeaderWhite} from "../components";
 // Add your Firebase >=9.x.x config here
 // https://firebase.google.com/docs/web/setup
@@ -24,18 +25,12 @@ const FIREBASE_CONFIG = {
 
 
 
-try {
-  if (FIREBASE_CONFIG.apiKey) {
-    initializeApp(FIREBASE_CONFIG);
-  }
-} catch (err) {
-  // ignore app already initialized error on snack
-}
+ 
 
 // Firebase references
-let app = getApp();
+const app = initializeApp(FIREBASE_CONFIG)
 const auth = getAuth(app);
-
+const db = getFirestore(app);
 
 
 
@@ -54,91 +49,69 @@ export default function Verify({ route, navigation }) {
   const [otpCode, setOTPCode] = useState("");
   const [isPinReady, setIsPinReady] = useState(false);
   const maximumCodeLength = 6;
-  const recaptchaVerifier = React.useRef(null);
-  const verificationCodeTextInput = React.useRef(null);
-  const [phoneNumber, setPhoneNumber] = React.useState("");
-  const [verificationId, setVerificationId] = React.useState('');
-  const [verifyError, setVerifyError] = React.useState();
-  const [verifyInProgress, setVerifyInProgress] = React.useState(false);
-  const [verificationCode, setVerificationCode] = React.useState(otpCode);
-  const [confirmError, setConfirmError] = React.useState();
-  const [confirmInProgress, setConfirmInProgress] = React.useState(false);
+  const recaptchaVerifier = useRef(null);
+  const [credential,setCredential]=React.useState(null);
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [verificationId, setVerificationId] = useState('');
+  const [verifyError, setVerifyError] = useState();
+  const [verifyInProgress, setVerifyInProgress] = useState(false);
+  const [verificationCode, setVerificationCode] = useState(otpCode);
+  const [confirmError, setConfirmError] = React.useState(null);
+  const [confirmInProgress, setConfirmInProgress] =useState(false);
   const isConfigValid = !!FIREBASE_CONFIG.apiKey;
-  
+  const [userData,setUserData] = useState({});
+
    
 
 
   useEffect(() => {
    setVerificationCode(otpCode)
+   setUserData(route.params)
    setPhoneNumber(route.params.contact)
-  },[otpCode,route.params.contact])
+   setVerificationId(route.params.verificationId)
+  });
 
 
   return (
 
     <View style={styles.screen}>
        <HomeHeaderWhite/>
-    <View style={styles.container}>
-     
-      <Image
+       <View style={styles.container}>
+        <Image
           source={assets.otp}
           resizeMode="contain"
           style={{ width: '60%',marginLeft:20 ,height:100}}
         />
+
     <Text style={styles.title}>OTP verification</Text>
+ 
+    <View>
     <Text style={styles.info}>Enter the OTP sent to  {route.params.contact}</Text>
+
     <View style={styles.content}>
-
-    
-      <FirebaseRecaptcha.FirebaseRecaptchaVerifierModal
-        ref={recaptchaVerifier}
-        firebaseConfig={FIREBASE_CONFIG}
-        attemptInvisibleVerification={true }
-      />
- 
- 
-     
-      
-      
-     
-
-       
-     
-     
-      {verifyError && <Text style={styles.error}>{`Error: ${verifyError.message}`}</Text>}
-      {verifyInProgress && <ActivityIndicator style={styles.loader} />}
-      {verificationId ? (
-        <Text style={styles.success}>A verification code has been sent to your phone</Text>
-      ) : undefined}
-      
       <Pressable style={styles.container1} onPress={Keyboard.dismiss}>
-      <OTPInput
-        code={otpCode}
-        setCode={setOTPCode}
-        maximumLength={maximumCodeLength}
-        setIsPinReady={setIsPinReady}
-        refer={verificationCodeTextInput}
-      />
-
-
-       
-
+        <OTPInput
+          code={otpCode}
+          setCode={setOTPCode}
+          maximumLength={maximumCodeLength}
+          setIsPinReady={setIsPinReady}  
+        />
       </Pressable>
       <TouchableOpacity
-       
         style={styles.appButtonContainer}
         disabled={!verificationCode}
-        onPress={async () => {
-          try {
-            setConfirmError(undefined);
-            setConfirmInProgress(true);
-            const credential = PhoneAuthProvider.credential(verificationId, verificationCode);
-            const authResult = await signInWithCredential(auth, credential);
-            setConfirmInProgress(false);
-            setVerificationId('');
-            setVerificationCode('');
-            verificationCodeTextInput.current?.clear();
-            Alert.alert('Phone authentication successful!');
+        onPress={async () => { 
+           try {
+              setConfirmError(undefined);
+              setConfirmInProgress(true);
+              const credential = PhoneAuthProvider.credential(verificationId, verificationCode);
+              setCredential(credential);
+              const authResult = await signInWithCredential(auth, credential);
+              setConfirmInProgress(false);
+              setVerificationId('');
+              setVerificationCode('');
+               signInWithCredential(auth, credential);
+               Alert.alert('Phone authentication successful!');
           } catch (err) {
             setConfirmError(err);
             setConfirmInProgress(false);
@@ -147,7 +120,7 @@ export default function Verify({ route, navigation }) {
           
           </TouchableOpacity>
 
-      {confirmError && <Text style={styles.error}>{`Error: ${confirmError.message}`}</Text>}
+     
       {confirmInProgress && <ActivityIndicator style={styles.loader} />}
     </View>
     {!isConfigValid && (
@@ -159,9 +132,7 @@ export default function Verify({ route, navigation }) {
     )}
     </View>
     </View>
-
-
-    
+    </View>
   );
 }
 

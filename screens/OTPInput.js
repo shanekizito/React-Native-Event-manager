@@ -8,7 +8,7 @@ import {
   SplitBoxesFocused,
 } from "./styles";
 
-const OTPInput = ({ code, setCode, maximumLength, setIsPinReady,refer }) => {
+const OTPInput = ({ code, setCode, maximumLength, setIsPinReady }) => {
   const boxArray = new Array(maximumLength).fill(0);
   const inputRef = useRef();
 
@@ -57,9 +57,9 @@ const OTPInput = ({ code, setCode, maximumLength, setIsPinReady,refer }) => {
       </SplitOTPBoxesContainer>
       <TextInputHidden
         value={code}
-        onChangeText={setCode}
+        onChangeText={code => setCode(code)}
         maxLength={maximumLength}
-        ref={refer}
+        ref={inputRef}
         onBlur={handleOnBlur}
       />
     </OTPInputContainer>

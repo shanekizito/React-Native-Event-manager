@@ -2,14 +2,13 @@
 import {  FocusedStatusBar, HomeHeader } from "../components";
 import { COLORS, NFTData ,assets} from "../constants";
 import Home from './Home';
-
- 
 import { ButtonContainer, ButtonText } from "./styles";
-import React, {  useState, useEffect } from "react";
+import React, {  useState, useEffect,useRef } from "react";
 import { Text, View, StyleSheet, TextInput,Image, Button, Keyboard , Alert, ActivityIndicator,Pressable ,TouchableOpacity ,SafeAreaView} from 'react-native';
 import * as FirebaseRecaptcha from 'expo-firebase-recaptcha';
 import { initializeApp, getApp } from 'firebase/app';
 import { getAuth, PhoneAuthProvider, signInWithCredential } from 'firebase/auth';
+import OTPInput from "./OTPInput";
 
 
 // Add your Firebase >=9.x.x config here
@@ -49,20 +48,23 @@ const auth = getAuth(app);
 const PhoneNumberAuth = ({navigation,route}) => {
 
   const [phoneNumber, setPhoneNumber] = useState("");
-  const recaptchaVerifier = React.useRef(null);
-  const verificationCodeTextInput = React.useRef(null);
-  
-  const [verificationId, setVerificationId] = React.useState('');
-  const [verifyError, setVerifyError] = React.useState();
-  const [verifyInProgress, setVerifyInProgress] = React.useState(false);
-  
-  const [confirmError, setConfirmError] = React.useState();
-  const [confirmInProgress, setConfirmInProgress] = React.useState(false);
+  const recaptchaVerifier = useRef(null);
+  const [otpCode, setOTPCode] = useState("");
+  const [isPinReady, setIsPinReady] = useState(false);
+  const [verificationId, setVerificationId] = useState(null);
+  const [credential,setCredential]=React.useState("");
+  const [verifyError, setVerifyError] = useState();
+  const [verifyInProgress, setVerifyInProgress] = useState(false);
+  const [codeSent,setCodeSent] = useState(false);
   const isConfigValid = !!FIREBASE_CONFIG.apiKey;
+  const [userData,setUserData]=useState({});
+  const [verificationCode, setVerificationCode] = useState(otpCode);
+  const [confirmError, setConfirmError] = React.useState(null);
+  const [confirmInProgress, setConfirmInProgress] =useState(false);
+  const maximumCodeLength = 6;
 
   useEffect(() => {
-    
-    setPhoneNumber(route.params.contact)
+    setUserData(route.params)
    },[route.params.contact])
 
   const AppButton = ({  title }) => (
@@ -96,10 +98,12 @@ const PhoneNumberAuth = ({navigation,route}) => {
         firebaseConfig={FIREBASE_CONFIG}
         attemptInvisibleVerification={true }
       />
+       {!codeSent ? (
+       <View>
        <Text style={styles.info}>We will send a one time password on this mobile number</Text>
-      <View style={{width:"100%",display:"flex",alignItems:"center",justifyContent:"center"}}>
-      <Text style={styles.prefix}>Enter Mobile Number</Text>
-      <TextInput
+       <View style={{width:"100%",display:"flex",alignItems:"center",justifyContent:"center"}}>
+       <Text style={styles.prefix}>Enter Mobile Number</Text>
+       <TextInput
         style={styles.input}
         autoFocus={isConfigValid}
         autoCompleteType="tel"
@@ -113,6 +117,7 @@ const PhoneNumberAuth = ({navigation,route}) => {
       <TouchableOpacity style={styles.appButtonContainer}
         disabled={!phoneNumber}
         onPress={async () => {
+    
           const phoneProvider = new PhoneAuthProvider(auth);
            try {
             setVerifyError(undefined);
@@ -124,8 +129,8 @@ const PhoneNumberAuth = ({navigation,route}) => {
             );
             setVerifyInProgress(false);
             setVerificationId(verificationId);
-            verificationCodeTextInput.current?.focus();
-            navigation.navigate('Verify',{contact:phoneNumber })
+            setCodeSent(true);
+          
           } catch (err) {
             setVerifyError(err);
             setVerifyInProgress(false);
@@ -138,18 +143,78 @@ const PhoneNumberAuth = ({navigation,route}) => {
        
         
       </TouchableOpacity>
-      {verifyError && <Text style={styles.error}>{` please use a valid format`}</Text>}
+      {verifyError && <Text style={styles.error}>{`${verifyError} please use a valid format`}</Text>}
       {verifyInProgress && <ActivityIndicator style={styles.loader} />}
       {verificationId ? (
         <Text style={styles.success}>A verification code has been sent to your phone</Text>
       ) : undefined}
+      </View>
+
+      ):(
+      <View>
+     <Text style={styles.info}>Enter the OTP sent to  {route.params.contact}</Text>
+     <View style={styles.content}>
+      <Pressable style={styles.container1} onPress={Keyboard.dismiss}>
+        <OTPInput
+          code={otpCode}
+          setCode={setOTPCode}
+          maximumLength={maximumCodeLength}
+          setIsPinReady={setIsPinReady}  
+        />
+      </Pressable>
+      
+      <TouchableOpacity
+        style={styles.appButtonContainer}
+       
+        onPress={async () => { 
+           try {
+              setConfirmError(undefined);
+              setConfirmInProgress(true);
+              const credential = PhoneAuthProvider.credential(verificationId, otpCode);
+              console.log('yert')
+              
+              setConfirmInProgress(false);
+              setVerificationId('');
+              setVerificationCode('');
+              
+              await signInWithCredential(auth, credential).then(()=>{
+                Alert.alert('Phone authentication successful!')
+                
+                setTimeout(()=>{
+                  navigation.navigate('Home', { name: 'Jane' })
+                }, 1000);
+
+              }
+               
+              ).catch((e)=>{
+              console.log(e);
+              })
+              inputRef.current?.clear();
+              
+          } catch (err) {
+            setConfirmError(err);
+            setConfirmInProgress(false);
+          }
+        }}><Text style={styles.appButtonText}>Verify & Proceed</Text>
+          
+          </TouchableOpacity>
+
+      {confirmInProgress && <ActivityIndicator style={styles.loader} />}
+      </View>
+     {!isConfigValid && (
+      <View style={styles.overlay} pointerEvents="none">
+        <Text style={styles.overlayText}>
+          To get started, set a valid firebaseConfig in App.js.
+        </Text>
+      </View>
+    )}
+     
+      </View>)}
         
        
       
        
-        
-         
-        
+  
         
       </View>
         
