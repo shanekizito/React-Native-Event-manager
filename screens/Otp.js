@@ -45,12 +45,12 @@ const auth = getAuth(app);
 export default function PhoneAuthScreen() {
   const recaptchaVerifier = React.useRef(null);
   const verificationCodeTextInput = React.useRef(null);
-  const [phoneNumber, setPhoneNumber] = React.useState('');
-  const [verificationId, setVerificationId] = React.useState('');
+  const [phoneNumber, setPhoneNumber] = React.useState(null);
+  const [verificationId, setVerificationId] = React.useState(null);
   const [verifyError, setVerifyError] = React.useState();
   const [verifyInProgress, setVerifyInProgress] = React.useState(false);
   const [verificationCode, setVerificationCode] = React.useState('');
-  const [confirmError, setConfirmError] = React.useState();
+  const [confirmError, setConfirmError] = React.useState(null);
   const [confirmInProgress, setConfirmInProgress] = React.useState(false);
   const isConfigValid = !!FIREBASE_CONFIG.apiKey;
  
@@ -126,6 +126,8 @@ export default function PhoneAuthScreen() {
           <Text style={styles.success}>A verification code has been sent to your phone</Text>
         ) : undefined}
         <Text style={styles.text}>Enter verification code</Text>
+      
+      
         <TextInput
           ref={verificationCodeTextInput}
           style={styles.textInput}
@@ -134,19 +136,21 @@ export default function PhoneAuthScreen() {
           placeholder="123456"
           onChangeText={verificationCode => setVerificationCode(verificationCode)}
         />
+
+
         <Button
           title="Confirm Verification Code"
           disabled={!verificationCode}
           onPress={async () => {
             try {
-              setConfirmError(undefined);
+               
               setConfirmInProgress(true);
               const credential = PhoneAuthProvider.credential(verificationId, verificationCode);
               const authResult = await signInWithCredential(auth, credential);
               setConfirmInProgress(false);
               setVerificationId('');
               setVerificationCode('');
-              verificationCodeTextInput.current?.clear();
+              inputRef.current?.clear();
               Alert.alert('Phone authentication successful!');
             } catch (err) {
               setConfirmError(err);

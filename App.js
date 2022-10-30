@@ -21,15 +21,36 @@ import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 import {BaseButton,GestureHandlerRootView} from 'react-native-gesture-handler';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { reload } from '../redux/actions/index';
-import firebase from 'firebase';
+import { reload } from './redux/actions/index';
+import * as FirebaseRecaptcha from 'expo-firebase-recaptcha';
+import { initializeApp, getApp } from 'firebase/app';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+ 
+
+// Add your Firebase >=9.x.x config here
+// https://firebase.google.com/docs/web/setup
+const FIREBASE_CONFIG = {
+    apiKey: "AIzaSyBSGXuwm2g6kcp8WJFMUNCrksryZ8PTEqk",
+    authDomain: "onthego-52662.firebaseapp.com",
+    databaseURL: "https://onthego-52662-default-rtdb.firebaseio.com",
+    projectId: "onthego-52662",
+    storageBucket: "onthego-52662.appspot.com",
+    messagingSenderId: "596897853249",
+    appId: "1:596897853249:web:f2c7f8d03a18cae2f47bc0"
+};
+
+
+
+
+
 import { Provider } from 'react-redux';
 import { applyMiddleware, createStore } from 'redux';
 import thunk from 'redux-thunk';
 import rootReducer from './redux/reducers';
+import { useEffect } from 'react';
+import { set } from 'react-native-reanimated';
 
 
-const store = createStore(rootReducer, applyMiddleware(thunk))
 
 const MyTabs=()=>{
   return (
@@ -174,14 +195,32 @@ const Screens=()=> {
 
 
 function App() {
+  const store = createStore(rootReducer, applyMiddleware(thunk))
+  // Firebase references
+   let app = initializeApp(FIREBASE_CONFIG);
+   const auth = getAuth(app);
+   const [loggedIn,setIsLoggedIn]=React.useState(false);
 
-
-  const 
+  
   const [loaded] = useFonts({
     RalewayRegular: require('./assets/fonts/Raleway-Regular.ttf'),
     RalewayBold: require('./assets/fonts/Raleway-Bold.ttf'),
   });
 
+
+
+  React.useEffect(()=>{
+    onAuthStateChanged(auth,user=> {
+      if (!user) {
+        console.log("logout");
+      }
+      else {
+        setIsLoggedIn(true);
+        console.log(user);
+      }
+    })
+  
+  })
 
   
   if (!loaded) {
@@ -203,11 +242,7 @@ function App() {
 }
 
 
-const mapStateToProps = (store) => ({
-  currentUser: store.userState.currentUser,
-  chats: store.userState.chats,
-  friendsRequestsReceived: store.userState.friendsRequestsReceived,
-})
-const mapDispatchProps = (dispatch) => bindActionCreators({ reload }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchProps)(App);
+
+
+export default App

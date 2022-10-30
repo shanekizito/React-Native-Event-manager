@@ -3,20 +3,23 @@ import { Alert, Button, TextInput, Text,View, StyleSheet,SafeAreaView,TouchableO
 import {  FocusedStatusBar, HomeHeader } from "../components";
 import { COLORS} from "../constants";
 import {  useState } from "react";
+import {doc, setDoc,getFirestore} from 'firebase/firestore'
+import 'firebase/firestore';
+
+import { getFirestore, collection, getDocs,createUserWithEmailAndPassword } from 'firebase/firestore/lite';
+
+const FIREBASE_CONFIG = {
+    apiKey: "AIzaSyBSGXuwm2g6kcp8WJFMUNCrksryZ8PTEqk",
+    authDomain: "onthego-52662.firebaseapp.com",
+    databaseURL: "https://onthego-52662-default-rtdb.firebaseio.com",
+    projectId: "onthego-52662",
+    storageBucket: "onthego-52662.appspot.com",
+    messagingSenderId: "596897853249",
+    appId: "1:596897853249:web:f2c7f8d03a18cae2f47bc0"
+};
 
 
-
-require('firebase/firestore');
-
-
-const AppButton = ({  title }) => (
-    <TouchableOpacity onPress={() =>
-      navigation.navigate('PhoneNumberAuth',{contact:phoneNumber })
-    } style={styles.appButtonContainer}>
-      <Text style={styles.appButtonText}>
-      {title}</Text>
-    </TouchableOpacity>
-  );
+let app = initializeApp(FIREBASE_CONFIG);
 
 
 
@@ -28,12 +31,23 @@ const SignUp = ({navigation}) => {
   const [name, setName] = useState('');
   const [username, setUsername] = useState('');
   const [isValid, setIsValid] = useState(true);
+  const db = getFirestore(app);
+  const userDB = collection(db, "users");
 
 
-  
+
+  const AppButton = ({  title }) => (
+    <TouchableOpacity onPress={() =>
+       
+        onRegister().navigation.navigate('PhoneNumberAuth',{contact:phoneNumber })
+    } style={styles.appButtonContainer}>
+      <Text style={styles.appButtonText}>
+      {title}</Text>
+    </TouchableOpacity>
+  );
 
 
-  if (name.lenght == 0 || username.lenght == 0 || email.length == 0 || password.length == 0) {
+  if (name.length == 0 || username.length == 0 || email.length == 0 || password.length == 0) {
     setIsValid({ bool: true, boolSnack: true, message: "Please fill out everything" })
     return;
 }
@@ -45,37 +59,8 @@ if (password.length < 6) {
     setIsValid({ bool: true, boolSnack: true, message: "passwords must be at least 6 characters" })
     return;
 }
-firebase.firestore()
-    .collection('users')
-    .where('username', '==', username)
-    .get()
-    .then((snapshot) => {
 
-        if (!snapshot.exist) {
-            firebase.auth().createUserWithEmailAndPassword(email, password)
-                .then(() => {
-                    if (snapshot.exist) {
-                        return
-                    }
-                    firebase.firestore().collection("users")
-                        .doc(firebase.auth().currentUser.uid)
-                        .set({
-                            name,
-                            email,
-                            username,
-                            image: 'default',
-                            followingCount: 0,
-                            followersCount: 0,
-
-                        })
-                })
-                .catch(() => {
-                    setIsValid({ bool: true, boolSnack: true, message: "Something went wrong" })
-                })
-        }
-    }).catch(() => {
-        setIsValid({ bool: true, boolSnack: true, message: "Something went wrong" })
-    })
+   
 
 
 
@@ -89,25 +74,22 @@ firebase.firestore()
         <TextInput
             placeholder={'Name'}
             
-
+            value={username}
             style={styles.input}
+            onChangeText={(username) => setUsername(username.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, '').replace(/[^a-z0-9]/gi, ''))}
         />
         <TextInput
             placeholder={'Email'}
-             
-
+            onChangeText={(email) => setEmail(email)}
             style={styles.input}
         />
         <TextInput
             placeholder={'Password'}
             style={styles.input}
             secureTextEntry={true}
+            onChangeText={(password) => setPassword(password)}
         />
-        <TextInput
-            placeholder={'Confirm Password'}
-            style={styles.input}
-            secureTextEntry={true}
-        />
+        
        
         <AppButton title="Next" size="sm" backgroundColor="#007bff" />
         <View style={styles.registerLink}>
