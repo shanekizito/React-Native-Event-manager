@@ -14,30 +14,54 @@ import Notification from './screens/Notification';
 import SignUp from './screens/SignUp';
 import Verify from './screens/Verify';
 import SignIn from './screens/SignIn';
-import { BlurView } from 'expo-blur';
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 import { useFonts } from 'expo-font';
+import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
+import {BaseButton,GestureHandlerRootView} from 'react-native-gesture-handler';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { reload } from './redux/actions/index';
+import * as FirebaseRecaptcha from 'expo-firebase-recaptcha';
+import { initializeApp, getApp } from 'firebase/app';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+ 
+
+// Add your Firebase >=9.x.x config here
+// https://firebase.google.com/docs/web/setup
+const FIREBASE_CONFIG = {
+    apiKey: "AIzaSyBSGXuwm2g6kcp8WJFMUNCrksryZ8PTEqk",
+    authDomain: "onthego-52662.firebaseapp.com",
+    databaseURL: "https://onthego-52662-default-rtdb.firebaseio.com",
+    projectId: "onthego-52662",
+    storageBucket: "onthego-52662.appspot.com",
+    messagingSenderId: "596897853249",
+    appId: "1:596897853249:web:f2c7f8d03a18cae2f47bc0"
+};
 
 
 
 
 
+import { Provider } from 'react-redux';
+import { applyMiddleware, createStore } from 'redux';
+import thunk from 'redux-thunk';
+import rootReducer from './redux/reducers';
+import { useEffect } from 'react';
+import { set } from 'react-native-reanimated';
 
 
 
 const MyTabs=()=>{
   return (
     <Tab.Navigator
-      initialRouteName="SignIn"
+      initialRouteName="Home"
       screenOptions={{
-       
-        tabBarActiveTintColor:'#424242',
+        tabBarActiveTintColor:'#000',
         tabBarHideOnKeyboard:true,
         headerShown:false,
         tabBarStyle: { position: 'absolute',
         bottom:10,
-        
         left:10,
         right:10,
         borderRadius:30,
@@ -51,21 +75,18 @@ const MyTabs=()=>{
         elevation: 24,
         backgroundColor:'#fff',
         height:60,
-      padding:10 },
-                
-          }}
-    >
+        padding:10 },             
+        }}>
 
-<Tab.Screen
+      <Tab.Screen
         name="Home"
         component={Home}
         options={{
           tabBarLabel: '',
           tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="map-marker-outline" color={color} size={35} />
+            <MaterialCommunityIcons name="map-marker-outline" color={"#000"} size={30} />
           ),
-        }}
-      />
+        }}/>
 
 
       <Tab.Screen
@@ -74,8 +95,15 @@ const MyTabs=()=>{
         options={{
           tabBarButton: () => null,
            tabBarVisible: false,
-        }}
-      />
+        }}/>
+
+      <Tab.Screen
+        name="Verify"
+        component={Verify}
+        options={{
+          tabBarButton: () => null,
+           tabBarVisible: false,
+        }}/>
 
        <Tab.Screen
         name="PhoneNumberAuth"
@@ -83,8 +111,7 @@ const MyTabs=()=>{
         options={{
           tabBarButton: () => null,
            tabBarVisible: false,
-        }}
-      />
+        }}/>
       
       
        <Tab.Screen
@@ -93,35 +120,20 @@ const MyTabs=()=>{
         options={{
           tabBarButton: () => null,
            tabBarVisible: false,
-        }}
-      />
+        }}/>
 
-<Tab.Screen
+      <Tab.Screen
         name="Ticket"
         component={Ticket}
         options={{
           tabBarLabel: '',
           tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="ticket-outline" color={color} size={35} />
+            <MaterialCommunityIcons name="ticket-outline" color={"#000"} size={30} />
           ),
-        }}
-      />
-
-<Tab.Screen
-        name="Verify"
-        component={Verify}
-        options={{
-          tabBarLabel: '',
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="phone" color={color} size={35} />
-          ),
-        }}
-      />
-      
-     
+        }}/>
 
 
-<Tab.Screen
+       <Tab.Screen
         name="Notification"
         component={Notification}
         options={{
@@ -132,39 +144,31 @@ const MyTabs=()=>{
             maxHeight: 10,
             fontSize: 8,
             lineHeight: 9,
-            backgroundColor:"#35a4e4",
-            color:"#35a4e4"
-           
-       },
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="bell-outline" color={color} size={35} />
+            backgroundColor:"#30a4e4",
+            color:"#30a4e4"
+            },
+           tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="bell-outline" color={"#000"} size={30} />
           ),
         }}
       />
-  <Tab.Screen
+    <Tab.Screen
         name="Venue"
         component={Venue}
         options={{
           tabBarButton: () => null,
            tabBarVisible: false,
-        }}
-      />
+        }}/>
 
-<Tab.Screen
+     <Tab.Screen
         name="SignIn"
         component={SignIn}
         options={{
           tabBarButton: () => null,
            tabBarVisible: false,
-        }}
-      />
-      
+        }}/>
 
 
-
-
-      
-      
       <Tab.Screen
         name="Profile"
         component={Profile}
@@ -190,12 +194,34 @@ const Screens=()=> {
 }
 
 
-export default function App() {
+function App() {
+  const store = createStore(rootReducer, applyMiddleware(thunk))
+  // Firebase references
+   let app = initializeApp(FIREBASE_CONFIG);
+   const auth = getAuth(app);
+   const [loggedIn,setIsLoggedIn]=React.useState(false);
 
+  
   const [loaded] = useFonts({
     RalewayRegular: require('./assets/fonts/Raleway-Regular.ttf'),
     RalewayBold: require('./assets/fonts/Raleway-Bold.ttf'),
   });
+
+
+
+  React.useEffect(()=>{
+    onAuthStateChanged(auth,user=> {
+      if (!user) {
+        console.log("logout");
+      }
+      else {
+        setIsLoggedIn(true);
+        console.log(user);
+      }
+    })
+  
+  })
+
   
   if (!loaded) {
     return null;
@@ -203,8 +229,20 @@ export default function App() {
 
   
   return (
+    <Provider store={store}>
+    <GestureHandlerRootView style={{flex: 1}}>
+    <BottomSheetModalProvider >
     <NavigationContainer>
       <MyTabs/>
     </NavigationContainer>
+    </BottomSheetModalProvider>
+    </GestureHandlerRootView>
+    </Provider>
   );
 }
+
+
+
+
+
+export default App

@@ -1,9 +1,9 @@
 import React from 'react';
-import { SafeAreaView, View, FlatList,ImageBackground,TouchableOpacity, StyleSheet, Text, StatusBar,Image } from 'react-native';
+import { SafeAreaView, View, FlatList,TouchableOpacity, StyleSheet, Text, Image } from 'react-native';
 import { IconComponentProvider, Icon } from "@react-native-material/core";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
-import { NFTCard, HomeHeaderWhite, DropDown, FocusedStatusBar } from "../components";
-import { SIZES, FONTS, COLORS, SHADOWS, assets } from "../constants";
+import {  HomeHeaderWhite } from "../components";
+
 
 
 const DATA = [
@@ -38,16 +38,7 @@ const DATA = [
 
 
 const Details= ({navigation}) => {
-  const BackButton = () => (
-    <TouchableOpacity style={styles.BackButtonContainer} onPress={() => 
   
-      navigation.goBack()
-    } >
-      <IconComponentProvider IconComponent={MaterialCommunityIcons}>
-        <Icon name="arrow-left" size={24} color="white"/>
-      </IconComponentProvider>
-    </TouchableOpacity>
-  )
   const Item = ({ title ,banner,location,vibe}) => (
    
     <View style={styles.item}>
@@ -89,7 +80,7 @@ const Details= ({navigation}) => {
      <HomeHeaderWhite header={"UPCOMING"} navigation={navigation}/>
      
       <FlatList
-      style={{marginTop:2}}
+       style={{marginTop:3}}
         data={DATA}
         renderItem={renderItem}
         keyExtractor={item => item.id}
@@ -109,23 +100,23 @@ const styles = StyleSheet.create({
 
   item: {
     flexDirection:'column',
-    backgroundColor:'#e4e4e4',
+    backgroundColor:'#ffff',
    
     borderRadius:10,
     width:'95%',
     height:260,
-    marginVertical: 15,
+    marginVertical: 8,
     marginTop:0,
     marginHorizontal: 8,
     shadowColor: "#000",
+    shadowColor: "#000",
     shadowOffset: {
-   	width: 0,
-  	height: 1,
-},
-shadowOpacity: 0.18,
-shadowRadius: 1.00,
-
-elevation: 1,
+        width: 0,
+        height: 1,
+     },
+    shadowOpacity: 0.18,
+    shadowRadius: 1.00,
+    elevation: 1,
   },
   BackButtonContainer:{
     backgroundColor:"black",
@@ -160,7 +151,10 @@ elevation: 1,
   tinyLogo: {
     width:'100%',
     height:'85%',
-    
+    borderWidth:1,
+    borderRadius:10,
+    borderBottomLeftRadius:0,
+    borderBottomRightRadius:0,
     
   },
 
@@ -169,6 +163,8 @@ elevation: 1,
     color:'#000',
     fontWeight: '800',
     textAlign:'center',
+    borderTopWidth: 1,
+    borderRadius:10,
     
 
   },

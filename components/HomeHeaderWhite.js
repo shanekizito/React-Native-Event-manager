@@ -94,7 +94,7 @@ const HomeHeaderWhite = ({ header,navigation  }) => {
   const BackButton = () => (
      
     <TouchableOpacity style={styles.BackButtonContainer} onPress={() =>
-      navigation.goBack()
+     navigation.popToTop()
     } >
       <IconComponentProvider IconComponent={MaterialCommunityIcons}>
         <Icon name="arrow-left" size={35} color="#424242"/>
@@ -105,12 +105,14 @@ const HomeHeaderWhite = ({ header,navigation  }) => {
 
   return (
     
-        
+        <View>
+        <FocusedStatusBar/>
         <View style={styles.homeHeaderWhiteContainer}>
-          
+        
           <BackButton/>
          
           <Text style={styles.Header}>{header}</Text>
+        </View>
         </View>
        
       

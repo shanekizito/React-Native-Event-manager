@@ -1,8 +1,7 @@
 import React, { useState,useCallback } from "react";
 import { View, SafeAreaView, FlatList,ImageBackground,StyleSheet,Dimensions,TouchableOpacity,Text} from "react-native";
 import DropDownPicker from 'react-native-dropdown-picker';
-import { NFTCard, HomeHeader, DropDown, FocusedStatusBar } from "../components";
-import { COLORS, NFTData ,assets} from "../constants";
+import {  HomeHeader} from "../components";
 import TypeWriter from 'react-native-typewriter'
 import { IconComponentProvider, Icon } from "@react-native-material/core";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
@@ -16,70 +15,10 @@ import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 
 
 
-const styles = StyleSheet.create({
-  screenContainer: {
-    height:30,
-    justifyContent: "center",
-    padding: 16,
-    zIndex:-1,
-    
-  },
-  appButtonContainer: {
-    backgroundColor: "#000",
-    marginLeft:20,
-    color:'#fff',
-    marginTop:20,
-    borderRadius: 25,
-    width:100,
-    height:45,
-    paddingVertical:9,
-    paddingHorizontal: 5,
-    
-  },
-  appButtonText: {
-    fontSize: 17,
-    color: "#fff",
-    alignSelf: "center",
-    fontFamily: 'RalewayRegular'
-  },
-  bgBody:{
-    backgroundColor:"#6d6b6b8e",
-    flex:1,
-  },
-  BackButtonContainer:{
-    backgroundColor:"black",
-    opacity:.5,
-    borderRadius:200,
-    alignItems:'center',
-    marginTop:-20,
-    marginBottom:120,
-    marginLeft:10,
-    padding:5,
-    width:50,
-  },
-  SignInButtonContainer: {
-    elevation: 8,
-    backgroundColor: "#f7f7f7f1",
-    color:'#000',
-    height: 40,
-    borderRadius: 20,
-    marginTop:-20,
-    marginLeft:10,
-    width:100,
-    paddingVertical: 5,
-    paddingHorizontal: 1,
-    
-  },
-  SignInButtonText: {
-    fontSize: 18,
-    color: "#5c5c5c",
-    alignSelf: "center",
-    fontFamily: 'RalewayRegular'
-  }
-});
+
 
 const Home = ({ navigation }) => {
-  const [nftData, setNftData] = useState(NFTData);
+
   const [cityOpen, setCityOpen] = useState(false);
   const [moodOpen, setMoodOpen] = useState(false);
   const [value, setValue] = useState(null);
@@ -152,11 +91,8 @@ const SignInButton = ({ title }) => (
   
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-     
-     
-      <ImageBackground
-       
+    <SafeAreaView style={{ flex: 1 }}>   
+      <ImageBackground     
        source={{uri:"https://cdn.uc.assets.prezly.com/6144c428-5a1d-44aa-ad3e-685ed09f0f5e/-/preview/1200x1200/-/format/auto/"}} 
        style={{width:"100%", height: "100%"}}>
       <View    style={styles.bgBody}>
@@ -165,27 +101,27 @@ const SignInButton = ({ title }) => (
        <View style={{marginTop:10,
     
         }}/>
+      
        <TypeWriter typing={1} style={
         {marginBottom:30,fontSize:44,marginTop:30,
         color:"#fff", marginLeft:"3%",height:150,fontFamily: 'RalewayRegular',
         }}>Discover where to go out</TypeWriter>
         <DropDownPicker
-        open={cityOpen}
-        onOpen={onTownOpen}
-        listItemLabelStyle={{
+          open={cityOpen}
+          onOpen={onTownOpen}
+          listItemLabelStyle={{
           color: "grey",
           marginTop:0,
           fontSize:13,
         }}
         setOpen={setCityOpen}
         zIndex={1000}
-         zIndexInverse={2000}
+        zIndexInverse={2000}
         placeholder="Where in Kenya"
-        
         placeholderStyle={{
-          color: "grey",
-          marginLeft:15,
-          fontFamily: 'RalewayRegular'
+        color: "grey",
+        marginLeft:15,
+        fontFamily: 'RalewayRegular'
         }}
         dropDownContainerStyle={{
         borderWidth: 0,
@@ -219,8 +155,7 @@ const SignInButton = ({ title }) => (
       justifyContent: "space-between",
       zIndex:1,
       padding:10
-        }}
-        />
+        }}/>
         <DropDownPicker
         open={moodOpen}
         onOpen={onVibeOpen}
@@ -276,13 +211,9 @@ const SignInButton = ({ title }) => (
     alignItems:'center',
     justifyContent: "space-between",
     padding:5
-        }}
-        />
-      
-      <AppButton title="Search" size="sm" backgroundColor="#007bff" />
-
-    
-      </View>
+        }}/>
+        <AppButton title="Search" size="sm" backgroundColor="#007bff" /> 
+       </View>
       </ImageBackground>
       
     </SafeAreaView>
@@ -290,6 +221,67 @@ const SignInButton = ({ title }) => (
 };
 
 
+const styles = StyleSheet.create({
+  screenContainer: {
+    height:30,
+    justifyContent: "center",
+    padding: 16,
+    zIndex:-1,
+    
+  },
+  appButtonContainer: {
+    backgroundColor: "#000",
+    marginLeft:20,
+    color:'#fff',
+    marginTop:20,
+    borderRadius: 25,
+    width:100,
+    height:45,
+    paddingVertical:9,
+    paddingHorizontal: 5,
+    
+  },
+  appButtonText: {
+    fontSize: 17,
+    color: "#fff",
+    alignSelf: "center",
+    fontFamily: 'RalewayRegular'
+  },
+  bgBody:{
+    backgroundColor:"#6d6b6b8e",
+    flex:1,
+  },
+  BackButtonContainer:{
+    backgroundColor:"black",
+    opacity:.5,
+    borderRadius:200,
+    alignItems:'center',
+    marginTop:-20,
+    marginBottom:120,
+    marginLeft:10,
+    padding:5,
+    width:50,
+  },
+  SignInButtonContainer: {
+    elevation: 8,
+    backgroundColor: "#f7f7f7f1",
+    color:'#000',
+    height: 40,
+    borderRadius: 20,
+    marginTop:-20,
+    marginLeft:10,
+    width:100,
+    paddingVertical: 5,
+    paddingHorizontal: 1,
+    
+  },
+  SignInButtonText: {
+    fontSize: 18,
+    color: "#5c5c5c",
+    alignSelf: "center",
+    fontFamily: 'RalewayRegular'
+  }
+});
 
 
 export default Home;

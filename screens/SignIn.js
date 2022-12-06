@@ -93,7 +93,7 @@ const SignIn = ({navigation}) => {
 
   const AppButton = ({  title }) => (
     <TouchableOpacity onPress={() =>
-      navigation.navigate('PhoneNumberAuth',{contact:phoneNumber })
+      navigation.navigate('PhoneNumberAuth',{contact:phoneNumber,userName:"shane" })
     } style={styles.appButtonContainer}>
       <Text style={styles.appButtonText}>
       {title}</Text>
