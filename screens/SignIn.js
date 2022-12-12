@@ -4,6 +4,15 @@ import {  FocusedStatusBar, HomeHeader } from "../components";
 import { COLORS, NFTData ,assets} from "../constants";
 import Home from './Home';
 import {  useState } from "react";
+
+
+
+
+
+
+
+
+
 const styles = StyleSheet.create({
 
 
@@ -92,13 +101,34 @@ const SignIn = ({navigation}) => {
 
 
   const AppButton = ({  title }) => (
-    <TouchableOpacity onPress={() =>
-      navigation.navigate('PhoneNumberAuth',{contact:phoneNumber,userName:"shane" })
-    } style={styles.appButtonContainer}>
+    <TouchableOpacity onPress={handleLogin}
+     style={styles.appButtonContainer}>
       <Text style={styles.appButtonText}>
       {title}</Text>
     </TouchableOpacity>
   );
+
+
+  // handle login
+  const handleLogin = () => {
+    // check if user has verified their phone number
+    firebase.auth().signInWithPhoneNumber(phoneNumber)
+      .then(result => {
+        // user has verified their phone number
+        // log user in
+        result.user.linkWithCredential(firebase.auth.PhoneAuthProvider.credential(result.verificationId, password))
+          .then(() => {
+            navigation.navigate('Home',{contact:phoneNumber,userName:"shane" })
+          })
+          .catch(error => {
+            // handle error
+          });
+      })
+      .catch(error => {
+        // user has not verified their phone number
+        // handle error
+      });
+  }
 
 
 

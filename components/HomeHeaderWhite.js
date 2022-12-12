@@ -97,7 +97,7 @@ const HomeHeaderWhite = ({ header,navigation  }) => {
      navigation.popToTop()
     } >
       <IconComponentProvider IconComponent={MaterialCommunityIcons}>
-        <Icon name="arrow-left" size={35} color="#424242"/>
+        <Icon name="arrow-left" size={30} color="#424242"/>
       </IconComponentProvider>
     </TouchableOpacity>
      

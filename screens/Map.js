@@ -1,131 +1,150 @@
-
-import { SafeAreaView, View, FlatList,ImageBackground, StyleSheet, Text,Image,TouchableOpacity} from 'react-native';
+import React, {useState,useEffect,useRef,useMemo,useCallback} from "react";
+import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
+import MapViewDirections from 'react-native-maps-directions';
+import { SafeAreaView, View, FlatList,ImageBackground, StyleSheet, Dimensions,Text,Image,TouchableOpacity} from 'react-native';
+import * as Location from 'expo-location';
 import {  HomeHeaderWhite} from "../components";
-import { LinearGradient } from 'expo-linear-gradient';
+import { useBottomSheetModal } from '@gorhom/bottom-sheet';
 import { IconComponentProvider, Icon } from "@react-native-material/core";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import Barcode from 'react-native-barcode-svg';
-import React, { useCallback, useMemo,useState, useRef, useEffect } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
+
+
 import {BottomSheetModal,} from '@gorhom/bottom-sheet';
-import { useBottomSheetModal } from '@gorhom/bottom-sheet';
-import { Stack, Alert, IconButton, HStack, VStack,Box, CloseIcon, Center, NativeBaseProvider } from "native-base";
 
 
- 
-    
 
-const Venue= ({navigation}) => {
-
-  const [booked,setBooked]=useState(false);
-  const bottomSheetModalRef = useRef(null);
+const Map = ({navigation}) => {
+  const [origin, setOrigin] = useState({latitude:28.450127,
+    longitude:-16.269045});
+  const [errorMsg, setErrorMsg] = useState(null);
+  const { width, height } = Dimensions.get('window');
+  const bottomSheetModalRefVenue = useRef(null);
   const { dismiss, dismissAll } = useBottomSheetModal();
+  const map = useRef();
+  const snapPoints = useMemo(() => ['20%', '25%']);
+  const [time,setTime]=useState(false);
+  const GOOGLE_MAPS_APIKEY = 'AIzaSyCmcpx4SLKG6wLsdIeD6RT5ioDYihSRNM0';
+  const [destination,setDestination]=useState({latitude: 37.771707, longitude: -122.4053769});
+
 
 
   
-  
-  // variables
-  const snapPoints = useMemo(() => ['50%', '85%'], []);
-
-  // callbacks
   const handlePresentModalPress = useCallback(() => {
-    bottomSheetModalRef.current?.present();
+    !bottomSheetModalRefVenue.current?.present();
   }, []);
 
   const handleSheetChanges = useCallback((index) => {
     console.log('handleSheetChanges', index);
   }, []);
 
-
-  const handleClosePress = () =>bottomSheetModalRef.current.close()
-  
-  const AppButton = ({  title }) => (
-    <TouchableOpacity onPress={
-      handlePresentModalPress
-    } style={styles.appButtonContainer}>
-      <Text style={styles.appButtonText}>
-      {title} </Text>
-       <IconComponentProvider IconComponent={MaterialCommunityIcons}>
-        <Icon name="chevron-right" size={25} color="#000"/>
-        </IconComponentProvider>
-    </TouchableOpacity>
-
-  );
-
   
 
-  const CloseAppButton = ({  title }) => (
-    <TouchableOpacity onPress={()=>{
-      handleClosePress();
-      return navigation.navigate('Map');
-    }} style={styles.CloseappButtonContainer}>
-      <Text style={styles.CloseappButtonText}>
-      {title} </Text>
-      <IconComponentProvider IconComponent={MaterialCommunityIcons}>
-        <Icon name="chevron-right" size={25} color="#fff"/>
-        </IconComponentProvider>
-    </TouchableOpacity>
-  );
 
-  
 
-  const Item = ({ title ,banner,location,vibe}) => (
-    <View style={styles.item}>
-     <ImageBackground  
-      style={styles.bannerImage}
-      resizeMode="cover"
-      source={{ uri:'https://cdn.uc.assets.prezly.com/63e33bf5-3a17-4b2d-bfae-18b6a1c528cc/-/preview/1200x1200/-/format/auto/' }}>  
-      </ImageBackground>
+
+
+
+  useFocusEffect(
+
     
+    useCallback(() => {
+      handlePresentModalPress();
+      getCordinates();
       
-      <View style={styles.card}>
-      <LinearGradient
-          // Background Linear Gradient
-          colors={['rgba(95, 93, 93, 0.623)', 'black', 'black']}
-          style={styles.linearGrd}
-        >
-          <View style={styles.venueContent}>
-
-         <Text style={styles.area}>Club Da Place</Text>
-         <View style={styles.date}>
-        
-        <Text style={styles.dateTextContainer} >Feb</Text>
-        <Text style={styles.dateText}>5</Text>
-        </View>
-      </View>
-         <View style={styles.eventDetails}>
-          
-        <View style={styles.venue}>
-        <IconComponentProvider IconComponent={MaterialCommunityIcons}>
-        <Icon name="flag" size={30} color="#fff"/>
-        </IconComponentProvider>
-          <Text  style={{color:"white",fontSize:15,textAlign:'center',color:"rgba(229, 233, 229, 0.938)",marginLeft:20,fontFamily: 'RalewayRegular'}}>Mamboleo Stage Kisumu </Text>
-        </View>
+    }, [1]))
   
-       
-        </View>
-      <Text style={styles.vibe}>We welcome you to come and join us in experiencing three magnificent films that will entertain and edutain you as our lovely guest. </Text>
-      <View >
-        <AppButton title="Get Ticket" size="sm" backgroundColor="#fff" />
-      </View> 
-      </LinearGradient>
+
+  useEffect(() => {
+   
+    (async () => {
+      
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        setErrorMsg('Permission to access location was denied');
+        return;
+      }
+      
+    })();
+  }, []);
+
+ 
+const getCordinates= async ()=>{
+      let location = await Location.getCurrentPositionAsync({});
+      const currentLocation={
+        latitude:location.coords.latitude,
+        longitude:location.coords.longitude
+      }
      
-      </View>
-    </View>
-  );
-  
+      setOrigin(currentLocation);
+      console.log(currentLocation);
+      
+    
+}
 
 
 
 
+
+ 
 
   return (
-   
-    <SafeAreaView style={styles.container}>
-
-     <HomeHeaderWhite navigation={navigation} header={'Venue'}/>
+    <View style={styles.container}>
+      <View >
+      <HomeHeaderWhite navigation={navigation} header={'Go direction'}/>
      
-        <BottomSheetModal
-            ref={bottomSheetModalRef}
+    </View>
+    <MapView ref={map}
+      style={{width: '100%', height: '100%'}}
+      provider={PROVIDER_GOOGLE}
+      showsUserLocation={true}
+      initialRegion={{
+        latitude: -1.3221119,
+        longitude: 36.7983279,
+        latitudeDelta: 0.0222,
+        longitudeDelta: 0.0121,
+      }}>
+      <MapViewDirections
+        origin={origin}
+        languege="en"
+        region="KE"
+        destination="Mamboleo stage kisumu"
+        onStart={(params) => {
+          console.log(`Started routing between "${params.origin}" and "${params.destination}"`);
+        }}
+        onReady={result => {
+          setDestination(result.coordinates[result.coordinates.length-1]);
+          console.log(`Distance: ${result.distance} km`)
+          console.log(`Duration: ${result.duration} min.`)
+        
+          map.current.fitToCoordinates(result.coordinates, {
+            edgePadding: {
+              right: (width / 20),
+              bottom: (height / 20),
+              left: (width / 20),
+              top: (height / 20),
+            }})
+
+        }}
+        onError={(errorMessage) => {
+          // console.log('GOT AN ERROR');
+        }}
+        apikey={GOOGLE_MAPS_APIKEY}
+        strokeWidth={5}
+        strokeColor="red"
+      />
+      <Marker
+        coordinate={origin}
+        title={'Origin'}
+      />
+      <Marker
+        coordinate={destination}
+        image={{uri:'https://img.icons8.com/ios-filled/100/null/go.png'}}
+      />
+    </MapView>
+    <BottomSheetModal
+            ref={bottomSheetModalRefVenue}
             index={1}
             snapPoints={snapPoints}
             onChange={handleSheetChanges}
@@ -164,27 +183,23 @@ const Venue= ({navigation}) => {
 
 
           </View>
-       <View style={styles.row3}>
-        
-          <Text  style={styles.info}>Security barcode</Text>
-          <Barcode value="Hello World" format="CODE128" />
-         
-          <CloseAppButton title="GO" size="sm" backgroundColor="#fff" />
-       </View> 
+      
               </View>
             
        </View>
         </BottomSheetModal>
-        <Item/>
-    </SafeAreaView>
-     
+    </View>
+    
   );
-}
-
+};
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     
+  },
+  paragraph: {
+    fontSize: 18,
+    textAlign: 'center',
   },
   bottomSheetRef: {
     flex: 1,
@@ -442,33 +457,5 @@ venueLocation: {
     fontSize:12,
     fontFamily: 'RalewayRegular',
 },
-
-userInfoContainer: {
-    flexDirection:'row',
-    alignItems:'center',
-    marginTop:20,
-    borderBottomWidth:1,
-    borderBottomColor:'#e4e3e3',
-    paddingBottom:10
-},
-row1:{
-marginRight:100,
-
-},
-title:{
-fontSize:18,
-fontFamily: 'RalewayBold',
-marginTop:10,
-
-},
-qrcode: {
-    width:110,
-    height:60
-}
 });
-
- 
-
- 
-
-export default Venue;
+export default Map;

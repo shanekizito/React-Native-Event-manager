@@ -6,41 +6,19 @@ import { ButtonContainer, ButtonText } from "./styles";
 import React, {  useState, useEffect,useRef } from "react";
 import { Text, View, StyleSheet, TextInput,Image, Button, Keyboard , Alert, ActivityIndicator,Pressable ,TouchableOpacity ,SafeAreaView} from 'react-native';
 import * as FirebaseRecaptcha from 'expo-firebase-recaptcha';
-import { initializeApp, getApp } from 'firebase/app';
 import { getAuth, PhoneAuthProvider, signInWithCredential } from 'firebase/auth';
 import OTPInput from "./OTPInput";
-
-
+import { firebaseConfig } from '../config/firebase';
+import { auth} from '../config/firebase';
 // Add your Firebase >=9.x.x config here
 // https://firebase.google.com/docs/web/setup
-const FIREBASE_CONFIG = {
-    apiKey: "AIzaSyBSGXuwm2g6kcp8WJFMUNCrksryZ8PTEqk",
-    authDomain: "onthego-52662.firebaseapp.com",
-    databaseURL: "https://onthego-52662-default-rtdb.firebaseio.com",
-    projectId: "onthego-52662",
-    storageBucket: "onthego-52662.appspot.com",
-    messagingSenderId: "596897853249",
-    appId: "1:596897853249:web:f2c7f8d03a18cae2f47bc0"
-};
 
+// Import the functions you need from the SDKs you need
 
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
 
-try {
-  if (FIREBASE_CONFIG.apiKey) {
-    initializeApp(FIREBASE_CONFIG);
-  }
-} catch (err) {
-  // ignore app already initialized error on snack
-}
-
-// Firebase references
-let app = getApp();
-const auth = getAuth(app);
-
-
-
-
-
+// Your web app's Firebase configuration
 
 
 
@@ -56,16 +34,21 @@ const PhoneNumberAuth = ({navigation,route}) => {
   const [verifyError, setVerifyError] = useState();
   const [verifyInProgress, setVerifyInProgress] = useState(false);
   const [codeSent,setCodeSent] = useState(false);
-  const isConfigValid = !!FIREBASE_CONFIG.apiKey;
+  const isConfigValid = !!firebaseConfig.apiKey;
   const [userData,setUserData]=useState({});
   const [verificationCode, setVerificationCode] = useState(otpCode);
   const [confirmError, setConfirmError] = React.useState(null);
   const [confirmInProgress, setConfirmInProgress] =useState(false);
   const maximumCodeLength = 6;
 
+
+
+  /*
   useEffect(() => {
     setUserData(route.params)
-   },[route.params.contact])
+   },[route.params])
+*/
+
 
   const AppButton = ({  title }) => (
     <TouchableOpacity onPress={() =>
@@ -95,14 +78,14 @@ const PhoneNumberAuth = ({navigation,route}) => {
       
         <FirebaseRecaptcha.FirebaseRecaptchaVerifierModal
         ref={recaptchaVerifier}
-        firebaseConfig={FIREBASE_CONFIG}
+        firebaseConfig={firebaseConfig}
         attemptInvisibleVerification={true }
       />
        {!codeSent ? (
-       <View>
-       <Text style={styles.info}>We will send a one time password on this mobile number</Text>
        <View style={{width:"100%",display:"flex",alignItems:"center",justifyContent:"center"}}>
-       <Text style={styles.prefix}>Enter Mobile Number</Text>
+       <Text style={styles.info}>We will send a one time password on this mobile number</Text>
+       
+       <Text style={styles.prefix}>Enter Mobile Number {phoneNumber}</Text>
        <TextInput
         style={styles.input}
         autoFocus={isConfigValid}
@@ -113,11 +96,11 @@ const PhoneNumberAuth = ({navigation,route}) => {
         editable={!verificationId}
         onChangeText={phoneNumber => setPhoneNumber(phoneNumber)}
       />
-      </View>
+      
       <TouchableOpacity style={styles.appButtonContainer}
         disabled={!phoneNumber}
         onPress={async () => {
-    
+          
           const phoneProvider = new PhoneAuthProvider(auth);
            try {
             setVerifyError(undefined);
@@ -130,7 +113,6 @@ const PhoneNumberAuth = ({navigation,route}) => {
             setVerifyInProgress(false);
             setVerificationId(verificationId);
             setCodeSent(true);
-          
           } catch (err) {
             setVerifyError(err);
             setVerifyInProgress(false);
@@ -138,10 +120,8 @@ const PhoneNumberAuth = ({navigation,route}) => {
         }}>
 
 
-<Text style={styles.appButtonText}>
-      GET OTP</Text>
-       
-        
+   <Text style={styles.appButtonText}>
+      GET OTP</Text> 
       </TouchableOpacity>
       {verifyError && <Text style={styles.error}>{`${verifyError} please use a valid format`}</Text>}
       {verifyInProgress && <ActivityIndicator style={styles.loader} />}
@@ -152,7 +132,7 @@ const PhoneNumberAuth = ({navigation,route}) => {
 
       ):(
       <View>
-     <Text style={styles.info}>Enter the OTP sent to  {route.params.contact}</Text>
+     <Text style={styles.info}>Enter the OTP sent to  {phoneNumber}</Text>
      <View style={styles.content}>
       <Pressable style={styles.container1} onPress={Keyboard.dismiss}>
         <OTPInput
@@ -230,8 +210,6 @@ const styles = StyleSheet.create({
       flex: 1,
       width:"100%",
       
-       
-      
   },
   form:{
       padding:20,
@@ -261,12 +239,11 @@ const styles = StyleSheet.create({
       color:'#000',
       height:40,
       fontSize:17,
-
       marginTop:20,
       padding:10,
       borderRadius:15,
       fontFamily: 'RalewayRegular',
-      width:"70%"
+      width:"80%"
 
 
   },

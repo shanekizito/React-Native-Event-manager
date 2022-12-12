@@ -1,56 +1,72 @@
-import styled from "styled-components/native";
+import { StyleSheet } from 'react-native';
 
-export const OTPInputContainer = styled.View`
-  justify-content: center;
-  align-items: center;
-`;
+const styles = StyleSheet.create({
+  container: {
+    padding: 10,
+    height: '100%',
+  },
+  textInput: {
+    padding: 10,
+    backgroundColor: '#eee',
+    marginVertical: 5,
+    marginLeft: 20,
+  },
 
-export const TextInputHidden = styled.TextInput`
- 
-  border-color: #e5e5e5;
-  border-width: 1px;
-  border-radius: 5px;
-  padding: 15px;
-  margin-top: 50px;
-  color: white; 
-  position: absolute;
-  opacity: 0;
-`;
+  separator: {
+    backgroundColor: '#efefef',
+    height: 1,
+  },
+  listView: {
+    position: 'absolute',
+      top: 105,
+  },
+  autocompleteContainer: {
+    position: 'absolute',
+    top: 0,
+    left: 10,
+    right: 10,
+  },
 
-export const SplitOTPBoxesContainer = styled.Pressable`
-  width: 99%;
-  flex-direction: row;
-  justify-content: space-evenly;
-`;
-export const SplitBoxes = styled.View`
-  border-color: #e5e5e5;
-  border-width: 2px;
-  border-radius: 5px;
-  padding: 12px;
-  min-width: 50px;
-`;
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginVertical: 10,
+  },
+  iconContainer: {
+    backgroundColor: '#a2a2a2',
+    padding: 5,
+    borderRadius: 50,
+    marginRight: 15,
+  },
+  locationText: {
 
-export const SplitBoxText = styled.Text`
-  font-size: 20px;
-  text-align: center;
-  
-`;
+  },
 
-export const SplitBoxesFocused = styled(SplitBoxes)`
-  border-color: #ecdbba;
-  
-`;
+  circle: {
+    width: 5,
+    height: 5,
+    backgroundColor: 'black',
+    position: 'absolute',
+    top: 20,
+    left: 15,
+    borderRadius: 5,
+  },
+  line: {
+    width: 1,
+    height: 50,
+    backgroundColor: '#c4c4c4',
+    position: 'absolute',
+    top: 28,
+    left: 17,
+  },
+  square: {
+    width: 5,
+    height: 5,
+    backgroundColor: 'black',
+    position: 'absolute',
+    top: 80,
+    left: 15,
+  },
+});
 
-export const ButtonContainer = styled.TouchableOpacity`
-  background-color: #000000;
-  padding: 20px;
-  justify-content: center;
-  align-items: center;
-  width: 200px;
-  margin-top: 30px;
-`;
-
-export const ButtonText = styled.Text`
-  color: black;
-  font-size: 20px;
-`;
+export default styles;
