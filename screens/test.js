@@ -1,68 +1,22 @@
-import React from 'react'
-import { Alert, Button, TextInput, Text,View, StyleSheet,SafeAreaView,TouchableOpacity } from 'react-native';
-import {  FocusedStatusBar, HomeHeader } from "../components";
-import { COLORS} from "../constants";
-import {  useState } from "react";
+import React, { useState } from 'react';
+import { Alert, Button, TextInput, Text, View } from 'react-native';
 import {doc, setDoc,getFirestore} from 'firebase/firestore'
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-
-
-import {
-    collection,
-    addDoc,
-    orderBy,
-    query,
-    onSnapshot
-  } from 'firebase/firestore';
-
-import { auth, database } from '../config/firebase';
+import 'firebase/firestore';
 
 
 
-const SignUp = ({navigation}) => {
-
-  const [phoneNumber, setPhoneNumber] = useState("");
+const SignUp = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
   const [username, setUsername] = useState('');
-  const collectionRef = collection(database, 'users');
-  const q = query(collectionRef, orderBy('createdAt', 'desc'));
+  const [isValid, setIsValid] = useState(true);
+  const [phoneNumber, setPhoneNumber] = useState("");
 
-
-
-
-  
-
-
-const handleSubmit = () => {
-    // create user with phone number and password
-    createUserWithEmailAndPassword(auth,email, password)
-      .then(result => {
-        // save user to Firestore
-        addDoc(collectionRef,{
-                username:username,
-                email:email,
-                phoneNumber:phoneNumber,   
-        })
-      }).then(navigation.navigate('PhoneNumberAuth',{contact:phoneNumber }))
-      .catch(error => {
-        console.log(error)
-      });
-}
-
-
-const onHandleSignup = () => {
-    if (email !== '' && password !== '') {
-  createUserWithEmailAndPassword(auth, email, password)
-        .then(() => console.log('Signup success'))
-        .catch((err) => Alert.alert("Login error", err.message));
-    }
-  };
 
   const AppButton = ({  title }) => (
-    <TouchableOpacity onPress={
-        handleSubmit
-    } style={styles.appButtonContainer}>
+    <TouchableOpacity onPress={handleSubmit}
+         style={styles.appButtonContainer}>
       <Text style={styles.appButtonText}>
       {title}</Text>
     </TouchableOpacity>
@@ -70,13 +24,33 @@ const onHandleSignup = () => {
 
 
 
-   
+  // handle submission of phone number and password
+  const handleSubmit = () => {
+    // create user with phone number and password
+    firebase.auth().createUserWithPhoneNumber(email, password)
+      .then(result => {
+        // save user to Firestore
+        firebase.firestore().collection('users')
+          .doc(result.user.uid)
+          .set({
+            name,
+            email,
+            username,
+            password
+          });
+      })
+      .catch(error => {
+        console.log(error)
+      });
+  }
+
+
+
 
 
 
   return (
-    
-        <SafeAreaView style={styles.container}>
+  <SafeAreaView style={styles.container}>
         <FocusedStatusBar backgroundColor={COLORS.primary} />
         <HomeHeader/>
         <View style={styles.form}>
@@ -94,11 +68,6 @@ const onHandleSignup = () => {
             style={styles.input}
         />
         <TextInput
-            placeholder={'phoneNumber'}
-            onChangeText={(phoneNumber) => setPhoneNumber(phoneNumber)}
-            style={styles.input}
-        />
-        <TextInput
             placeholder={'Password'}
             style={styles.input}
             secureTextEntry={true}
@@ -110,7 +79,7 @@ const onHandleSignup = () => {
         <View style={styles.registerLink}>
         <Text style={{color:"#929292"}}>Already have an account ? </Text> 
         <TouchableOpacity onPress={() =>
-      navigation.navigate('SignIn', { name: 'Jane' })
+         navigation.navigate('SignIn', { name: 'Jane' })
         } >
         <Text style={styles.registerButton}>Login</Text>
         </TouchableOpacity>

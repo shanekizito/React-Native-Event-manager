@@ -1,4 +1,4 @@
-import 'dotenv'
+import 'dotenv/config'
 
 export default{
   "expo": {
@@ -35,18 +35,19 @@ export default{
     "web": {
       "favicon": "./assets/icon.png"
     },
-    "extra": {
-      firebaseApiKey: process.env.FIREBASE_API_KEY,
-      firebaseAuthDomain: process.env.FIREBASE_AUTH_DOMAIN,
-      firebaseProjectId: process.env.FIREBASE_PROJECT_ID,
-      firebaseStorageBucket: process.env.FIREBASE_STORAGE_BUCKET,
-      firebaseMessagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
-      firebaseAppId: process.env.FIREBASE_APP_ID,
-      firebaseDatabaseURL: process.env.FIREBASE_DATABASE_URL,
+   
       "eas": {
         "projectId": "a8f6d266-f2fd-4045-80e4-c382440e0e2d"
-      }
-    },
+      },
+      extra: {
+        apiKey: process.env.API_KEY,
+        authDomain: process.env.AUTH_DOMAIN,
+        projectId: process.env.PROJECT_ID,
+        storageBucket: process.env.STORAGE_BUCKET,
+        messagingSenderId: process.env.MESSAGING_SENDER_ID,
+        appId: process.env.APP_ID
+      },
+    
     "plugins": [
       [
         "expo-build-properties",

@@ -9,29 +9,9 @@ import { getAuth, PhoneAuthProvider, signInWithCredential } from 'firebase/auth'
 
 // Add your Firebase >=9.x.x config here
 // https://firebase.google.com/docs/web/setup
-const FIREBASE_CONFIG = {
-    apiKey: "AIzaSyBSGXuwm2g6kcp8WJFMUNCrksryZ8PTEqk",
-    authDomain: "onthego-52662.firebaseapp.com",
-    databaseURL: "https://onthego-52662-default-rtdb.firebaseio.com",
-    projectId: "onthego-52662",
-    storageBucket: "onthego-52662.appspot.com",
-    messagingSenderId: "596897853249",
-    appId: "1:596897853249:web:f2c7f8d03a18cae2f47bc0"
-};
 
 
 
-try {
-  if (FIREBASE_CONFIG.apiKey) {
-    initializeApp(FIREBASE_CONFIG);
-  }
-} catch (err) {
-  // ignore app already initialized error on snack
-}
-
-// Firebase references
-let app = getApp();
-const auth = getAuth(app);
 
 
 

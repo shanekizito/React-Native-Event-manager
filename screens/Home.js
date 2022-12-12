@@ -1,16 +1,13 @@
-import React, { useState,useCallback } from "react";
+import React, { useState,useCallback,useEffect} from "react";
 import { View, SafeAreaView, FlatList,ImageBackground,StyleSheet,Dimensions,TouchableOpacity,Text} from "react-native";
 import DropDownPicker from 'react-native-dropdown-picker';
 import {  HomeHeader} from "../components";
 import TypeWriter from 'react-native-typewriter'
 import { IconComponentProvider, Icon } from "@react-native-material/core";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
-
-  
-
-
-
-
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from '../config/firebase';  
+import { HomeHeaderWhite} from "../components";
 
 
 
@@ -54,6 +51,23 @@ const Home = ({ navigation }) => {
     {label: 'Mombasa', value: 'Mombasa' },
     {label: 'Nairobi', value: 'Nairobi'}
   ]);
+  const  [user,setUser] = useState(null);
+
+
+
+
+
+useEffect(()=>{
+  const unsubscribeAuth = onAuthStateChanged(
+    auth, async authenticatedUser => {
+      authenticatedUser ? setUser(authenticatedUser) : setUser(null);
+      setIsLoading(false);
+    }
+  );
+  return unsubscribeAuth;
+},[user])
+
+
 
   const onTownOpen = useCallback(() => {
     setMoodOpen(false);
@@ -91,13 +105,16 @@ const SignInButton = ({ title }) => (
   
 
   return (
+
     <SafeAreaView style={{ flex: 1 }}>   
+      
       <ImageBackground     
        source={{uri:"https://cdn.uc.assets.prezly.com/6144c428-5a1d-44aa-ad3e-685ed09f0f5e/-/preview/1200x1200/-/format/auto/"}} 
        style={{width:"100%", height: "100%"}}>
       <View    style={styles.bgBody}>
        <HomeHeader/>
-       <SignInButton title=" sign in" size="sm" backgroundColor="#007bff" />
+       {!user?<SignInButton title=" sign in" size="sm" backgroundColor="#007bff" />:null}
+       
        <View style={{marginTop:10,
     
         }}/>
@@ -229,6 +246,7 @@ const styles = StyleSheet.create({
     zIndex:-1,
     
   },
+  
   appButtonContainer: {
     backgroundColor: "#000",
     marginLeft:20,
