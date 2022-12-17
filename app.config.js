@@ -36,16 +36,17 @@ export default{
       "favicon": "./assets/icon.png"
     },
    
-      "eas": {
-        "projectId": "a8f6d266-f2fd-4045-80e4-c382440e0e2d"
-      },
-      extra: {
+      
+      "extra": {
         apiKey: process.env.API_KEY,
         authDomain: process.env.AUTH_DOMAIN,
         projectId: process.env.PROJECT_ID,
         storageBucket: process.env.STORAGE_BUCKET,
         messagingSenderId: process.env.MESSAGING_SENDER_ID,
-        appId: process.env.APP_ID
+        appId: process.env.APP_ID,
+        "eas": {
+          "projectId": "a8f6d266-f2fd-4045-80e4-c382440e0e2d"
+        },
       },
     
     "plugins": [
@@ -60,3 +61,5 @@ export default{
     ]
   }
 }
+
+

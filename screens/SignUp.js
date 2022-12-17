@@ -83,24 +83,27 @@ const onHandleSignup = () => {
         <Text style={styles.text}>Create account</Text>
         <TextInput
             placeholder={'Name'}
-            
+            placeholderTextColor={'grey'}
             value={username}
             style={styles.input}
             onChangeText={(username) => setUsername(username.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, '').replace(/[^a-z0-9]/gi, ''))}
         />
         <TextInput
             placeholder={'Email'}
+            placeholderTextColor={'grey'}
             onChangeText={(email) => setEmail(email)}
             style={styles.input}
         />
         <TextInput
             placeholder={'phoneNumber'}
+            placeholderTextColor={'grey'}
             onChangeText={(phoneNumber) => setPhoneNumber(phoneNumber)}
             style={styles.input}
         />
         <TextInput
             placeholder={'Password'}
             style={styles.input}
+            placeholderTextColor={'grey'}
             secureTextEntry={true}
             onChangeText={(password) => setPassword(password)}
         />
@@ -135,10 +138,8 @@ const styles = StyleSheet.create({
     form:{
         padding:20,
         
-        shadowColor: '#000',
-        shadowOffset: {width: -2, height: 4},
-        shadowOpacity: 0.2,
-        shadowRadius: 3,
+          color:"black",
+        
         width:'98%',
         height: '65%',
         
@@ -148,18 +149,17 @@ const styles = StyleSheet.create({
     text:{
         fontSize: 20,
         fontFamily: 'RalewayBold',
-         marginBottom:12,
+        marginBottom:12,
     },
     input: {
         borderBottomColor:'rgba(196, 193, 193, 0.945)',
         borderBottomWidth:1,
-        color:'#000',
+        color:'black',
         height:40,
         marginTop:20,
         padding:10,
-        borderRadius:15,
+       
         fontFamily: 'RalewayRegular'
-
 
     },
     appButtonContainer:{

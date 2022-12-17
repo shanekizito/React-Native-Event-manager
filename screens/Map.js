@@ -23,6 +23,8 @@ const Map = ({navigation}) => {
   const bottomSheetModalRefVenue = useRef(null);
   const { dismiss, dismissAll } = useBottomSheetModal();
   const map = useRef();
+  const [distance,setDistance]=useState(0);
+  const [duration,setDuration]=useState(0);
   const snapPoints = useMemo(() => ['20%', '25%']);
   const [time,setTime]=useState(false);
   const GOOGLE_MAPS_APIKEY = 'AIzaSyCmcpx4SLKG6wLsdIeD6RT5ioDYihSRNM0';
@@ -72,6 +74,7 @@ const Map = ({navigation}) => {
  
 const getCordinates= async ()=>{
       let location = await Location.getCurrentPositionAsync({});
+
       const currentLocation={
         latitude:location.coords.latitude,
         longitude:location.coords.longitude
@@ -117,7 +120,8 @@ const getCordinates= async ()=>{
           setDestination(result.coordinates[result.coordinates.length-1]);
           console.log(`Distance: ${result.distance} km`)
           console.log(`Duration: ${result.duration} min.`)
-        
+          setDistance(result.distance);
+          setDuration(result.duration);
           map.current.fitToCoordinates(result.coordinates, {
             edgePadding: {
               right: (width / 20),
@@ -163,7 +167,9 @@ const getCordinates= async ()=>{
  
               <View style={styles.userInfoContainer}>
                 <View style={styles.row1}>
-                <Text style={styles.title}>Shane Kizito</Text>
+                <Text style={styles.title}>{duration.toFixed(0)} KM </Text>
+                <Text style={styles.title}>{distance.toFixed(0)} Minutes</Text>
+
                 <Text style={styles.title}>Feb 29 2023</Text>
                 </View>
 
@@ -450,6 +456,11 @@ venueInfoContainer: {
     
 }
 ,
+title:{
+  fontSize:15,
+  fontFamily: 'RalewayBold',
+  marginTop:5,
+},
 
 venueName: {
 },

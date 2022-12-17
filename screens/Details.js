@@ -21,6 +21,7 @@ const DATA = [
     location:"Nairobi Rd , Kisumu",
     banner: 'https://cdn.uc.assets.prezly.com/8f4a921a-814e-4032-9b87-77ff8e40323c/-/preview/1200x1200/-/format/auto/',
   },
+
   {
     id: '58694a0f-3da1-471f-bd96-145571e29d72',
     title: 'Alleways Beer Garden',
@@ -28,6 +29,7 @@ const DATA = [
     location:"Kisumu CBD Behind KPLC",
     banner: 'https://cdn.uc.assets.prezly.com/ab038d3e-0b19-4780-8d26-f8f5f327024d/-/preview/1200x1200/-/format/auto/',
   },
+
 ];
 
 
@@ -44,7 +46,7 @@ const Details= ({navigation}) => {
     <View style={styles.item}>
     
      <TouchableOpacity  onPress={() =>
-        navigation.navigate('Venue', { name: 'Jane' })
+        navigation.navigate('Venue', { item:{title,banner,location,vibe} })
       } >
      <Image style={styles.tinyLogo} resizeMode="cover"source={{ uri:banner}} />
        <View style={styles.heartIcon}>

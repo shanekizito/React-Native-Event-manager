@@ -8,8 +8,8 @@ import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../config/firebase';  
 import { HomeHeaderWhite} from "../components";
-
-
+import { ref, getDownloadURL } from "firebase/storage";
+import { storage} from '../config/firebase';
 
 
 
@@ -54,18 +54,32 @@ const Home = ({ navigation }) => {
   const  [user,setUser] = useState(null);
 
 
+  
+  
+
+
+
 
 
 
 useEffect(()=>{
+
+  getDownloadURL(ref(storage, 'images/hero.jpg'))
+    .then((url) => {
+     console.log(url);
+    }).catch((err) => {
+    console.log(err)
+    });
+
   const unsubscribeAuth = onAuthStateChanged(
     auth, async authenticatedUser => {
       authenticatedUser ? setUser(authenticatedUser) : setUser(null);
+      console.log(user);
       setIsLoading(false);
     }
   );
   return unsubscribeAuth;
-},[user])
+},[])
 
 
 
@@ -132,7 +146,7 @@ const SignInButton = ({ title }) => (
           fontSize:13,
         }}
         setOpen={setCityOpen}
-        zIndex={1000}
+        zIndex={2000}
         zIndexInverse={2000}
         placeholder="Where in Kenya"
         placeholderStyle={{
@@ -189,7 +203,7 @@ const SignInButton = ({ title }) => (
         }}
         listItemLabelStyle={{
           color: "grey",
-          marginTop:5,
+          marginTop:0,
           fontSize:13,
           fontFamily: 'RalewayRegular'
         }}
@@ -249,6 +263,9 @@ const styles = StyleSheet.create({
   
   appButtonContainer: {
     backgroundColor: "#000",
+    flexDirection:'row',
+    alignItems:"center",
+    justifyContent:"center",
     marginLeft:20,
     color:'#fff',
     marginTop:20,
@@ -282,15 +299,17 @@ const styles = StyleSheet.create({
   },
   SignInButtonContainer: {
     elevation: 8,
-    backgroundColor: "#f7f7f7f1",
+    flexDirection:'row',
+    alignItems:"center",
+    justifyContent:"center",
+   backgroundColor: "#f7f7f7f1",
     color:'#000',
     height: 40,
     borderRadius: 20,
     marginTop:-20,
     marginLeft:10,
     width:100,
-    paddingVertical: 5,
-    paddingHorizontal: 1,
+    
     
   },
   SignInButtonText: {
