@@ -70,7 +70,7 @@ export default function PhoneAuthScreen() {
           style={styles.textInput}
           autoFocus={isConfigValid}
           autoCompleteType="tel"
-          keyboardType="phone-pad"
+         
           textContentType="telephoneNumber"
           placeholder="phone number"
           editable={!verificationId}

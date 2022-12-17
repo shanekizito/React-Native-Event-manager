@@ -9,6 +9,7 @@ import React, { useCallback, useMemo,useState, useRef, useEffect } from 'react';
 import {BottomSheetModal,} from '@gorhom/bottom-sheet';
 import { useBottomSheetModal } from '@gorhom/bottom-sheet';
 import { Stack, Alert, IconButton, HStack, VStack,Box, CloseIcon, Center, NativeBaseProvider } from "native-base";
+import { useRoute, useNavigation } from '@react-navigation/native';
 
 
  
@@ -17,9 +18,18 @@ import { Stack, Alert, IconButton, HStack, VStack,Box, CloseIcon, Center, Native
 const Venue= ({navigation}) => {
 
   const [booked,setBooked]=useState(false);
+  const [venueData,setVenueData]=useState({});
   const bottomSheetModalRef = useRef(null);
+  const route = useRoute();
+  
   const { dismiss, dismissAll } = useBottomSheetModal();
 
+
+  useEffect(()=>{
+
+    setVenueData(route.params.item)
+    console.log(route.params.item);
+  },[route.params.item])
 
   
   
@@ -55,7 +65,7 @@ const Venue= ({navigation}) => {
 
   const CloseAppButton = ({  title }) => (
     <TouchableOpacity onPress={()=>{
-      handleClosePress();
+      dismissAll();
       return navigation.navigate('Map');
     }} style={styles.CloseappButtonContainer}>
       <Text style={styles.CloseappButtonText}>
@@ -73,7 +83,7 @@ const Venue= ({navigation}) => {
      <ImageBackground  
       style={styles.bannerImage}
       resizeMode="cover"
-      source={{ uri:'https://cdn.uc.assets.prezly.com/63e33bf5-3a17-4b2d-bfae-18b6a1c528cc/-/preview/1200x1200/-/format/auto/' }}>  
+      source={{ uri:venueData.banner}}>  
       </ImageBackground>
     
       
@@ -81,11 +91,10 @@ const Venue= ({navigation}) => {
       <LinearGradient
           // Background Linear Gradient
           colors={['rgba(95, 93, 93, 0.623)', 'black', 'black']}
-          style={styles.linearGrd}
-        >
+          style={styles.linearGrd}>
           <View style={styles.venueContent}>
 
-         <Text style={styles.area}>Club Da Place</Text>
+         <Text style={styles.area}>{venueData.title}</Text>
          <View style={styles.date}>
         
         <Text style={styles.dateTextContainer} >Feb</Text>
@@ -98,10 +107,8 @@ const Venue= ({navigation}) => {
         <IconComponentProvider IconComponent={MaterialCommunityIcons}>
         <Icon name="flag" size={30} color="#fff"/>
         </IconComponentProvider>
-          <Text  style={{color:"white",fontSize:15,textAlign:'center',color:"rgba(229, 233, 229, 0.938)",marginLeft:20,fontFamily: 'RalewayRegular'}}>Mamboleo Stage Kisumu </Text>
+          <Text  style={{color:"white",fontSize:15,textAlign:'center',color:"rgba(229, 233, 229, 0.938)",marginLeft:20,fontFamily: 'RalewayRegular'}}>{venueData.location} </Text>
         </View>
-  
-       
         </View>
       <Text style={styles.vibe}>We welcome you to come and join us in experiencing three magnificent films that will entertain and edutain you as our lovely guest. </Text>
       <View >
@@ -135,10 +142,10 @@ const Venue= ({navigation}) => {
                <View style={styles.ticket}>
                 
                   <View style={styles.venueContainer}>
-                    <Image style={styles.tinyBanner}resizeMode="cover"source={{ uri:"https://kenyaonthego.com/wp-content/uploads/2021/11/black-pearl-4-520x397.jpg" }}/>
+                    <Image style={styles.tinyBanner}resizeMode="cover"source={{ uri:venueData.banner}}/>
                   <View style={styles.venueInfoContainer}>
-                    <Text style={styles.place}>Club Da Place</Text>
-                    <Text style={styles.venueLocation}>Mamboleo stage - Kisumu</Text>
+                    <Text style={styles.place}>{venueData.title}</Text>
+                    <Text style={styles.venueLocation}>{venueData.location}</Text>
                  </View>
                </View>
  
@@ -260,7 +267,7 @@ const styles = StyleSheet.create({
      backgroundColor:"#ffff",
      width:70,
      marginLeft:127,
-     marginTop:-20,
+     marginTop:20,
      padding:12,
      borderRadius:12,
 
@@ -270,9 +277,10 @@ const styles = StyleSheet.create({
   },
   dateText:{
 color:'#000',
+borderWidth:0,
 borderTopWidth:3,
-borderTopColor:'grey',
- 
+borderColor:'grey',
+borderRadius:1,
 fontWeight:'bold',
 fontSize:25,
 fontFamily: 'RalewayRegular',
@@ -322,7 +330,7 @@ fontFamily: 'RalewayRegular',
      flexDirection:"row",
      alignItems:"center",
      justifyContent:'center',
-    marginTop:120,
+    marginTop:60,
     marginLeft:20,
     borderRadius: 115,
     width:320,
@@ -347,7 +355,6 @@ fontFamily: 'RalewayRegular',
     fontSize: 17,
     fontFamily: 'RalewayBold',
     color: "#fff",
-     
     flexDirection:"row",
     alignItems:"center",
     justifyContent:"flex-end",

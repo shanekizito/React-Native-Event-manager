@@ -24,6 +24,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { reload } from './redux/actions/index';
 import * as FirebaseRecaptcha from 'expo-firebase-recaptcha';
+import { firebaseConfig } from './config/firebase';
+import { auth} from './config/firebase';
 
  
 
@@ -146,7 +148,7 @@ const App=()=> {
           name="Notification"
           component={Notification}
           options={{
-            tabBarLabel: '1',
+            tabBarLabel: '',
             tabBarBadge:'3',
             tabBarBadgeStyle: {
               maxWidth: 9,
@@ -154,8 +156,8 @@ const App=()=> {
               maxHeight: 9,
               fontSize: 5,
               lineHeight: 9,
-              backgroundColor:"#000",
-              color:"#000"
+              backgroundColor:"red",
+              color:"#fff"
               },
              tabBarIcon: ({ color, size }) => (
               <MaterialCommunityIcons name="bell-outline" color={"#424242"} size={30} />

@@ -23,64 +23,17 @@ const Profile = ({navigation}) => {
 
    return (
     <View style={styles.container}>
-    <HomeHeaderWhite header={'SETTINGS'} navigation={navigation}/>
+    <HomeHeaderWhite header={'Settings'} navigation={navigation}/>
 
     
     <View style={styles.form}>
         
-        <View style={styles.inputSection}>
-            <IconComponentProvider IconComponent={MaterialCommunityIcons}>
-                <Icon style={styles.inputIcon} name="map-marker" size={25} color="#000"/>
-                </IconComponentProvider>
-            <TextInput
-                    placeholder={'Location'}
-                    style={styles.input}
-                    placeholderTextColor="#000"
-                    editable={false}
-            />
-        </View>
-        <View style={styles.inputSection}>
-            <IconComponentProvider IconComponent={MaterialCommunityIcons}>
-                <Icon style={styles.inputIcon} name="email-outline" size={25} color="#000"/>
-                </IconComponentProvider>
-            <TextInput
-                    placeholder={'Email'}
-                    style={styles.input}
-                    placeholderTextColor="#000"
-                    editable={false}
-            />
-        </View>
-        <View style={styles.inputSection}>
-            <IconComponentProvider IconComponent={MaterialCommunityIcons}>
-                <Icon style={styles.inputIcon} name="account-outline" size={25} color="#000"/>
-                </IconComponentProvider>
-            <TextInput
-                    placeholder={'Name'}
-                    style={styles.input}
-                    placeholderTextColor="#000"
-                    editable={false}
-            />
-        </View>
-        <View style={styles.inputSection}>
-            <IconComponentProvider IconComponent={MaterialCommunityIcons}>
-                <Icon style={styles.inputIcon} name="phone-outline" size={25} color="#000"/>
-                </IconComponentProvider>
-            <TextInput
-                    placeholder={'Phone Number'}
-                    style={styles.input}
-                    placeholderTextColor="#000"
-                    editable={false}
-            />
-        </View>
-
-       
-
        
         <View style={styles.notification}>
             <IconComponentProvider IconComponent={MaterialCommunityIcons}>
-                <Icon style={styles.notificationIcon} name="bell-outline" size={25} color="black"/>
+            <Icon style={styles.notificationIcon} name="bell-outline" size={25} color="black"/>
                 </IconComponentProvider>
-            <Text style={{fontSize:17}}>Notifications</Text>
+            <Text style={{fontSize:17}}>Location </Text>
             <Switch
                     style={{marginLeft:"37%"}}
                     trackColor={{ false: "#767577", true: "green" }}
@@ -90,7 +43,22 @@ const Profile = ({navigation}) => {
                     value={isEnabled}
             />
         </View>
-        <AppButton title="Edit" size="sm" backgroundColor="#007bff" />
+        <View style={styles.notification}>
+            <IconComponentProvider IconComponent={MaterialCommunityIcons}>
+            <Icon style={styles.inputIcon} name="map-marker" size={25} color="black"/>
+                </IconComponentProvider>
+            <Text style={{fontSize:17}}>Location </Text>
+            <Switch
+                    style={{marginLeft:"37%"}}
+                    trackColor={{ false: "#767577", true: "green" }}
+                    thumbColor={isEnabled ? "green" : "#f4f3f4"}
+                    ios_backgroundColor="#3e3e3e"
+                    onValueChange={toggleSwitch}
+                    value={isEnabled}
+            />
+        </View>
+        
+        
 
     </View>
     </View>

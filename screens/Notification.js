@@ -23,7 +23,7 @@ const Notification = ({navigation}) => {
 
    return (
     <View style={styles.container}>
-     <HomeHeaderWhite navigation={navigation} header={'NOTIFICATIONS'}/>
+     <HomeHeaderWhite navigation={navigation} header={'Notifications'}/>
     
       <View style={styles.notificationContainer}>
         
