@@ -10,6 +10,7 @@ import { getAuth, PhoneAuthProvider, signInWithCredential } from 'firebase/auth'
 import OTPInput from "./OTPInput";
 import { firebaseConfig } from '../config/firebase';
 import { auth} from '../config/firebase';
+
 // Add your Firebase >=9.x.x config here
 // https://firebase.google.com/docs/web/setup
 
