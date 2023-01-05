@@ -14,14 +14,14 @@ import Notification from './screens/Notification';
 import SignUp from './screens/SignUp';
 import Map from './screens/Map';
 import Verify from './screens/Verify';
+import Booked from './screens/Booked';
 import SignIn from './screens/SignIn';
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 import { useFonts } from 'expo-font';
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 import {BaseButton,GestureHandlerRootView} from 'react-native-gesture-handler';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+
 import { reload } from './redux/actions/index';
 import * as FirebaseRecaptcha from 'expo-firebase-recaptcha';
 import { firebaseConfig } from './config/firebase';
@@ -39,14 +39,111 @@ import { auth} from './config/firebase';
 
 
 
-import { Provider } from 'react-redux';
-import { applyMiddleware, createStore } from 'redux';
-import thunk from 'redux-thunk';
-import rootReducer from './redux/reducers';
+
 import { useEffect } from 'react';
 import { set } from 'react-native-reanimated';
 
 
+const MyTabs=()=>{
+  return (
+    <Tab.Navigator
+      initialRouteName="Home"
+      screenOptions={{
+        tabBarActiveTintColor:'#424242',
+        tabBarHideOnKeyboard:true,
+        headerShown:false,
+        tabBarStyle: { position: 'absolute',
+        bottom:10,
+        left:10,
+        right:10,
+        borderRadius:30,
+        shadowColor: "#424242",
+        shadowOffset: {
+          width: 0,
+          height: 12,
+        },
+        shadowOpacity: 0.58,
+        shadowRadius: 10,
+        elevation: 24,
+        backgroundColor:'#fff',
+        height:60,
+        padding:10 },             
+        }}>
+
+      <Tab.Screen
+        name="Home"
+        component={Home}
+        options={{
+          tabBarLabel: '',
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="map-marker-outline" color={"#424242"} size={30} />
+          ),
+      }}/>
+
+      <Tab.Screen
+        name="Booked"
+        component={Booked}
+        options={{
+          tabBarLabel: '',
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="ticket-outline" color={"#424242"} size={30} />
+          ),
+        }}/>
+
+
+       <Tab.Screen
+        name="Notification"
+        component={Notification}
+        options={{
+          tabBarLabel: '',
+          tabBarBadge:'3',
+          tabBarBadgeStyle: {
+            maxWidth: 9,
+            marginLeft:6,
+            maxHeight: 9,
+            fontSize: 5,
+            lineHeight: 9,
+            backgroundColor:"red",
+            color:"#fff"
+            },
+           tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="bell-outline" color={"#424242"} size={30} />
+          ),
+        }}
+      />
+      
+    <Tab.Screen
+        name="Venue"
+        component={Venue}
+        options={{
+          tabBarButton: () => null,
+           tabBarVisible: false,
+        }}/>
+
+     <Tab.Screen
+        name="SignIn"
+        component={SignIn}
+        options={{
+          tabBarButton: () => null,
+           tabBarVisible: false,
+        }}/>
+
+
+      <Tab.Screen
+        name="Profile"
+        component={Profile}
+        options={{
+          tabBarLabel: '',
+          tabBarIcon: ({ color, size }) => (
+           <View style={{backgroundColor:"#424242",color:"#fff",fontSize:15,borderRadius:20,display:"flex",alignItems:"center",justifyContent:"center",height:36,width:36}}>
+            <Text style={{color:"#fff",fontSize:16,fontWeight:"bold"}}>S</Text>
+            </View>
+          ),
+        }}
+      />
+    </Tab.Navigator>
+  );
+}
 
 
 
@@ -55,7 +152,13 @@ import { set } from 'react-native-reanimated';
 const Screens=()=> {
   return (
       <Stack.Navigator screenOptions={{ headerShown: false}}>
-        <Stack.Screen  component={MyTabs} />
+        <Stack.Screen name ='HomePage' component={MyTabs} />
+        <Stack.Screen name='SignUp' component={SignUp} />
+        <Stack.Screen name='Verify' component={Verify} />
+        <Stack.Screen name='PhoneNumberAuth' component={PhoneNumberAuth} />
+        <Stack.Screen name='Details' component={Details} />
+        <Stack.Screen name='SignIn' component={SignIn} />
+        <Stack.Screen name='Map' component={Map} />
       </Stack.Navigator>
   );
 }
@@ -63,140 +166,7 @@ const Screens=()=> {
 
 const App=()=> {
 
-  const MyTabs=()=>{
-    return (
-      <Tab.Navigator
-        initialRouteName="Home"
-        screenOptions={{
-          tabBarActiveTintColor:'#424242',
-          tabBarHideOnKeyboard:true,
-          headerShown:false,
-          tabBarStyle: { position: 'absolute',
-          bottom:10,
-          left:10,
-          right:10,
-          borderRadius:30,
-          shadowColor: "#424242",
-          shadowOffset: {
-            width: 0,
-            height: 12,
-          },
-          shadowOpacity: 0.58,
-          shadowRadius: 10,
-          elevation: 24,
-          backgroundColor:'#fff',
-          height:60,
-          padding:10 },             
-          }}>
   
-        <Tab.Screen
-          name="Home"
-          component={Home}
-          options={{
-            tabBarLabel: '',
-            tabBarIcon: ({ color, size }) => (
-              <MaterialCommunityIcons name="map-marker-outline" color={"#424242"} size={30} />
-            ),
-          }}/>
-  
-  
-        <Tab.Screen
-          name="SignUp"
-          component={SignUp}
-          options={{
-            tabBarButton: () => null,
-             tabBarVisible: false,
-          }}/>
-  
-        <Tab.Screen
-          name="Verify"
-          component={Verify}
-          options={{
-            tabBarButton: () => null,
-             tabBarVisible: false,
-          }}/>
-  
-         <Tab.Screen
-          name="PhoneNumberAuth"
-          component={PhoneNumberAuth}
-          options={{
-            tabBarButton: () => null,
-             tabBarVisible: false,
-          }}/>
-        
-        
-         <Tab.Screen
-          name="Details"
-          component={Details}
-          options={{
-            tabBarButton: () => null,
-             tabBarVisible: false,
-          }}/>
-  
-        <Tab.Screen
-          name="Map"
-          component={Map}
-          options={{
-            tabBarLabel: '',
-            tabBarIcon: ({ color, size }) => (
-              <MaterialCommunityIcons name="ticket-outline" color={"#424242"} size={30} />
-            ),
-          }}/>
-  
-  
-         <Tab.Screen
-          name="Notification"
-          component={Notification}
-          options={{
-            tabBarLabel: '',
-            tabBarBadge:'3',
-            tabBarBadgeStyle: {
-              maxWidth: 9,
-              marginLeft:6,
-              maxHeight: 9,
-              fontSize: 5,
-              lineHeight: 9,
-              backgroundColor:"red",
-              color:"#fff"
-              },
-             tabBarIcon: ({ color, size }) => (
-              <MaterialCommunityIcons name="bell-outline" color={"#424242"} size={30} />
-            ),
-          }}
-        />
-        
-      <Tab.Screen
-          name="Venue"
-          component={Venue}
-          options={{
-            tabBarButton: () => null,
-             tabBarVisible: false,
-          }}/>
-  
-       <Tab.Screen
-          name="SignIn"
-          component={SignIn}
-          options={{
-            tabBarButton: () => null,
-             tabBarVisible: false,
-          }}/>
-  
-  
-        <Tab.Screen
-          name="Profile"
-          component={Profile}
-          options={{
-            tabBarLabel: '',
-            tabBarIcon: ({ color, size }) => (
-             <View style={{backgroundColor:"#424242",color:"#fff",fontSize:15,borderRadius:20,display:"flex",alignItems:"center",justifyContent:"center",height:36,width:36}}>
-              <Text style={{color:"#fff",fontSize:16,fontWeight:"bold"}}>S</Text>
-              </View>
-            ),
-          }}
-        />
-      </Tab.Navigator>
-    );
-  }
   
    const [loggedIn,setIsLoggedIn]=React.useState(false);
 
@@ -221,7 +191,7 @@ const App=()=> {
     <GestureHandlerRootView style={{flex: 1}}>
     <BottomSheetModalProvider >
     <NavigationContainer>
-      <MyTabs/>
+      <Screens/>
     </NavigationContainer>
     </BottomSheetModalProvider>
     </GestureHandlerRootView>

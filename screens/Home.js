@@ -18,6 +18,7 @@ const Home = ({ navigation }) => {
 
   const [cityOpen, setCityOpen] = useState(false);
   const [moodOpen, setMoodOpen] = useState(false);
+  const [IsLoading, setIsLoading] = useState(false);
   const [value, setValue] = useState(null);
   const [valueTown, setValueTown] = useState(null);
   const [items, setItems] = useState([
@@ -73,7 +74,7 @@ useEffect(()=>{
 
   const unsubscribeAuth = onAuthStateChanged(
     auth, async authenticatedUser => {
-      authenticatedUser ? setUser(authenticatedUser) : setUser(null);
+      authenticatedUser ? setUser(authenticatedUser) : null,
       console.log(user);
       setIsLoading(false);
     }
@@ -98,7 +99,7 @@ useEffect(()=>{
 const AppButton = ({  title }) => (
  <View>
   <TouchableOpacity onPress={() =>
-    navigation.navigate('Details', { name: 'Jane' })
+    navigation.navigate('Details',{ venue: valueTown })
   } style={styles.appButtonContainer}>
     <Text style={styles.appButtonText}>
     {title}</Text>
@@ -108,7 +109,7 @@ const AppButton = ({  title }) => (
 
 const SignInButton = ({ title }) => (
   <TouchableOpacity onPress={() =>
-    navigation.navigate('SignIn', { name: 'Jane' })} style={styles.SignInButtonContainer}>
+    navigation.navigate('SignIn')} style={styles.SignInButtonContainer}>
     <Text style={styles.SignInButtonText}>
     <IconComponentProvider IconComponent={MaterialCommunityIcons}>
      <Icon name="login" size={15} color="#5c5c5c"/>
@@ -121,18 +122,15 @@ const SignInButton = ({ title }) => (
   return (
 
     <SafeAreaView style={{ flex: 1 }}>   
-      
+      <HomeHeader/>
       <ImageBackground     
        source={{uri:"https://cdn.uc.assets.prezly.com/6144c428-5a1d-44aa-ad3e-685ed09f0f5e/-/preview/1200x1200/-/format/auto/"}} 
        style={{width:"100%", height: "100%"}}>
       <View    style={styles.bgBody}>
-       <HomeHeader/>
        {!user?<SignInButton title=" sign in" size="sm" backgroundColor="#007bff" />:null}
-       
        <View style={{marginTop:10,
-    
         }}/>
-      
+    
        <TypeWriter typing={1} style={
         {marginBottom:30,fontSize:44,marginTop:30,
         color:"#fff", marginLeft:"3%",height:150,fontFamily: 'RalewayRegular',
@@ -306,7 +304,7 @@ const styles = StyleSheet.create({
     color:'#000',
     height: 40,
     borderRadius: 20,
-    marginTop:-20,
+    marginTop:20,
     marginLeft:10,
     width:100,
     

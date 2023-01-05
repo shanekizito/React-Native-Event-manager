@@ -22,7 +22,7 @@ const Profile = ({navigation}) => {
     const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
    return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
     <HomeHeaderWhite header={'Settings'} navigation={navigation}/>
 
     
@@ -61,7 +61,7 @@ const Profile = ({navigation}) => {
         
 
     </View>
-    </View>
+    </SafeAreaView>
   )
 }
 

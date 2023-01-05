@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useRef, useState, useEffect } from "react";
 import { SafeAreaView, View, FlatList,TouchableOpacity, StyleSheet, Text, Image } from 'react-native';
 import { IconComponentProvider, Icon } from "@react-native-material/core";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import {  HomeHeaderWhite } from "../components";
-
+import { useRoute, useNavigation } from '@react-navigation/native';
+import Venue from "./Venue";
 
 
 const DATA = [
@@ -40,7 +41,18 @@ const DATA = [
 
 
 const Details= ({navigation}) => {
-  
+
+  const [venue,setVenue]=useState('');
+  const route = useRoute();
+
+
+  useEffect(()=>{
+
+    setVenue(route.params.venue)
+    console.log(route.params.venue);
+  },[route.params.venue]);
+
+
   const Item = ({ title ,banner,location,vibe}) => (
    
     <View style={styles.item}>
@@ -79,8 +91,7 @@ const Details= ({navigation}) => {
 
   return (
     <SafeAreaView style={styles.container}>
-     <HomeHeaderWhite header={"UPCOMING"} navigation={navigation}/>
-     
+     <HomeHeaderWhite header={venue} navigation={navigation}/>
       <FlatList
        style={{marginTop:3}}
         data={DATA}
