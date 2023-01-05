@@ -15,7 +15,7 @@ const AppButton = ({  title }) => (
   );
 
 
-const Notification = ({navigation}) => {
+const Booked = ({navigation}) => {
 
     const [isEnabled, setIsEnabled] = useState(false);
 
@@ -23,7 +23,7 @@ const Notification = ({navigation}) => {
 
    return (
     <SafeAreaView style={styles.container}>
-     <HomeHeaderWhite navigation={navigation} header={'Notifications'}/>
+     <HomeHeaderWhite navigation={navigation} header={'Tickets'}/>
     
       <View style={styles.notificationContainer}>
         
@@ -46,7 +46,7 @@ const Notification = ({navigation}) => {
 
 const styles = StyleSheet.create({
 container:{
-  backgroundColor:'#252525',
+  
   flex:1
 },
 notification:{
@@ -129,4 +129,4 @@ color:'#fff',
 
 
 
-export default Notification;
+export default Booked;

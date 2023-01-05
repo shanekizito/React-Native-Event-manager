@@ -1,4 +1,5 @@
-import 'dotenv/config';
+import Constants from 'expo-constants';
+
 
 export default{
   "expo": {
@@ -13,7 +14,7 @@ export default{
       "backgroundColor": "#ffffff"
     },
     "packagerOpts": {
-      "sourceExts": ["cjs"] 
+      "sourceExts": ["cjs"]
     },
     "updates": {
       "fallbackToCacheTimeout": 0

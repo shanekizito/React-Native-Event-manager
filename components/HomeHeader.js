@@ -27,41 +27,37 @@ const styles = StyleSheet.create({
 
 const HomeHeader = ({ onSearch }) => {
   return (
-    <View
-      style={{
-       
-       
-      }}
-    >
+    
       <View
         style={{
           backgroundColor:"white",
           width:'100%',
           height:70,
-          marginBottom:20,
+          
+          borderBottom: '1px solid #64626246',
         }}
       >
-        
-        
         <Image
           source={assets.bannerLogoWhite}
           resizeMode="contain"
           style={{ width: '60%',marginLeft:20 ,height:'100%'}}
         />
-        </View>
-        <View style={{ width: '100%' ,borderBottom: '1px solid #64626246',marginBottom:5}}>
        
-        </View>
+       
       
         <View style={styles.screenContainer}>
-      
-    </View>
+      <View/>
+      </View>
+      </View>
+       
+
+    
        
       
         
 
        
-    </View>
+    
   );
 };
 

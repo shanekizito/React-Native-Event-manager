@@ -66,7 +66,7 @@ const Venue= ({navigation}) => {
   const CloseAppButton = ({  title }) => (
     <TouchableOpacity onPress={()=>{
       dismissAll();
-      return navigation.navigate('Map');
+      return navigation.navigate('Map',{item:venueData});
     }} style={styles.CloseappButtonContainer}>
       <Text style={styles.CloseappButtonText}>
       {title} </Text>
@@ -96,18 +96,17 @@ const Venue= ({navigation}) => {
 
          <Text style={styles.area}>{venueData.title}</Text>
          <View style={styles.date}>
-        
         <Text style={styles.dateTextContainer} >Feb</Text>
         <Text style={styles.dateText}>5</Text>
         </View>
-      </View>
+           </View>
          <View style={styles.eventDetails}>
           
         <View style={styles.venue}>
         <IconComponentProvider IconComponent={MaterialCommunityIcons}>
         <Icon name="flag" size={30} color="#fff"/>
         </IconComponentProvider>
-          <Text  style={{color:"white",fontSize:15,textAlign:'center',color:"rgba(229, 233, 229, 0.938)",marginLeft:20,fontFamily: 'RalewayRegular'}}>{venueData.location} </Text>
+          <Text  style={{color:"white",fontSize:15,textAlign:'center',color:"rgba(229, 233, 229, 0.938)",marginLeft:20,fontFamily: 'RalewayRegular'  ,maxWidth:250}}>{venueData.location} </Text>
         </View>
         </View>
       <Text style={styles.vibe}>We welcome you to come and join us in experiencing three magnificent films that will entertain and edutain you as our lovely guest. </Text>
@@ -256,6 +255,7 @@ const styles = StyleSheet.create({
     fontFamily: 'RalewayRegular',
     color:'#fff',
     marginBottom:15,
+   
     
   },
   date:{
@@ -266,24 +266,26 @@ const styles = StyleSheet.create({
      marginTop:30,
      backgroundColor:"#ffff",
      width:70,
-     marginLeft:127,
-     marginTop:20,
+     width:50,
      padding:12,
      borderRadius:12,
 
   },
   venueContent:{
- flexDirection:'row',
+    display:'flex',
+    flexDirection:'row',
+    alignItems:'center',
+    justifyContent:'space-evenly',
+ 
   },
   dateText:{
 color:'#000',
-borderWidth:0,
+
 borderTopWidth:3,
-borderColor:'grey',
-borderRadius:1,
+borderTopColor:'#0000',
 fontWeight:'bold',
 fontSize:25,
-fontFamily: 'RalewayRegular',
+fontFamily: 'RalewayBold',
 
   },
   venue:{
@@ -295,13 +297,14 @@ fontFamily: 'RalewayRegular',
   },
 
   area:{
-    fontSize:22,
+    fontSize:20,
     fontFamily: 'RalewayRegular',
-    marginLeft:20,
+   
     fontWeight:'600',
-    marginTop:30,
+    marginTop:45,
     textAlign:'center',
-    color:'white',
+    color:'#dad7d7',
+    width:300,
   },
 
   road:{
@@ -428,7 +431,6 @@ venueContainer: {
     alignItems:'center',
     borderBottomWidth:1,
     borderBottomColor:'#e4e3e3',
-    
     paddingBottom:20
 },
 tinyBanner:{

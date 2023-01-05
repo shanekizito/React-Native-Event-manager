@@ -28,7 +28,6 @@ const styles = StyleSheet.create({
     alignItems:'center',
     backgroundColor: '#ffff',
     height:60,
-    
     elevation:2,
   },
   Header:{
@@ -94,7 +93,7 @@ const HomeHeaderWhite = ({ header,navigation  }) => {
   const BackButton = () => (
      
     <TouchableOpacity style={styles.BackButtonContainer} onPress={() =>
-     navigation.popToTop()
+     navigation.goBack()
     } >
       <IconComponentProvider IconComponent={MaterialCommunityIcons}>
         <Icon name="arrow-left" size={30} color="#424242"/>
@@ -105,15 +104,14 @@ const HomeHeaderWhite = ({ header,navigation  }) => {
 
   return (
     
-        <View>
-        <FocusedStatusBar/>
+       
         <View style={styles.homeHeaderWhiteContainer}>
-        
+
           <BackButton/>
          
           <Text style={styles.Header}>{header}</Text>
         </View>
-        </View>
+       
        
       
   );

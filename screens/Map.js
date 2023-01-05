@@ -9,7 +9,12 @@ import { IconComponentProvider, Icon } from "@react-native-material/core";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import Barcode from 'react-native-barcode-svg';
 import { useFocusEffect } from '@react-navigation/native';
+import AnimatedLoader from 'react-native-animated-loader';
+import { useRoute, useNavigation } from '@react-navigation/native';
 
+
+
+ 
 
 import {BottomSheetModal,} from '@gorhom/bottom-sheet';
 
@@ -25,14 +30,33 @@ const Map = ({navigation}) => {
   const map = useRef();
   const [distance,setDistance]=useState(0);
   const [duration,setDuration]=useState(0);
-  const snapPoints = useMemo(() => ['20%', '25%']);
+  const snapPoints = useMemo(() => ['10%', '25%', '30%']);
   const [time,setTime]=useState(false);
   const GOOGLE_MAPS_APIKEY = 'AIzaSyCmcpx4SLKG6wLsdIeD6RT5ioDYihSRNM0';
-  const [destination,setDestination]=useState({latitude: 37.771707, longitude: -122.4053769});
+  const [destination,setDestination]=useState(null);
+  const [visible, setVisible] = useState(false);
+  const [CoordinatesReady,setCoordinatesReady] = useState(false);
+  const [venueData,setVenueData]=useState({});
+  const route = useRoute();
 
 
 
-  
+
+  useEffect(()=>{
+
+    setVenueData(route.params.item)
+    console.log(route.params.item);
+  },[route.params.item])
+
+
+ 
+  useEffect(() => {
+    setTimeout(() => {
+      setVisible(true);
+    }, 10000);
+  }, [0]);
+
+
   const handlePresentModalPress = useCallback(() => {
     !bottomSheetModalRefVenue.current?.present();
   }, []);
@@ -46,14 +70,12 @@ const Map = ({navigation}) => {
 
 
 
-
-
   useFocusEffect(
 
-    
+
     useCallback(() => {
       handlePresentModalPress();
-      getCordinates();
+      
       
     }, [1]))
   
@@ -67,23 +89,24 @@ const Map = ({navigation}) => {
         setErrorMsg('Permission to access location was denied');
         return;
       }
+      getCordinates();
       
     })();
   }, []);
 
  
-const getCordinates= async ()=>{
-      let location = await Location.getCurrentPositionAsync({});
+  const getCordinates= async ()=>{
+    let location = await Location.getCurrentPositionAsync({});
 
-      const currentLocation={
-        latitude:location.coords.latitude,
-        longitude:location.coords.longitude
-      }
-     
-      setOrigin(currentLocation);
-      console.log(currentLocation);
-      
+    const currentLocation={
+      latitude:location.coords.latitude,
+      longitude:location.coords.longitude
+    }
+   
+    setOrigin(currentLocation);
+    console.log(currentLocation);
     
+  
 }
 
 
@@ -93,11 +116,18 @@ const getCordinates= async ()=>{
  
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View >
       <HomeHeaderWhite navigation={navigation} header={'Go direction'}/>
-     
-    </View>
+      </View>
+    {!CoordinatesReady?(<AnimatedLoader
+      visible={true}
+      overlayColor="rgba(255,255,255,0.75)"
+      source={require("../assets/loader.json")}
+      animationStyle={styles.lottie}
+      speed={1}>
+    </AnimatedLoader>):null}
+    
     <MapView ref={map}
       style={{width: '100%', height: '100%'}}
       provider={PROVIDER_GOOGLE}
@@ -112,11 +142,12 @@ const getCordinates= async ()=>{
         origin={origin}
         languege="en"
         region="KE"
-        destination="Mamboleo stage kisumu"
+        destination={venueData.location}
         onStart={(params) => {
           console.log(`Started routing between "${params.origin}" and "${params.destination}"`);
         }}
         onReady={result => {
+          
           setDestination(result.coordinates[result.coordinates.length-1]);
           console.log(`Distance: ${result.distance} km`)
           console.log(`Duration: ${result.duration} min.`)
@@ -129,7 +160,12 @@ const getCordinates= async ()=>{
               left: (width / 20),
               top: (height / 20),
             }})
-
+            if(result.coordinates){
+              setTimeout(() => {
+                setCoordinatesReady(true)
+              }, 8000);
+           
+            }
         }}
         onError={(errorMessage) => {
           // console.log('GOT AN ERROR');
@@ -152,16 +188,18 @@ const getCordinates= async ()=>{
             index={1}
             snapPoints={snapPoints}
             onChange={handleSheetChanges}
-            enablePanDownToClose >
+            enablePanDownToClose={false}
+            
+             >
           <View style={styles.contentContainer}>
           
                <View style={styles.ticket}>
                 
                   <View style={styles.venueContainer}>
-                    <Image style={styles.tinyBanner}resizeMode="cover"source={{ uri:"https://kenyaonthego.com/wp-content/uploads/2021/11/black-pearl-4-520x397.jpg" }}/>
+                    <Image style={styles.tinyBanner}resizeMode="cover"source={{ uri:venueData.banner }}/>
                   <View style={styles.venueInfoContainer}>
-                    <Text style={styles.place}>Club Da Place</Text>
-                    <Text style={styles.venueLocation}>Mamboleo stage - Kisumu</Text>
+                    <Text style={styles.place}>{venueData.title}</Text>
+                    <Text style={styles.venueLocation}>{venueData.location}</Text>
                  </View>
                </View>
  
@@ -194,7 +232,7 @@ const getCordinates= async ()=>{
             
        </View>
         </BottomSheetModal>
-    </View>
+    </SafeAreaView>
     
   );
 };
@@ -206,6 +244,10 @@ const styles = StyleSheet.create({
   paragraph: {
     fontSize: 18,
     textAlign: 'center',
+  },
+  lottie: {
+    width: 100,
+    height: 100,
   },
   bottomSheetRef: {
     flex: 1,

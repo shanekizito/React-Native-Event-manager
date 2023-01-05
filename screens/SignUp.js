@@ -1,6 +1,6 @@
 import React from 'react'
 import { Alert, Button, TextInput, Text,View, StyleSheet,SafeAreaView,TouchableOpacity } from 'react-native';
-import {  FocusedStatusBar, HomeHeader } from "../components";
+import {  FocusedStatusBar, HomeHeaderWhite } from "../components";
 import { COLORS} from "../constants";
 import {  useState } from "react";
 import {doc, setDoc,getFirestore} from 'firebase/firestore'
@@ -44,7 +44,12 @@ const handleSubmit = () => {
                 email:email,
                 phoneNumber:phoneNumber,   
         })
-      }).then(navigation.navigate('PhoneNumberAuth',{contact:phoneNumber }))
+      }).then(navigation.navigate('PhoneNumberAuth',{user:{
+                username:username,
+                email:email,
+                phoneNumber:phoneNumber, 
+      }
+       }))
       .catch(error => {
         console.log(error)
       });
@@ -78,7 +83,7 @@ const onHandleSignup = () => {
     
         <SafeAreaView style={styles.container}>
         <FocusedStatusBar backgroundColor={COLORS.primary} />
-        <HomeHeader/>
+        <HomeHeaderWhite navigation={navigation} header={'SIGN UP'}/>
         <View style={styles.form}>
         <Text style={styles.text}>Create account</Text>
         <TextInput
@@ -95,7 +100,7 @@ const onHandleSignup = () => {
             style={styles.input}
         />
         <TextInput
-            placeholder={'phoneNumber'}
+            placeholder={'Phone Number'}
             placeholderTextColor={'grey'}
             onChangeText={(phoneNumber) => setPhoneNumber(phoneNumber)}
             style={styles.input}
@@ -158,7 +163,6 @@ const styles = StyleSheet.create({
         height:40,
         marginTop:20,
         padding:10,
-       
         fontFamily: 'RalewayRegular'
 
     },

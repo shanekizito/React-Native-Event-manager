@@ -9,7 +9,17 @@ import * as FirebaseRecaptcha from 'expo-firebase-recaptcha';
 import { getAuth, PhoneAuthProvider, signInWithCredential } from 'firebase/auth';
 import OTPInput from "./OTPInput";
 import { firebaseConfig } from '../config/firebase';
-import { auth} from '../config/firebase';
+
+import {
+  collection,
+  addDoc,
+  orderBy,
+  query,
+  onSnapshot
+} from 'firebase/firestore';
+
+import { auth, database } from '../config/firebase';
+
 
 // Add your Firebase >=9.x.x config here
 // https://firebase.google.com/docs/web/setup
@@ -41,6 +51,7 @@ const PhoneNumberAuth = ({navigation,route}) => {
   const [confirmError, setConfirmError] = React.useState(null);
   const [confirmInProgress, setConfirmInProgress] =useState(false);
   const maximumCodeLength = 6;
+  const collectionRef = collection(database, 'users');
 
 
 
@@ -65,7 +76,6 @@ const PhoneNumberAuth = ({navigation,route}) => {
   return (
     
         <SafeAreaView style={styles.container}>
-        <FocusedStatusBar backgroundColor={COLORS.primary} />
         <HomeHeader/>
       <View style={styles.form}>
       <Image
@@ -91,7 +101,6 @@ const PhoneNumberAuth = ({navigation,route}) => {
         style={styles.input}
         autoFocus={isConfigValid}
         autoCompleteType="tel"
-        keyboardType="phone-pad"
         textContentType="telephoneNumber"
         placeholder="+254 700 000 000"
         editable={!verificationId}
@@ -101,7 +110,6 @@ const PhoneNumberAuth = ({navigation,route}) => {
       <TouchableOpacity style={styles.appButtonContainer}
         disabled={!phoneNumber}
         onPress={async () => {
-          
           const phoneProvider = new PhoneAuthProvider(auth);
            try {
             setVerifyError(undefined);
@@ -153,25 +161,24 @@ const PhoneNumberAuth = ({navigation,route}) => {
               setConfirmInProgress(true);
               const credential = PhoneAuthProvider.credential(verificationId, otpCode);
               console.log('yert')
-              
               setConfirmInProgress(false);
               setVerificationId('');
               setVerificationCode('');
-              
               await signInWithCredential(auth, credential).then(()=>{
+                addDoc(collectionRef,{
+                  username:username,
+                  email:email,
+                  phoneNumber:phoneNumber,   
+               }).then(()=>{
                 Alert.alert('Phone authentication successful!')
-                
                 setTimeout(()=>{
                   navigation.navigate('Home', { name: 'Jane' })
-                }, 1000);
-
+                }, 1000)});
               }
-               
               ).catch((e)=>{
               console.log(e);
               })
               inputRef.current?.clear();
-              
           } catch (err) {
             setConfirmError(err);
             setConfirmInProgress(false);
@@ -224,7 +231,7 @@ const styles = StyleSheet.create({
       shadowOpacity: 0.2,
       shadowRadius: 3,
       width:'98%',
-      height: '65%',
+      
        
 
 

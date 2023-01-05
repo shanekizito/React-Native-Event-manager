@@ -19,16 +19,6 @@ import { HomeHeaderWhite} from "../components";
 
 
 
-
-
-
-
-
-
-  
- 
-
-
 export default function Verify({ route, navigation }) {
   const [otpCode, setOTPCode] = useState("");
   const [isPinReady, setIsPinReady] = useState(false);
@@ -61,18 +51,14 @@ export default function Verify({ route, navigation }) {
     <View style={styles.screen}>
        <HomeHeaderWhite/>
        <View style={styles.container}>
-        <Image
-          source={assets.otp}
-          resizeMode="contain"
-          style={{ width: '60%',marginLeft:20 ,height:100}}
-        />
+        <Image source={assets.otp}
+               resizeMode="contain" 
+                style={{ width: '60%',marginLeft:20 ,height:100}}/>
 
-    <Text style={styles.title}>OTP verification</Text>
- 
+       <Text style={styles.title}>OTP verification</Text>
     <View>
     <Text style={styles.info}>Enter the OTP sent to  {route.params.contact}</Text>
-
-    <View style={styles.content}>
+    <View style={styles.content}>``
       <Pressable style={styles.container1} onPress={Keyboard.dismiss}>
         <OTPInput
           code={otpCode}
@@ -100,12 +86,12 @@ export default function Verify({ route, navigation }) {
             setConfirmError(err);
             setConfirmInProgress(false);
           }
-        }}><Text style={styles.appButtonText}>Verify & Proceed</Text>
-          
-          </TouchableOpacity>
+        }}>
+          <Text style={styles.appButtonText}>Verify & Proceed</Text>
+      </TouchableOpacity>
 
-     
-      {confirmInProgress && <ActivityIndicator style={styles.loader} />}
+      { confirmInProgress && <ActivityIndicator style={styles.loader} /> }
+
     </View>
     {!isConfigValid && (
       <View style={styles.overlay} pointerEvents="none">
@@ -125,19 +111,13 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   container: {
-   
     padding: 20,
     alignItems: 'center',
     justifyContent:'center'
-
-    
-
   },
 
   container1: {
     marginTop:30,
-    
-
   },
   content: {
     marginTop: 50,
