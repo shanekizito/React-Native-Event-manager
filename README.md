@@ -1,3 +1,5 @@
+Introducing 'On the Go' – your ultimate events booking companion. Seamlessly book tickets, organize itineraries, and pay securely using M-PESA, all in one platform. With AI integration, your experience is personalized and optimized for convenience. Say hello to effortless event planning wherever you go
+
 ![IMG_1793](https://github.com/shanekizito/React-Native-Event-manager/assets/79025747/c3f12ac5-3e8c-47d1-9e78-26ce5b096299)
 ![IMG_1794](https://github.com/shanekizito/React-Native-Event-manager/assets/79025747/28329c70-a039-4894-8c56-c0292ba7d4f3)
 ![IMG_1796](https://github.com/shanekizito/React-Native-Event-manager/assets/79025747/342e396b-6f05-4300-bc0a-6f73210c405b)
